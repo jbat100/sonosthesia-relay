@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>SchemeUserState</key>
+	<dict>
+		<key>Relay (AU).xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>2</integer>
+		</dict>
+		<key>Relay (AUv3 AppExtension).xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>3</integer>
+		</dict>
+		<key>Relay (AUv3 Standalone).xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>4</integer>
+		</dict>
+		<key>Relay (All).xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>0</integer>
+		</dict>
+		<key>Relay (Shared Code).xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>5</integer>
+		</dict>
+		<key>Relay (VST).xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>1B45F1B4B64EB88CB46DF67F</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>6EB5AE518EF71BE85C56A04C</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>C08320FB3D65569284C03546</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>CC16ABCB11BBC000997741BE</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>D061727367FD0966F0E7B961</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>ED214ED01F9D9B522D105FFD</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+	</dict>
+</dict>
+</plist>
