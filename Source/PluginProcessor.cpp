@@ -15,6 +15,7 @@
 //==============================================================================
 RelayAudioProcessor::RelayAudioProcessor()
 {
+    sender.connect( juce::String("127.0.0.1"), 3333);
 }
 
 RelayAudioProcessor::~RelayAudioProcessor()
@@ -142,10 +143,18 @@ void RelayAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuffer& m
     {
         if (m.isNoteOn())
         {
+            OSCAddressPattern pattern = OSCAddressPattern("/default/midi/");
+            OSCMessage message = OSCMessage(pattern, juce::String("note_on"), (int)m.getChannel(), (int)m.getNoteNumber(), (int)m.getVelocity());
+            sender.send(message);
+            
             std::cout << "note_on " << m.getChannel() << " " << m.getNoteNumber() << " " << (int)m.getVelocity() << "\n";
         }
         else if (m.isNoteOff())
         {
+            OSCAddressPattern pattern = OSCAddressPattern("/default/midi/");
+            OSCMessage message = OSCMessage(pattern, juce::String("note_on"), (int)m.getChannel(), (int)m.getNoteNumber(), (int)m.getVelocity());
+            sender.send(message);
+            
             std::cout << "note_off " << m.getChannel() << " " << m.getNoteNumber() << " " << (int)m.getVelocity() << "\n";
         }
     }
