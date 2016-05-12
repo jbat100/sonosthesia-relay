@@ -11,6 +11,29 @@
               jucerVersion="4.2.1">
   <MAINGROUP id="YN10nS" name="Relay">
     <GROUP id="{CA07BB16-3DC8-BFEA-3102-6340B6C296CD}" name="Source">
+      <FILE id="P89m54" name="ParameterRelayManager.cpp" compile="1" resource="0"
+            file="Source/ParameterRelayManager.cpp"/>
+      <FILE id="b0NHyr" name="ParameterRelayManager.h" compile="0" resource="0"
+            file="Source/ParameterRelayManager.h"/>
+      <FILE id="ltZ4ft" name="MIDIRelayManager.cpp" compile="1" resource="0"
+            file="Source/MIDIRelayManager.cpp"/>
+      <FILE id="oKt4LM" name="MIDIRelayManager.h" compile="0" resource="0"
+            file="Source/MIDIRelayManager.h"/>
+      <FILE id="VjHDz6" name="OSCTargetManager.cpp" compile="1" resource="0"
+            file="Source/OSCTargetManager.cpp"/>
+      <FILE id="hbLyRr" name="OSCTargetManager.h" compile="0" resource="0"
+            file="Source/OSCTargetManager.h"/>
+      <FILE id="cCDFVV" name="MIDIComponent.cpp" compile="1" resource="0"
+            file="Source/MIDIComponent.cpp"/>
+      <FILE id="LL4etf" name="MIDIComponent.h" compile="0" resource="0" file="Source/MIDIComponent.h"/>
+      <FILE id="fZSGVC" name="ParameterComponent.cpp" compile="1" resource="0"
+            file="Source/ParameterComponent.cpp"/>
+      <FILE id="SDAI3m" name="ParameterComponent.h" compile="0" resource="0"
+            file="Source/ParameterComponent.h"/>
+      <FILE id="dk3z4m" name="TargetComponent.cpp" compile="1" resource="0"
+            file="Source/TargetComponent.cpp"/>
+      <FILE id="RFQRMa" name="TargetComponent.h" compile="0" resource="0"
+            file="Source/TargetComponent.h"/>
       <FILE id="iREjjT" name="PluginProcessor.cpp" compile="1" resource="0"
             file="Source/PluginProcessor.cpp"/>
       <FILE id="MfJAW4" name="PluginProcessor.h" compile="0" resource="0"
