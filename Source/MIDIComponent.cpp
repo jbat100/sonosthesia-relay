@@ -12,7 +12,7 @@
 #include "MIDIComponent.h"
 
 //==============================================================================
-MIDIComponent::MIDIComponent()
+MIDIComponent::MIDIComponent(MIDIRelayManager& _midiRelayManager) : midiRelayManager(_midiRelayManager)
 {
     // In your constructor, you should add any child components, and
     // initialise any special settings that your component needs.
@@ -22,6 +22,7 @@ MIDIComponent::MIDIComponent()
 MIDIComponent::~MIDIComponent()
 {
 }
+
 
 void MIDIComponent::paint (Graphics& g)
 {
@@ -38,9 +39,9 @@ void MIDIComponent::paint (Graphics& g)
     g.drawRect (getLocalBounds(), 1);   // draw an outline around the component
 
     g.setColour (Colours::lightblue);
-    g.setFont (14.0f);
-    g.drawText ("MIDIComponent", getLocalBounds(),
-                Justification::centred, true);   // draw some placeholder text
+    
+    //g.setFont (14.0f);
+    //g.drawText ("MIDIComponent", getLocalBounds(), Justification::centred, true);
 }
 
 void MIDIComponent::resized()

@@ -12,7 +12,7 @@
 #include "ParameterComponent.h"
 
 //==============================================================================
-ParameterComponent::ParameterComponent()
+ParameterComponent::ParameterComponent(ParameterRelayManager& _parameterRelayManager) : parameterRelayManager(parameterRelayManager)
 {
     // In your constructor, you should add any child components, and
     // initialise any special settings that your component needs.
@@ -38,9 +38,9 @@ void ParameterComponent::paint (Graphics& g)
     g.drawRect (getLocalBounds(), 1);   // draw an outline around the component
 
     g.setColour (Colours::lightblue);
-    g.setFont (14.0f);
-    g.drawText ("ParameterComponent", getLocalBounds(),
-                Justification::centred, true);   // draw some placeholder text
+    
+    //g.setFont (14.0f);
+    //g.drawText ("ParameterComponent", getLocalBounds(), Justification::centred, true);
 }
 
 void ParameterComponent::resized()

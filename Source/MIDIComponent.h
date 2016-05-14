@@ -13,19 +13,24 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 
+#include "MIDIRelayManager.h"
+
 //==============================================================================
 /*
 */
 class MIDIComponent    : public Component
 {
 public:
-    MIDIComponent();
+    MIDIComponent(MIDIRelayManager& _midiRelayManager);
     ~MIDIComponent();
 
     void paint (Graphics&);
     void resized();
 
 private:
+    
+    MIDIRelayManager& midiRelayManager;
+    
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MIDIComponent)
 };
 

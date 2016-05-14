@@ -13,19 +13,24 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 
+#include "ParameterRelayManager.h"
+
 //==============================================================================
 /*
 */
 class ParameterComponent    : public Component
 {
 public:
-    ParameterComponent();
+    ParameterComponent(ParameterRelayManager& _parameterRelayManager);
     ~ParameterComponent();
 
     void paint (Graphics&);
     void resized();
 
 private:
+    
+    ParameterRelayManager& parameterRelayManager;
+    
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ParameterComponent)
 };
 

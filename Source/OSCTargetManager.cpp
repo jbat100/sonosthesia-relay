@@ -71,8 +71,14 @@ std::shared_ptr<OSCTarget> OSCTargetManager::newTarget()
 
 void OSCTargetManager::deleteTarget(String identifier)
 {
-    for (auto i = targets.begin(); i != targets.end(); ++i)
+    for (auto i = targets.begin(); i != targets.end();)
     {
-        if ((*i)->getIdentifier() == identifier) targets.erase(i--);
+        if ((*i)->getIdentifier() == identifier) targets.erase(i);
+        else i++;
     }
+}
+
+void OSCTargetManager::clear()
+{
+    targets.clear();
 }

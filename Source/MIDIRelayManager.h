@@ -22,6 +22,7 @@ class MIDIRelay
 {
 public:
     
+    MIDIRelay();
     MIDIRelay(int _channel, std::shared_ptr<OSCTarget> _target);
     
     void setChannel(int _channel);
@@ -51,6 +52,8 @@ public:
     std::shared_ptr<MIDIRelay> newRelay();
     
     void deleteRelay(String identifier);
+    
+    void clear();
     
 private:
     

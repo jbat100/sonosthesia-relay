@@ -13,6 +13,9 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 
+#include "OSCTargetManager.h"
+#include "MidiRelayManager.h"
+#include "ParameterRelayManager.h"
 
 //==============================================================================
 /**
@@ -55,12 +58,21 @@ public:
     //==============================================================================
     void getStateInformation (MemoryBlock& destData) override;
     void setStateInformation (const void* data, int sizeInBytes) override;
+    
+    //==============================================================================
+    OSCTargetManager& getOSCTargetManager();
+    MIDIRelayManager& getMIDIRelayManager();
+    ParameterRelayManager& getParameterRelayManager();
 
 private:
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (RelayAudioProcessor)
     
     OSCSender sender;
+    
+    OSCTargetManager oscTargetManager;
+    MIDIRelayManager midiRelayManager;
+    ParameterRelayManager parameterRelayManager;
 };
 
 
