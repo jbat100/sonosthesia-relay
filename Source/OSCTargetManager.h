@@ -13,7 +13,7 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 
-#include <list>
+#include <vector>
 #include <memory>
 
 
@@ -30,6 +30,8 @@ public:
     void setPortNumber(int _portNumber);
     int getPortNumber();
     
+    bool isConnected();
+    
     String getIdentifier();
     
     OSCSender& getSender();
@@ -38,8 +40,10 @@ private:
     
     String hostName;
     int portNumber;
-    String identifier;
     OSCSender sender;
+    bool connected;
+    
+    String identifier;
     
     void updateSender();
 };
@@ -49,7 +53,7 @@ class OSCTargetManager
 {
 public:
     
-    std::list< std::shared_ptr<OSCTarget> > getTargets();
+    const std::vector< std::shared_ptr<OSCTarget> > getTargets() const;
     
     std::shared_ptr<OSCTarget> newTarget();
     
@@ -58,7 +62,7 @@ public:
     void clear();
     
 private:
-    std::list< std::shared_ptr<OSCTarget> > targets;
+    std::vector< std::shared_ptr<OSCTarget> > targets;
 };
 
 

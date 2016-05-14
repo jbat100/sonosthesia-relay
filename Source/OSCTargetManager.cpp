@@ -10,18 +10,27 @@
 
 #include "OSCTargetManager.h"
 
-OSCTarget::OSCTarget()
+OSCTarget::OSCTarget() :
+    hostName("127.0.0.1"),
+    portNumber(3333),
+    connected(false),
+    identifier(Uuid().toString())
 {
-    hostName = String("127.0.0.1");
-    portNumber = 3333;
-    identifier = Uuid().toString();
     updateSender();
 }
 
-OSCTarget::OSCTarget(String _hostName, int _portNumber) : hostName(_hostName), portNumber(_portNumber)
+OSCTarget::OSCTarget(String _hostName, int _portNumber) :
+    hostName(_hostName),
+    portNumber(_portNumber),
+    connected(false),
+    identifier(Uuid().toString())
 {
-    identifier = Uuid().toString();
     updateSender();
+}
+
+bool OSCTarget::isConnected()
+{
+    return connected;
 }
     
 void OSCTarget::setHostName(String _hostName)
@@ -54,10 +63,10 @@ String OSCTarget::getIdentifier()
 void OSCTarget::updateSender()
 {
     sender.disconnect();
-    sender.connect(hostName, portNumber);
+    connected = sender.connect(hostName, portNumber);
 }
 
-std::list< std::shared_ptr<OSCTarget> > OSCTargetManager::getTargets()
+const std::vector< std::shared_ptr<OSCTarget> > OSCTargetManager::getTargets() const
 {
     return targets;
 }

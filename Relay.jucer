@@ -11,6 +11,10 @@
               jucerVersion="4.2.1">
   <MAINGROUP id="YN10nS" name="Relay">
     <GROUP id="{CA07BB16-3DC8-BFEA-3102-6340B6C296CD}" name="Source">
+      <FILE id="FzERRw" name="CommonComponent.cpp" compile="1" resource="0"
+            file="Source/CommonComponent.cpp"/>
+      <FILE id="YUNSBC" name="CommonComponent.h" compile="0" resource="0"
+            file="Source/CommonComponent.h"/>
       <FILE id="P89m54" name="ParameterRelayManager.cpp" compile="1" resource="0"
             file="Source/ParameterRelayManager.cpp"/>
       <FILE id="b0NHyr" name="ParameterRelayManager.h" compile="0" resource="0"
