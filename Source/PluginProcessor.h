@@ -63,7 +63,12 @@ public:
     OSCTargetManager& getOSCTargetManager();
     MIDIRelayManager& getMIDIRelayManager();
     ParameterRelayManager& getParameterRelayManager();
-
+    
+    // these are used to persist the UI's size - the values are stored along with the
+    // filter's other parameters, and the UI component will update them when it gets
+    // resized.
+    int lastUIWidth, lastUIHeight;
+    
 private:
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (RelayAudioProcessor)

@@ -3073,7 +3073,7 @@
 				LIBRARY_STYLE = Bundle;
 				MACOSX_DEPLOYMENT_TARGET_ppc = 10.4;
 				OTHER_LDFLAGS = "-bundle -lRelay";
-				PRODUCT_BUNDLE_IDENTIFIER = com.sonosthesia.Relay;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sonosthesia.relay;
 				SDKROOT_ppc = macosx10.5;
 				WRAPPER_EXTENSION = vst; }; name = Debug; };
 		974A533645DD693864F39C8B = {isa = XCBuildConfiguration; buildSettings = {
@@ -3108,7 +3108,7 @@
 				LIBRARY_STYLE = Bundle;
 				MACOSX_DEPLOYMENT_TARGET_ppc = 10.4;
 				OTHER_LDFLAGS = "-bundle -lRelay";
-				PRODUCT_BUNDLE_IDENTIFIER = com.sonosthesia.Relay;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sonosthesia.relay;
 				SDKROOT_ppc = macosx10.5;
 				WRAPPER_EXTENSION = vst; }; name = Release; };
 		73CA74A0486807DB8D866149 = {isa = XCBuildConfiguration; buildSettings = {
@@ -3143,7 +3143,7 @@
 				MACOSX_DEPLOYMENT_TARGET_ppc = 10.4;
 				OTHER_LDFLAGS = "-bundle -lRelay";
 				OTHER_REZFLAGS = "-d ppc_$ppc -d i386_$i386 -d ppc64_$ppc64 -d x86_64_$x86_64 -I /System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Versions/A/Headers -I \"$(DEVELOPER_DIR)/Extras/CoreAudio/AudioUnits/AUPublic/AUBase\"";
-				PRODUCT_BUNDLE_IDENTIFIER = com.sonosthesia.Relay;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sonosthesia.relay;
 				SDKROOT_ppc = macosx10.5;
 				WRAPPER_EXTENSION = component; }; name = Debug; };
 		AE9B6E6C87186D1F675847FD = {isa = XCBuildConfiguration; buildSettings = {
@@ -3179,7 +3179,7 @@
 				MACOSX_DEPLOYMENT_TARGET_ppc = 10.4;
 				OTHER_LDFLAGS = "-bundle -lRelay";
 				OTHER_REZFLAGS = "-d ppc_$ppc -d i386_$i386 -d ppc64_$ppc64 -d x86_64_$x86_64 -I /System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Versions/A/Headers -I \"$(DEVELOPER_DIR)/Extras/CoreAudio/AudioUnits/AUPublic/AUBase\"";
-				PRODUCT_BUNDLE_IDENTIFIER = com.sonosthesia.Relay;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sonosthesia.relay;
 				SDKROOT_ppc = macosx10.5;
 				WRAPPER_EXTENSION = component; }; name = Release; };
 		A0CFE17EE21C385D496BBF1A = {isa = XCBuildConfiguration; buildSettings = {
@@ -3210,7 +3210,7 @@
 				INFOPLIST_FILE = Info-AUv3_AppExtension.plist;
 				MACOSX_DEPLOYMENT_TARGET_ppc = 10.4;
 				OTHER_LDFLAGS = "-lRelay";
-				PRODUCT_BUNDLE_IDENTIFIER = com.sonosthesia.Relay.RelayAUv3;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sonosthesia.relay.relayAUv3;
 				SDKROOT_ppc = macosx10.5; }; name = Debug; };
 		0FA72DAC42B310C23F0B30DF = {isa = XCBuildConfiguration; buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
@@ -3241,7 +3241,7 @@
 				INFOPLIST_FILE = Info-AUv3_AppExtension.plist;
 				MACOSX_DEPLOYMENT_TARGET_ppc = 10.4;
 				OTHER_LDFLAGS = "-lRelay";
-				PRODUCT_BUNDLE_IDENTIFIER = com.sonosthesia.Relay.RelayAUv3;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sonosthesia.relay.relayAUv3;
 				SDKROOT_ppc = macosx10.5; }; name = Release; };
 		24F205923E72A22C002E00E8 = {isa = XCBuildConfiguration; buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
@@ -3269,7 +3269,7 @@
 				INFOPLIST_FILE = Info-AUv3_Standalone.plist;
 				MACOSX_DEPLOYMENT_TARGET_ppc = 10.4;
 				OTHER_LDFLAGS = "-lRelay";
-				PRODUCT_BUNDLE_IDENTIFIER = com.sonosthesia.Relay;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sonosthesia.relay;
 				SDKROOT_ppc = macosx10.5; }; name = Debug; };
 		56680F5C9E15359FEC231C41 = {isa = XCBuildConfiguration; buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
@@ -3298,7 +3298,7 @@
 				INFOPLIST_FILE = Info-AUv3_Standalone.plist;
 				MACOSX_DEPLOYMENT_TARGET_ppc = 10.4;
 				OTHER_LDFLAGS = "-lRelay";
-				PRODUCT_BUNDLE_IDENTIFIER = com.sonosthesia.Relay;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sonosthesia.relay;
 				SDKROOT_ppc = macosx10.5; }; name = Release; };
 		F2AD3268F721247AF097E5CB = {isa = XCBuildConfiguration; buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
@@ -3326,7 +3326,7 @@
 				HEADER_SEARCH_PATHS = ("/Developer/VST3", "../../JuceLibraryCode", "../../JuceLibraryCode/modules", "$(inherited)");
 				INSTALL_PATH = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET_ppc = 10.4;
-				PRODUCT_BUNDLE_IDENTIFIER = com.sonosthesia.Relay;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sonosthesia.relay;
 				SDKROOT_ppc = macosx10.5; }; name = Debug; };
 		488E499D075BCC6198B60B24 = {isa = XCBuildConfiguration; buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
@@ -3355,7 +3355,7 @@
 				HEADER_SEARCH_PATHS = ("/Developer/VST3", "../../JuceLibraryCode", "../../JuceLibraryCode/modules", "$(inherited)");
 				INSTALL_PATH = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET_ppc = 10.4;
-				PRODUCT_BUNDLE_IDENTIFIER = com.sonosthesia.Relay;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sonosthesia.relay;
 				SDKROOT_ppc = macosx10.5; }; name = Release; };
 		C071B27FCFD23903620D4097 = {isa = XCBuildConfiguration; buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;

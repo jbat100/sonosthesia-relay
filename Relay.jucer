@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <JUCERPROJECT id="rZAfux" name="Relay" projectType="audioplug" version="0.0.1"
-              bundleIdentifier="com.sonosthesia.Relay" includeBinaryInAppConfig="1"
+              bundleIdentifier="com.sonosthesia.relay" includeBinaryInAppConfig="1"
               buildVST="1" buildVST3="0" buildAU="1" buildAUv3="1" buildRTAS="0"
-              buildAAX="0" pluginName="Relay" pluginDesc="Relay" pluginManufacturer="sonosthesia"
-              pluginManufacturerCode="Snst" pluginCode="Rlay" pluginChannelConfigs=""
+              buildAAX="0" pluginName="relay" pluginDesc="relay" pluginManufacturer="sonosthesia"
+              pluginManufacturerCode="snst" pluginCode="rlay" pluginChannelConfigs=""
               pluginIsSynth="0" pluginWantsMidiIn="1" pluginProducesMidiOut="0"
               pluginIsMidiEffectPlugin="0" pluginEditorRequiresKeys="0" pluginAUExportPrefix="RelayAU"
-              pluginRTASCategory="" aaxIdentifier="com.sonosthesia.Relay" pluginAAXCategory="AAX_ePlugInCategory_Dynamics"
-              jucerVersion="4.2.1">
+              pluginRTASCategory="" aaxIdentifier="com.sonosthesia.relay" pluginAAXCategory="AAX_ePlugInCategory_Dynamics"
+              jucerVersion="4.2.1" pluginAUMainType="rlay">
   <MAINGROUP id="YN10nS" name="Relay">
     <GROUP id="{CA07BB16-3DC8-BFEA-3102-6340B6C296CD}" name="Source">
       <FILE id="FzERRw" name="CommonComponent.cpp" compile="1" resource="0"

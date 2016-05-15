@@ -37,11 +37,14 @@ public:
     void paintRowBackground (Graphics& g, int rowNumber, int width, int height, bool rowIsSelected) override;
     void paintCell (Graphics& g, int rowNumber, int columnId, int width, int height, bool rowIsSelected) override;
     Component* refreshComponentForCell (int rowNumber, int columnId, bool isRowSelected, Component* existingComponentToUpdate) override;
+    int getColumnAutoSizeWidth (int columnId) override;
     
     // ======= TableListBox Helpers =========
     
-    String getText (const int columnNumber, const int rowNumber) const;
-    void setText (const int columnId, const int rowNumber, const String& newText);
+    String getCellText (const int columnNumber, const int rowNumber) const;
+    
+    void onCellText (const int columnId, const int rowNumber, const String& newText);
+    void onCellButton (const int columnId, const int rowNumber);
 
 private:
     
@@ -51,8 +54,8 @@ private:
     
     const int hostnameColumnId = 1;
     const int portColumnId = 2;
-    const int connectedColumnId = 3;
-    const int connectColumnId = 4;
+    const int statusColumnId = 3;
+    const int buttonColumnId = 4;
     
     OSCTargetManager& oscTargetManager;
     
@@ -70,14 +73,14 @@ private:
         
         void textWasEdited() override
         {
-            owner.setText (columnId, row, getText());
+            owner.onCellText (columnId, row, getText());
         }
         
         void setRowAndColumn (const int newRow, const int newColumn)
         {
             row = newRow;
             columnId = newColumn;
-            setText (owner.getText(columnId, row), dontSendNotification);
+            setText (owner.getCellText(columnId, row), dontSendNotification);
         }
         
     private:
@@ -102,14 +105,13 @@ private:
         
         void buttonClicked (Button* button) override
         {
-            
+            owner.onCellButton(columnId, row);
         }
         
         void setRowAndColumn (const int newRow, const int newColumn)
         {
             row = newRow;
             columnId = newColumn;
-            //setText (owner.get(columnId, row), dontSendNotification);
         }
         
     private:

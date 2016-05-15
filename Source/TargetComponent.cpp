@@ -24,16 +24,24 @@ TargetComponent::TargetComponent(OSCTargetManager& _oscTargetManager) : font (14
     
     // Create our table component and add it to this component..
     addAndMakeVisible (table);
+    
     table.setModel (this);
     
     // give it a border
     table.setColour (ListBox::outlineColourId, Colours::grey);
     table.setOutlineThickness (1);
     
-    table.getHeader().addColumn ("Hostname", hostnameColumnId, 200, 50, 400, TableHeaderComponent::defaultFlags);
-    table.getHeader().addColumn ("Port", portColumnId, 200, 50, 400, TableHeaderComponent::defaultFlags);
-    table.getHeader().addColumn ("", connectedColumnId, 200, 50, 400, TableHeaderComponent::defaultFlags);
-    table.getHeader().addColumn ("", connectColumnId, 200, 50, 400, TableHeaderComponent::defaultFlags);
+    TableHeaderComponent::ColumnPropertyFlags flags = (TableHeaderComponent::ColumnPropertyFlags)
+    (TableHeaderComponent::ColumnPropertyFlags::visible |
+     TableHeaderComponent::ColumnPropertyFlags::resizable);
+    
+    TableHeaderComponent::ColumnPropertyFlags buttonFlags = (TableHeaderComponent::ColumnPropertyFlags)
+    (TableHeaderComponent::ColumnPropertyFlags::visible);
+    
+    table.getHeader().addColumn ("Hostname", hostnameColumnId, 250, 50, 400, flags);
+    table.getHeader().addColumn ("Port", portColumnId, 60, 50, 400, flags);
+    table.getHeader().addColumn ("Status", statusColumnId, 100, 50, 400, flags);
+    table.getHeader().addColumn ("", buttonColumnId, 200, 50, 400, buttonFlags);
     
 }
 
@@ -67,7 +75,12 @@ void TargetComponent::resized()
     // This method is where you should set the bounds of any child
     // components that your component contains...
     
-    newButton.setBounds( getBounds().withX(0).withY(0).withHeight(25).reduced(4) );
+    int buttonHeight = 25;
+    int margin = 4;
+    
+    newButton.setBounds( getBounds().withX(0).withY(0).withHeight(buttonHeight).reduced(margin) );
+    
+    table.setBounds( getBounds().withX(0).withY(buttonHeight).withTrimmedBottom(buttonHeight).reduced(margin) );
 }
 
 
@@ -79,7 +92,7 @@ void TargetComponent::buttonClicked (Button* button)
     {
         std::cout << "Make new target!\n";
         oscTargetManager.newTarget();
-        this->table.repaint();
+        table.updateContent();
     }
 }
 
@@ -97,17 +110,31 @@ void TargetComponent::paintRowBackground (Graphics& g, int rowNumber, int width,
 }
 
 
-String TargetComponent::getText (const int columnId, const int rowNumber) const
+String TargetComponent::getCellText (const int columnId, const int rowNumber) const
 {
     std::shared_ptr<OSCTarget> target = oscTargetManager.getTargets().at(rowNumber);
     
     if (columnId == hostnameColumnId) return target->getHostName();
-    if (columnId == hostnameColumnId) return std::to_string(target->getPortNumber());
+    if (columnId == portColumnId) return std::to_string(target->getPortNumber());
     
     return "";
 }
 
-void TargetComponent::setText (const int columnId, const int rowNumber, const String& newText)
+void TargetComponent::onCellText (const int columnId, const int rowNumber, const String& newText)
+{
+    std::shared_ptr<OSCTarget> target = oscTargetManager.getTargets().at(rowNumber);
+    
+    if (columnId == hostnameColumnId)
+    {
+        target->setHostName(String(newText));
+    }
+    else if (columnId == portColumnId)
+    {
+        target->setPortNumber(newText.getIntValue());
+    }
+}
+
+void TargetComponent::onCellButton (const int columnId, const int rowNumber)
 {
     
 }
@@ -123,35 +150,34 @@ void TargetComponent::paintCell (Graphics& g, int rowNumber, int columnId, int w
     // we need custom components to actually be able to edit the cells which is a bit shitty but anyway...
     // so only the connected indicator can be drawn using a graphics context
     
-    if (columnId == connectColumnId)
+    if (columnId == statusColumnId)
     {
-        
+        if (target->isConnected())
+        {
+            g.setColour (Colours::green.withAlpha (0.5f));
+            g.drawText ("Connected", 2, 0, width - 4, height, Justification::centredLeft, true);
+        }
+        else
+        {
+            g.setColour (Colours::red.withAlpha (0.5f));
+            g.drawText ("Disconnected", 2, 0, width - 4, height, Justification::centredLeft, true);
+        }
     }
     
-    /*
-    if (columnId == hostnameColumnId)
-        g.drawText (target->getHostName(), 2, 0, width - 4, height, Justification::centredLeft, true);
-    else if (columnId == portColumnId)
-        g.drawText (std::to_string(target->getPortNumber()), 2, 0, width - 4, height, Justification::centredLeft, true);
-    */
-    
-    
-     
-    g.setColour (Colours::black.withAlpha (0.2f));
-    g.fillRect (width - 1, 0, 1, height);
+    //g.fillRect (width - 1, 0, 1, height);
 }
 
 
 // This is overloaded from TableListBoxModel, and must update any custom components that we're using
 Component* TargetComponent::refreshComponentForCell (int rowNumber, int columnId, bool isRowSelected, Component* existingComponentToUpdate)
 {
-    if (columnId == connectColumnId)
+    if (columnId == statusColumnId)
     {
         jassert (existingComponentToUpdate == nullptr);
         return nullptr;
     }
     
-    if (columnId == connectColumnId) // For the ratings column, we return the custom combobox component
+    if (columnId == buttonColumnId) // For the ratings column, we return the custom combobox component
     {
         ButtonCustomComponent* connectComponent = static_cast<ButtonCustomComponent*> (existingComponentToUpdate);
         
@@ -160,7 +186,7 @@ Component* TargetComponent::refreshComponentForCell (int rowNumber, int columnId
         if (connectComponent == nullptr)
             connectComponent = new ButtonCustomComponent(*this);
         
-        connectComponent->setRowAndColumn (rowNumber, columnId);
+        connectComponent->setRowAndColumn(rowNumber, columnId);
         return connectComponent;
     }
     
@@ -171,6 +197,23 @@ Component* TargetComponent::refreshComponentForCell (int rowNumber, int columnId
     if (textLabel == nullptr)
         textLabel = new EditableTextCustomComponent (*this);
     
-    textLabel->setRowAndColumn (rowNumber, columnId);
+    textLabel->setRowAndColumn(rowNumber, columnId);
     return textLabel;
+}
+
+int TargetComponent::getColumnAutoSizeWidth (int columnId)
+{
+    if (columnId == buttonColumnId)
+        return 150;
+    
+    if (columnId == statusColumnId)
+        return 150;
+    
+    if (columnId == portColumnId)
+        return 50;
+    
+    if (columnId == hostnameColumnId)
+        return 300;
+    
+    return 32;
 }

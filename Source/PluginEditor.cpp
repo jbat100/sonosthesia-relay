@@ -35,11 +35,18 @@ processor (p),
 tabbedComponent(p.getOSCTargetManager(), p.getMIDIRelayManager(), p.getParameterRelayManager())
 {
     setOpaque (true);
+
+    
     addAndMakeVisible(&tabbedComponent);
+
+    addAndMakeVisible (resizer = new ResizableCornerComponent (this, &resizeLimits));
+    resizeLimits.setSizeLimits (150, 150, 1000, 500);
+    
+    std::cout << "Editor setting UI dimensions to processor setting " << processor.lastUIWidth << " " << processor.lastUIHeight << "\n";
     
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
-    setSize (400, 300);
+    setSize (processor.lastUIWidth, processor.lastUIHeight);
 }
 
 RelayAudioProcessorEditor::~RelayAudioProcessorEditor()
@@ -62,4 +69,9 @@ void RelayAudioProcessorEditor::resized()
     
     //tabbedComponent.setBounds (getLocalBounds().reduced (4));
     tabbedComponent.setBounds (getLocalBounds());
+    
+    resizer->setBounds (getWidth() - 16, getHeight() - 16, 16, 16);
+    
+    processor.lastUIWidth = getWidth();
+    processor.lastUIHeight = getHeight();
 }

@@ -37,17 +37,17 @@
         <array>
           <dict>
             <key>name</key>
-            <string>sonosthesia: Relay</string>
+            <string>sonosthesia: relay</string>
             <key>description</key>
-            <string>Relay</string>
+            <string>relay</string>
             <key>factoryFunction</key>
             <string>RelayAUFactoryAUv3</string>
             <key>manufacturer</key>
-            <string>Snst</string>
+            <string>snst</string>
             <key>type</key>
-            <string>aumf</string>
+            <string>rlay</string>
             <key>subtype</key>
-            <string>Rlay</string>
+            <string>rlay</string>
             <key>version</key>
             <integer>1</integer>
             <key>sandboxSafe</key>

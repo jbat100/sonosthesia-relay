@@ -240,10 +240,10 @@
  #define JucePlugin_Build_STANDALONE       1
 #endif
 #ifndef  JucePlugin_Name
- #define JucePlugin_Name                   "Relay"
+ #define JucePlugin_Name                   "relay"
 #endif
 #ifndef  JucePlugin_Desc
- #define JucePlugin_Desc                   "Relay"
+ #define JucePlugin_Desc                   "relay"
 #endif
 #ifndef  JucePlugin_Manufacturer
  #define JucePlugin_Manufacturer           "sonosthesia"
@@ -255,10 +255,10 @@
  #define JucePlugin_ManufacturerEmail      ""
 #endif
 #ifndef  JucePlugin_ManufacturerCode
- #define JucePlugin_ManufacturerCode       'Snst'
+ #define JucePlugin_ManufacturerCode       'snst'
 #endif
 #ifndef  JucePlugin_PluginCode
- #define JucePlugin_PluginCode             'Rlay'
+ #define JucePlugin_PluginCode             'rlay'
 #endif
 #ifndef  JucePlugin_IsSynth
  #define JucePlugin_IsSynth                0
@@ -291,7 +291,7 @@
  #define JucePlugin_VSTCategory            kPlugCategEffect
 #endif
 #ifndef  JucePlugin_AUMainType
- #define JucePlugin_AUMainType             kAudioUnitType_MusicEffect
+ #define JucePlugin_AUMainType             rlay
 #endif
 #ifndef  JucePlugin_AUSubType
  #define JucePlugin_AUSubType              JucePlugin_PluginCode
@@ -306,7 +306,7 @@
  #define JucePlugin_AUManufacturerCode     JucePlugin_ManufacturerCode
 #endif
 #ifndef  JucePlugin_CFBundleIdentifier
- #define JucePlugin_CFBundleIdentifier     com.sonosthesia.Relay
+ #define JucePlugin_CFBundleIdentifier     com.sonosthesia.relay
 #endif
 #ifndef  JucePlugin_RTASCategory
  #define JucePlugin_RTASCategory           ePlugInCategory_None
@@ -324,7 +324,7 @@
  #define JucePlugin_RTASDisableMultiMono   0
 #endif
 #ifndef  JucePlugin_AAXIdentifier
- #define JucePlugin_AAXIdentifier          com.sonosthesia.Relay
+ #define JucePlugin_AAXIdentifier          com.sonosthesia.relay
 #endif
 #ifndef  JucePlugin_AAXManufacturerCode
  #define JucePlugin_AAXManufacturerCode    JucePlugin_ManufacturerCode
