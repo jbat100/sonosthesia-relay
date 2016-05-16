@@ -13,8 +13,8 @@
 
 
 MainTabbedComponent::MainTabbedComponent(OSCTargetManager& oscTargetManager,
-                                         RelayManager& midiRelayManager,
-                                         RelayManager& parameterRelayManager) :
+                                         MIDIRelayManager& midiRelayManager,
+                                         ParameterRelayManager& parameterRelayManager) :
 TabbedComponent (TabbedButtonBar::TabsAtTop),
 targetComponent(oscTargetManager),
 midiComponent(midiRelayManager),

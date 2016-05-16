@@ -61,8 +61,8 @@ public:
     
     //==============================================================================
     OSCTargetManager& getOSCTargetManager();
-    RelayManager& getMIDIRelayManager();
-    RelayManager& getParameterRelayManager();
+    MIDIRelayManager& getMIDIRelayManager();
+    ParameterRelayManager& getParameterRelayManager();
     
     // these are used to persist the UI's size - the values are stored along with the
     // filter's other parameters, and the UI component will update them when it gets
@@ -76,8 +76,8 @@ private:
     OSCSender sender;
     
     OSCTargetManager oscTargetManager;
-    RelayManager midiRelayManager;
-    RelayManager parameterRelayManager;
+    MIDIRelayManager midiRelayManager;
+    ParameterRelayManager parameterRelayManager;
 };
 
 

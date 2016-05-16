@@ -237,12 +237,12 @@ OSCTargetManager& RelayAudioProcessor::getOSCTargetManager()
     return oscTargetManager;
 }
 
-RelayManager& RelayAudioProcessor::getMIDIRelayManager()
+MIDIRelayManager& RelayAudioProcessor::getMIDIRelayManager()
 {
     return midiRelayManager;
 }
 
-RelayManager& RelayAudioProcessor::getParameterRelayManager()
+ParameterRelayManager& RelayAudioProcessor::getParameterRelayManager()
 {
     return parameterRelayManager;
 }

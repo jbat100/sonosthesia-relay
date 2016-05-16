@@ -37,38 +37,3 @@ String Relay::getIdentifier()
 }
 
 
-std::list< std::shared_ptr<Relay> > RelayManager::getRelays()
-{
-    return relays;
-}
-
-std::shared_ptr<Relay> RelayManager::newRelay()
-{
-    std::shared_ptr<Relay> relay(new Relay);
-    relays.push_back(relay);
-    return relay;
-}
-
-void RelayManager::deleteRelay(String identifier)
-{
-    for (auto i = relays.begin(); i != relays.end();)
-    {
-        if ((*i)->getIdentifier() == identifier) relays.erase(i);
-        else i++;
-    }
-}
-
-std::shared_ptr<Relay> RelayManager::getRelay(String identifier)
-{
-    for (auto i = relays.begin(); i != relays.end();)
-    {
-        if ((*i)->getIdentifier() == identifier) return (*i);
-    }
-    
-    throw std::invalid_argument( "unknown identifier" );
-}
-
-void RelayManager::clear()
-{
-    relays.clear();
-}

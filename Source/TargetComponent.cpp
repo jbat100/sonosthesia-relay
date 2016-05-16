@@ -101,7 +101,7 @@ void TargetComponent::buttonClicked (Button* button)
     if (button == &newButton)
     {
         //std::cout << "Make new target!\n";
-        oscTargetManager.newTarget();
+        oscTargetManager.newItem();
         table.updateContent();
     }
     else if (button == &clearButton)
@@ -116,7 +116,7 @@ void TargetComponent::buttonClicked (Button* button)
 
 int TargetComponent::getNumRows()
 {
-    return oscTargetManager.getTargets().size();
+    return oscTargetManager.getItems().size();
 }
 
 void TargetComponent::paintRowBackground (Graphics& g, int rowNumber, int width, int height, bool rowIsSelected)
@@ -128,7 +128,7 @@ void TargetComponent::paintRowBackground (Graphics& g, int rowNumber, int width,
 
 String TargetComponent::getCellText (const int columnId, const int rowNumber) const
 {
-    std::shared_ptr<OSCTarget> target = oscTargetManager.getTargets().at(rowNumber);
+    std::shared_ptr<OSCTarget> target = oscTargetManager.getItems().at(rowNumber);
     
     if (columnId == hostnameColumnId) return target->getHostName();
     if (columnId == portColumnId) return std::to_string(target->getPortNumber());
@@ -138,7 +138,7 @@ String TargetComponent::getCellText (const int columnId, const int rowNumber) co
 
 void TargetComponent::onCellText (const int columnId, const int rowNumber, const String& newText)
 {
-    std::shared_ptr<OSCTarget> target = oscTargetManager.getTargets().at(rowNumber);
+    std::shared_ptr<OSCTarget> target = oscTargetManager.getItems().at(rowNumber);
     
     if (columnId == hostnameColumnId)
     {
@@ -154,9 +154,9 @@ void TargetComponent::onCellDeleteButton (const int rowNumber)
 {
     std::cout << "Delete row " << rowNumber << "\n";
     
-    std::shared_ptr<OSCTarget> target = oscTargetManager.getTargets().at(rowNumber);
+    std::shared_ptr<OSCTarget> target = oscTargetManager.getItems().at(rowNumber);
     
-    oscTargetManager.deleteTarget(target->getIdentifier());
+    oscTargetManager.deleteItem(target->getIdentifier());
     
     table.updateContent();
 }
@@ -165,7 +165,7 @@ void TargetComponent::onCellConnectButton (const int rowNumber)
 {
     std::cout << "Connect row " << rowNumber << "\n";
     
-    std::shared_ptr<OSCTarget> target = oscTargetManager.getTargets().at(rowNumber);
+    std::shared_ptr<OSCTarget> target = oscTargetManager.getItems().at(rowNumber);
     
     target->reconnect();
 }
@@ -176,7 +176,7 @@ void TargetComponent::paintCell (Graphics& g, int rowNumber, int columnId, int w
     g.setColour (Colours::black);
     g.setFont (font);
     
-    std::shared_ptr<OSCTarget> target = oscTargetManager.getTargets().at(rowNumber);
+    std::shared_ptr<OSCTarget> target = oscTargetManager.getItems().at(rowNumber);
     
     // we need custom components to actually be able to edit the cells which is a bit shitty but anyway...
     // so only the connected indicator can be drawn using a graphics context

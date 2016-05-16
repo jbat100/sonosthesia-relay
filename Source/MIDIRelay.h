@@ -16,6 +16,7 @@
 #include <list>
 #include <memory>
 
+#include "Utils.h"
 #include "Relay.h"
 #include "OSCTargetManager.h"
 
@@ -34,6 +35,11 @@ public:
 private:
 
     int channel;
+    
+};
+
+class MIDIRelayManager : public ListManager<MIDIRelay>
+{
     
 };
 

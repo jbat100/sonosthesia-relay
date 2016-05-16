@@ -37,3 +37,4 @@ String NumericIdentifierGenerator::getStringIdentifier(int identifier)
     
     throw std::invalid_argument( "unknown identifier" );
 }
+

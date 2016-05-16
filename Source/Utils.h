@@ -12,6 +12,7 @@
 #define UTILS_H_INCLUDED
 
 #include <map>
+#include <list>
 
 #include "../JuceLibraryCode/JuceHeader.h"
 
@@ -33,6 +34,58 @@ public:
 private:
     std::map<String, int> identifiers;
     int counter;
+};
+
+// there are many things which follow this pattern so ended up making a template class
+// template instance classes need a String getIdentifier() method, that's all
+
+template <typename T>
+class ListManager
+{
+public:
+    
+    ListManager() {}
+    
+    std::vector< std::shared_ptr<T> > getItems()
+    {
+        return items;
+    }
+    
+    std::shared_ptr<T> newItem()
+    {
+        std::shared_ptr<T> item(new T);
+        items.push_back(item);
+        return item;
+    }
+    
+    void deleteItem(String identifier)
+    {
+        for (auto i = items.begin(); i != items.end();)
+        {
+            if ((*i)->getIdentifier() == identifier) items.erase(i);
+            else i++;
+        }
+    }
+    
+    std::shared_ptr<T> getItem(String identifier)
+    {
+        for (auto i = items.begin(); i != items.end();)
+        {
+            if ((*i)->getIdentifier() == identifier) return (*i);
+        }
+        
+        throw std::invalid_argument( "unknown identifier" );
+    }
+    
+    void clear()
+    {
+        items.clear();
+    }
+    
+private:
+    
+    std::vector< std::shared_ptr<T> > items;
+    
 };
 
 

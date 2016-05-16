@@ -35,25 +35,7 @@ private:
     
 };
 
-class RelayManager
-{
-public:
-    
-    std::list< std::shared_ptr<Relay> > getRelays();
-    
-    std::shared_ptr<Relay> newRelay();
-    
-    std::shared_ptr<Relay> getRelay(String identifier);
-    
-    void deleteRelay(String identifier);
-    
-    void clear();
-    
-private:
-    
-    std::list< std::shared_ptr<Relay> > relays;
-    
-};
+
 
 
 #endif  // RELAY_H_INCLUDED

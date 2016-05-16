@@ -11,6 +11,8 @@
 #ifndef OSCTARGETMANAGER_H_INCLUDED
 #define OSCTARGETMANAGER_H_INCLUDED
 
+#include "Utils.h"
+
 #include "../JuceLibraryCode/JuceHeader.h"
 
 #include <vector>
@@ -51,22 +53,9 @@ private:
 };
 
 
-class OSCTargetManager
+class OSCTargetManager : public ListManager<OSCTarget>
 {
-public:
-    
-    const std::vector< std::shared_ptr<OSCTarget> > getTargets() const;
-    
-    std::shared_ptr<OSCTarget> newTarget();
-    
-    void deleteTarget(String identifier);
-    
-    std::shared_ptr<OSCTarget> getTarget(String identifier);
-    
-    void clear();
-    
-private:
-    std::vector< std::shared_ptr<OSCTarget> > targets;
+
 };
 
 

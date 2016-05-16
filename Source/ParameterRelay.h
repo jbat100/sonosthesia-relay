@@ -41,6 +41,11 @@ private:
     
 };
 
+class ParameterRelayManager : public ListManager<ParameterRelay>
+{
+    
+};
+
 
 
 #endif  // PARAMETERRELAYMANAGER_H_INCLUDED

@@ -29,8 +29,8 @@ class MainTabbedComponent  : public TabbedComponent
     
 public:
     MainTabbedComponent(OSCTargetManager& oscTargetManager,
-                        RelayManager& midiRelayManager,
-                        RelayManager& parameterRelayManager);
+                        MIDIRelayManager& midiRelayManager,
+                        ParameterRelayManager& parameterRelayManager);
     
 private:
     

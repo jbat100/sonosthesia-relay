@@ -27,8 +27,16 @@ public:
         // just put a combo box inside this component
         addAndMakeVisible (comboBox);
         
-        //comboBox.addItem ("All", -1);
+        const std::vector< std::shared_ptr<OSCTarget> > targets = manager.getItems();
         
+        for (auto i = targets.begin(); i != targets.end(); i++)
+        {
+            int numericIdentifier = generator.getNumericIdentifier( (*i)->getIdentifier() );
+            String description = (*i)->getHostName() + ":" + String((*i)->getPortNumber());
+            comboBox.addItem(description, numericIdentifier);
+        }
+        
+        comboBox.setTextWhenNothingSelected("None");
         comboBox.addListener (this);
         comboBox.setWantsKeyboardFocus (false);
     }
@@ -41,15 +49,35 @@ public:
     void setRelay (std::shared_ptr<Relay> _relay)
     {
         relay = _relay;
-        int numericIdentifier = generator.getNumericIdentifier(relay->getTarget()->getIdentifier());
-        comboBox.setSelectedId (numericIdentifier, dontSendNotification);
+        
+        std::shared_ptr<OSCTarget> target = relay->getTarget();
+        
+        if (target)
+        {
+            int numericIdentifier = generator.getNumericIdentifier(target->getIdentifier());
+            comboBox.setSelectedId (numericIdentifier, dontSendNotification);
+        }
+        else
+        {
+            comboBox.setSelectedId (-1, dontSendNotification);
+        }
+        
     }
     
     void comboBoxChanged (ComboBox*) override
     {
-        String identifier = generator.getStringIdentifier(comboBox.getSelectedId());
-        std::shared_ptr<OSCTarget> target = manager.getTarget(identifier);
-        relay->setTarget (target);
+        int numericIdentifier = comboBox.getSelectedId();
+        
+        if (numericIdentifier == -1)
+        {
+            relay->setTarget (nullptr);
+        }
+        else
+        {
+            String identifier = generator.getStringIdentifier(numericIdentifier);
+            std::shared_ptr<OSCTarget> target = manager.getItem(identifier);
+            relay->setTarget (target);
+        }
     }
     
 private:
@@ -58,6 +86,7 @@ private:
     OSCTargetManager& manager;
     NumericIdentifierGenerator generator;
 };
+
 
 
 #endif  // RELAYCOMPONENT_H_INCLUDED

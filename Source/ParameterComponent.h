@@ -21,7 +21,7 @@
 class ParameterComponent    : public Component
 {
 public:
-    ParameterComponent(RelayManager& _parameterRelayManager);
+    ParameterComponent(ParameterRelayManager& _parameterRelayManager);
     ~ParameterComponent();
 
     void paint (Graphics&);
@@ -29,7 +29,7 @@ public:
 
 private:
     
-    RelayManager& relayManager;
+    ParameterRelayManager& relayManager;
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ParameterComponent)
 };
