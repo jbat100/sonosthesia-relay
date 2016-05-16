@@ -44,11 +44,13 @@ public:
     String getCellText (const int columnNumber, const int rowNumber) const;
     
     void onCellText (const int columnId, const int rowNumber, const String& newText);
-    void onCellButton (const int columnId, const int rowNumber);
+    void onCellDeleteButton (const int rowNumber);
+    void onCellConnectButton (const int rowNumber);
 
 private:
     
     TextButton newButton;
+    TextButton clearButton;
     TableListBox table;
     Font font;
     
@@ -95,17 +97,36 @@ private:
     public:
         ButtonCustomComponent (TargetComponent& td)  : owner (td)
         {
-            addAndMakeVisible(button);
+            addAndMakeVisible(deleteButton);
+            deleteButton.setButtonText("Delete");
+            deleteButton.addListener(this);
+            
+            addAndMakeVisible(connectButton);
+            connectButton.setButtonText("Reconnect");
+            connectButton.addListener(this);
+            
         }
         
         void resized() override
         {
-            button.setBounds(getBounds());
+            Rectangle<int> b = getBounds();
+            int halfWidth = b.getWidth() / 2;
+            b.setWidth( halfWidth );
+            
+            deleteButton.setBounds( b.withX(0).reduced(4) );
+            connectButton.setBounds( b.withX(halfWidth).reduced(4) );
         }
         
         void buttonClicked (Button* button) override
         {
-            owner.onCellButton(columnId, row);
+            if (button == &deleteButton)
+            {
+                owner.onCellDeleteButton(row);
+            }
+            else if (button == &connectButton)
+            {
+                owner.onCellConnectButton(row);
+            }
         }
         
         void setRowAndColumn (const int newRow, const int newColumn)
@@ -116,7 +137,7 @@ private:
         
     private:
         TargetComponent& owner;
-        TextButton button;
+        TextButton deleteButton, connectButton;
         int row, columnId;
     };
     

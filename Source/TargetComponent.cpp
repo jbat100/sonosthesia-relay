@@ -18,9 +18,12 @@ TargetComponent::TargetComponent(OSCTargetManager& _oscTargetManager) : font (14
     // initialise any special settings that your component needs.
     
     addAndMakeVisible(newButton);
-    
     newButton.addListener(this);
     newButton.setButtonText("New");
+    
+    addAndMakeVisible(clearButton);
+    clearButton.addListener(this);
+    clearButton.setButtonText("Clear");
     
     // Create our table component and add it to this component..
     addAndMakeVisible (table);
@@ -42,6 +45,9 @@ TargetComponent::TargetComponent(OSCTargetManager& _oscTargetManager) : font (14
     table.getHeader().addColumn ("Port", portColumnId, 60, 50, 400, flags);
     table.getHeader().addColumn ("Status", statusColumnId, 100, 50, 400, flags);
     table.getHeader().addColumn ("", buttonColumnId, 200, 50, 400, buttonFlags);
+    
+    table.autoSizeColumn(hostnameColumnId);
+    table.setRowHeight(25);
     
 }
 
@@ -78,9 +84,13 @@ void TargetComponent::resized()
     int buttonHeight = 25;
     int margin = 4;
     
-    newButton.setBounds( getBounds().withX(0).withY(0).withHeight(buttonHeight).reduced(margin) );
+    int halfWidth = getBounds().getWidth() / 2;
+    
+    newButton.setBounds( getBounds().withX(0).withY(0).withHeight(buttonHeight).withWidth(halfWidth).reduced(margin) );
+    clearButton.setBounds( getBounds().withX(halfWidth).withY(0).withHeight(buttonHeight).withWidth(halfWidth).reduced(margin) );
     
     table.setBounds( getBounds().withX(0).withY(buttonHeight).withTrimmedBottom(buttonHeight).reduced(margin) );
+    table.autoSizeColumn(hostnameColumnId);
 }
 
 
@@ -90,8 +100,14 @@ void TargetComponent::buttonClicked (Button* button)
 {
     if (button == &newButton)
     {
-        std::cout << "Make new target!\n";
+        //std::cout << "Make new target!\n";
         oscTargetManager.newTarget();
+        table.updateContent();
+    }
+    else if (button == &clearButton)
+    {
+        //std::cout << "Clear targets!\n";
+        oscTargetManager.clear();
         table.updateContent();
     }
 }
@@ -134,9 +150,24 @@ void TargetComponent::onCellText (const int columnId, const int rowNumber, const
     }
 }
 
-void TargetComponent::onCellButton (const int columnId, const int rowNumber)
+void TargetComponent::onCellDeleteButton (const int rowNumber)
 {
+    std::cout << "Delete row " << rowNumber << "\n";
     
+    std::shared_ptr<OSCTarget> target = oscTargetManager.getTargets().at(rowNumber);
+    
+    oscTargetManager.deleteTarget(target->getIdentifier());
+    
+    table.updateContent();
+}
+
+void TargetComponent::onCellConnectButton (const int rowNumber)
+{
+    std::cout << "Connect row " << rowNumber << "\n";
+    
+    std::shared_ptr<OSCTarget> target = oscTargetManager.getTargets().at(rowNumber);
+    
+    target->reconnect();
 }
 
 // This is overloaded from TableListBoxModel, and must paint any cells that aren't using custom components.

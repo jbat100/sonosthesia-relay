@@ -30,6 +30,8 @@ public:
     void setPortNumber(int _portNumber);
     int getPortNumber();
     
+    bool reconnect();
+    
     bool isConnected();
     
     String getIdentifier();

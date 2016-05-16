@@ -28,6 +28,12 @@ OSCTarget::OSCTarget(String _hostName, int _portNumber) :
     updateSender();
 }
 
+bool OSCTarget::reconnect()
+{
+    updateSender();
+    return connected;
+}
+
 bool OSCTarget::isConnected()
 {
     return connected;
@@ -64,6 +70,9 @@ void OSCTarget::updateSender()
 {
     sender.disconnect();
     connected = sender.connect(hostName, portNumber);
+    std::cout << "Connecting " << hostName << ":" << portNumber;
+    if (connected) std::cout << " (success)\n";
+    else std::cout << " (failure)\n";
 }
 
 const std::vector< std::shared_ptr<OSCTarget> > OSCTargetManager::getTargets() const
@@ -75,19 +84,39 @@ std::shared_ptr<OSCTarget> OSCTargetManager::newTarget()
 {
     std::shared_ptr<OSCTarget> target ( new OSCTarget() );
     targets.push_back(target);
+
+    std::cout << "Made new target : " << target->getHostName() << ":" << target->getPortNumber();
+    std::cout << " (identifier: " << target->getIdentifier() << "), now have " << targets.size() << " target(s)\n";
+    
     return target;
 }
 
 void OSCTargetManager::deleteTarget(String identifier)
 {
+    bool found = false;
+    
     for (auto i = targets.begin(); i != targets.end();)
     {
-        if ((*i)->getIdentifier() == identifier) targets.erase(i);
+        if ((*i)->getIdentifier() == identifier)
+        {
+            targets.erase(i);
+            found = true;
+        }
         else i++;
+    }
+    
+    if (!found)
+    {
+        std::cerr << "Could not remove target with identifier " << identifier;
+    }
+    else
+    {
+        std::cout << "Removed target with identifier : " << identifier << ", now have " << targets.size() << " target(s)\n";
     }
 }
 
 void OSCTargetManager::clear()
 {
     targets.clear();
+    std::cout << "Cleared targets\n";
 }
