@@ -14,8 +14,8 @@
 #include "../JuceLibraryCode/JuceHeader.h"
 
 #include "OSCTargetManager.h"
-#include "MidiRelayManager.h"
-#include "ParameterRelayManager.h"
+#include "MidiRelay.h"
+#include "ParameterRelay.h"
 
 //==============================================================================
 /**
@@ -61,8 +61,8 @@ public:
     
     //==============================================================================
     OSCTargetManager& getOSCTargetManager();
-    MIDIRelayManager& getMIDIRelayManager();
-    ParameterRelayManager& getParameterRelayManager();
+    RelayManager& getMIDIRelayManager();
+    RelayManager& getParameterRelayManager();
     
     // these are used to persist the UI's size - the values are stored along with the
     // filter's other parameters, and the UI component will update them when it gets
@@ -76,8 +76,8 @@ private:
     OSCSender sender;
     
     OSCTargetManager oscTargetManager;
-    MIDIRelayManager midiRelayManager;
-    ParameterRelayManager parameterRelayManager;
+    RelayManager midiRelayManager;
+    RelayManager parameterRelayManager;
 };
 
 

@@ -16,9 +16,10 @@
 #include <list>
 #include <memory>
 
+#include "Relay.h"
 #include "OSCTargetManager.h"
 
-class ParameterRelay
+class ParameterRelay : public Relay
 {
 public:
     
@@ -31,40 +32,15 @@ public:
     void setAddress(OSCAddress _address);
     OSCAddress getAddress();
     
-    std::shared_ptr<OSCTarget> getTarget();
-    void setTarget(std::shared_ptr<OSCTarget> _target);
-    
     void relay(int index, float value);
-    
-    String getIdentifier();
     
 private:
     
-    String identifier;
-    
     int index;
-    std::shared_ptr<OSCTarget> target;
     OSCAddress address;
     
 };
 
-class ParameterRelayManager
-{
-public:
-    
-    std::list< std::shared_ptr<ParameterRelay> > getRelays();
-    
-    std::shared_ptr<ParameterRelay> newRelay();
-    
-    void deleteRelay(String identifier);
-    
-    void clear();
-    
-private:
-    
-    std::list< std::shared_ptr<ParameterRelay> > relays;
-    
-};
 
 
 #endif  // PARAMETERRELAYMANAGER_H_INCLUDED

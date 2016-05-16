@@ -12,7 +12,7 @@
 #include "MIDIComponent.h"
 
 //==============================================================================
-MIDIComponent::MIDIComponent(MIDIRelayManager& _midiRelayManager) : midiRelayManager(_midiRelayManager)
+MIDIComponent::MIDIComponent(RelayManager& _relayManager) : relayManager(_relayManager)
 {
     // In your constructor, you should add any child components, and
     // initialise any special settings that your component needs.

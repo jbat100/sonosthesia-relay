@@ -16,8 +16,8 @@
 #include "PluginProcessor.h"
 
 #include "OSCTargetManager.h"
-#include "MIDIRelayManager.h"
-#include "ParameterRelayManager.h"
+#include "MIDIRelay.h"
+#include "ParameterRelay.h"
 
 #include "TargetComponent.h"
 #include "MIDIComponent.h"
@@ -29,8 +29,8 @@ class MainTabbedComponent  : public TabbedComponent
     
 public:
     MainTabbedComponent(OSCTargetManager& oscTargetManager,
-                        MIDIRelayManager& midiRelayManager,
-                        ParameterRelayManager& parameterRelayManager);
+                        RelayManager& midiRelayManager,
+                        RelayManager& parameterRelayManager);
     
 private:
     

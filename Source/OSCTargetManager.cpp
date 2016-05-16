@@ -115,6 +115,16 @@ void OSCTargetManager::deleteTarget(String identifier)
     }
 }
 
+std::shared_ptr<OSCTarget> OSCTargetManager::getTarget(String identifier)
+{
+    for (auto i = targets.begin(); i != targets.end();)
+    {
+        if ((*i)->getIdentifier() == identifier) return (*i);
+    }
+    
+    throw std::invalid_argument( "unknown identifier" );
+}
+
 void OSCTargetManager::clear()
 {
     targets.clear();

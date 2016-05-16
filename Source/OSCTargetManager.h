@@ -61,6 +61,8 @@ public:
     
     void deleteTarget(String identifier);
     
+    std::shared_ptr<OSCTarget> getTarget(String identifier);
+    
     void clear();
     
 private:

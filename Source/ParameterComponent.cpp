@@ -12,7 +12,7 @@
 #include "ParameterComponent.h"
 
 //==============================================================================
-ParameterComponent::ParameterComponent(ParameterRelayManager& _parameterRelayManager) : parameterRelayManager(parameterRelayManager)
+ParameterComponent::ParameterComponent(RelayManager& _relayManager) : relayManager(relayManager)
 {
     // In your constructor, you should add any child components, and
     // initialise any special settings that your component needs.
