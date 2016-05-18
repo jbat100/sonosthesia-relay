@@ -12,7 +12,8 @@
 
 #include "Utils.h"
 
-NumericIdentifierGenerator::NumericIdentifierGenerator() : counter(0) {}
+// we start the counter at 1 as juce item ids generally don't like 0
+NumericIdentifierGenerator::NumericIdentifierGenerator() : counter(1) {}
 
 int NumericIdentifierGenerator::getNumericIdentifier(String identifier)
 {

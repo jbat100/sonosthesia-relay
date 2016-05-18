@@ -27,15 +27,6 @@ public:
         // just put a combo box inside this component
         addAndMakeVisible (comboBox);
         
-        const std::vector< std::shared_ptr<OSCTarget> > targets = manager.getItems();
-        
-        for (auto i = targets.begin(); i != targets.end(); i++)
-        {
-            int numericIdentifier = generator.getNumericIdentifier( (*i)->getIdentifier() );
-            String description = (*i)->getHostName() + ":" + String((*i)->getPortNumber());
-            comboBox.addItem(description, numericIdentifier);
-        }
-        
         comboBox.setTextWhenNothingSelected("None");
         comboBox.addListener (this);
         comboBox.setWantsKeyboardFocus (false);
@@ -46,41 +37,73 @@ public:
         comboBox.setBoundsInset (BorderSize<int> (2));
     }
     
+    void refresh()
+    {
+        updateComboBox();
+    }
+    
     void setRelay (std::shared_ptr<Relay> _relay)
     {
         relay = _relay;
-        
-        std::shared_ptr<OSCTarget> target = relay->getTarget();
-        
-        if (target)
+        if (relay)
         {
-            int numericIdentifier = generator.getNumericIdentifier(target->getIdentifier());
-            comboBox.setSelectedId (numericIdentifier, dontSendNotification);
+            std::shared_ptr<OSCTarget> target = relay->getTarget();
+            if (target)
+            {
+                int numericIdentifier = generator.getNumericIdentifier(target->getIdentifier());
+                comboBox.setSelectedId (numericIdentifier, dontSendNotification);
+                return;
+            }
         }
-        else
-        {
-            comboBox.setSelectedId (-1, dontSendNotification);
-        }
+        comboBox.setSelectedId (-1, dontSendNotification);
         
     }
     
     void comboBoxChanged (ComboBox*) override
     {
-        int numericIdentifier = comboBox.getSelectedId();
+        std::cout << "TargetColumnCustomComponent comboBoxChanged\n";
         
-        if (numericIdentifier == -1)
+        try
         {
-            relay->setTarget (nullptr);
+            int numericIdentifier = comboBox.getSelectedId();
+            
+            if (numericIdentifier == -1)
+            {
+                relay->setTarget (nullptr);
+            }
+            else
+            {
+                String identifier = generator.getStringIdentifier(numericIdentifier);
+                std::shared_ptr<OSCTarget> target = manager.getItem(identifier);
+                relay->setTarget (target);
+            }
         }
-        else
+        catch (std::invalid_argument& err)
         {
-            String identifier = generator.getStringIdentifier(numericIdentifier);
-            std::shared_ptr<OSCTarget> target = manager.getItem(identifier);
-            relay->setTarget (target);
+            
         }
+        
     }
     
 private:
+    
+    void updateComboBox() {
+        
+        const std::vector< std::shared_ptr<OSCTarget> > targets = manager.getItems();
+        
+        comboBox.clear();
+        
+        for (auto i = targets.begin(); i != targets.end(); i++)
+        {
+            int numericIdentifier = generator.getNumericIdentifier( (*i)->getIdentifier() );
+            String description = (*i)->getHostName() + ":" + String((*i)->getPortNumber());
+            comboBox.addItem(description, numericIdentifier);
+        }
+        
+        setRelay(relay);
+        
+    }
+    
     ComboBox comboBox;
     std::shared_ptr<Relay> relay;
     OSCTargetManager& manager;

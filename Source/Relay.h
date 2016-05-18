@@ -16,7 +16,7 @@
 
 #include "OSCTargetManager.h"
 
-class Relay
+class Relay : public OSCTargetListener
 {
 public:
     
@@ -27,6 +27,10 @@ public:
     void setTarget(std::shared_ptr<OSCTarget> _target);
     
     String getIdentifier();
+    
+    // change listener, in case the osc target is invalidated
+    
+    void targetInvalidated (OSCTarget* _target) override;
     
 private:
     

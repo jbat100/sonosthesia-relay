@@ -39,22 +39,30 @@ private:
 // there are many things which follow this pattern so ended up making a template class
 // template instance classes need a String getIdentifier() method, that's all
 
+
+
 template <typename T>
-class ListManager
+class ListManager : public ChangeBroadcaster
 {
 public:
     
     ListManager() {}
     
+    // avoid using this, better to use number of items and getter
     std::vector< std::shared_ptr<T> > getItems()
     {
         return items;
+    }
+    
+    int count() {
+        return items.size();
     }
     
     std::shared_ptr<T> newItem()
     {
         std::shared_ptr<T> item(new T);
         items.push_back(item);
+        sendChangeMessage();
         return item;
     }
     
@@ -65,11 +73,14 @@ public:
             if ((*i)->getIdentifier() == identifier) items.erase(i);
             else i++;
         }
+        sendChangeMessage();
     }
     
     std::shared_ptr<T> getItem(String identifier)
     {
-        for (auto i = items.begin(); i != items.end();)
+        std::cout << "ListManager getItem " << identifier;
+        
+        for (auto i = items.begin(); i != items.end(); i++)
         {
             if ((*i)->getIdentifier() == identifier) return (*i);
         }
@@ -77,9 +88,15 @@ public:
         throw std::invalid_argument( "unknown identifier" );
     }
     
+    std::shared_ptr<T> getItem(int index)
+    {
+        return items.at(index);
+    }
+    
     void clear()
     {
         items.clear();
+        sendChangeMessage();
     }
     
 private:

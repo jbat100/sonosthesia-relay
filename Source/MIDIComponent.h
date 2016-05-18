@@ -18,14 +18,18 @@
 //==============================================================================
 /*
 */
-class MIDIComponent : public Component, public Button::Listener, public TableListBoxModel
+class MIDIComponent : public Component, public Button::Listener, public TableListBoxModel, public ChangeListener
 {
 public:
-    MIDIComponent(MIDIRelayManager& _relayManager);
+    MIDIComponent(MIDIRelayManager& _relayManager, OSCTargetManager& _targetManager);
     ~MIDIComponent();
 
     void paint (Graphics&) override;
     void resized() override;
+    
+    // ======= ChangeListener ===========
+    
+    void changeListenerCallback (ChangeBroadcaster *source) override;
     
     // ======== Button::Listener =========
     
@@ -44,6 +48,7 @@ public:
     void onCellDeleteButton (const int rowNumber);
     void onCellDetailsButton (const int rowNumber);
     
+    
 private:
     
     TextButton newButton;
@@ -56,6 +61,7 @@ private:
     const int buttonColumnId = 4;
     
     MIDIRelayManager& relayManager;
+    OSCTargetManager& targetManager;
     
     //==============================================================================
     // This is a custom component containing used for selecting a midi channel
@@ -71,12 +77,27 @@ private:
             
             for (int i = 0; i < 16; i++)
             {
-                comboBox.addItem (String(i) , i);
+                // can't have 0 as id so we offset by 1
+                comboBox.addItem (String(i) , idForChannel(i));
             }
             
             // when the combo is changed, we'll get a callback.
             comboBox.addListener (this);
             comboBox.setWantsKeyboardFocus (false);
+        }
+        
+        int idForChannel(int channel)
+        {
+            if (channel == -1) return channel;
+            else if (channel >= 0) return channel + 1;
+            throw std::invalid_argument("unexpected channel");
+        }
+        
+        int channelForId(int _id)
+        {
+            if (_id == -1) return _id;
+            else if (_id > 0) return _id - 1;
+            throw std::invalid_argument("unexpected _id");
         }
         
         void resized() override
@@ -87,17 +108,68 @@ private:
         void setRelay (std::shared_ptr<MIDIRelay> _relay)
         {
             relay = _relay;
-            comboBox.setSelectedId (relay->getChannel(), dontSendNotification);
+            comboBox.setSelectedId (idForChannel(relay->getChannel()), dontSendNotification);
         }
         
         void comboBoxChanged (ComboBox*) override
         {
-            relay->setChannel (comboBox.getSelectedId());
+            relay->setChannel ( channelForId(comboBox.getSelectedId()) );
         }
         
     private:
         ComboBox comboBox;
         std::shared_ptr<MIDIRelay> relay;
+    };
+    
+    
+    //==============================================================================
+    // This is a custom Label component, which we use for the table's editable text columns.
+    class ButtonCustomComponent  : public Component, public ButtonListener
+    {
+    public:
+        ButtonCustomComponent (MIDIComponent& td)  : owner (td)
+        {
+            addAndMakeVisible(deleteButton);
+            deleteButton.setButtonText("Delete");
+            deleteButton.addListener(this);
+            
+            addAndMakeVisible(detailsButton);
+            detailsButton.setButtonText("Details");
+            detailsButton.addListener(this);
+            
+        }
+        
+        void resized() override
+        {
+            Rectangle<int> b = getBounds();
+            int halfWidth = b.getWidth() / 2;
+            b.setWidth( halfWidth );
+            
+            deleteButton.setBounds( b.withX(0).reduced(4) );
+            detailsButton.setBounds( b.withX(halfWidth).reduced(4) );
+        }
+        
+        void buttonClicked (Button* button) override
+        {
+            if (button == &deleteButton)
+            {
+                owner.onCellDeleteButton(row);
+            }
+            else if (button == &detailsButton)
+            {
+                owner.onCellDetailsButton(row);
+            }
+        }
+        
+        void setRow (const int newRow)
+        {
+            row = newRow;
+        }
+        
+    private:
+        MIDIComponent& owner;
+        TextButton deleteButton, detailsButton;
+        int row;
     };
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MIDIComponent)

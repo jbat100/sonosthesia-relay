@@ -17,7 +17,7 @@ MainTabbedComponent::MainTabbedComponent(OSCTargetManager& oscTargetManager,
                                          ParameterRelayManager& parameterRelayManager) :
 TabbedComponent (TabbedButtonBar::TabsAtTop),
 targetComponent(oscTargetManager),
-midiComponent(midiRelayManager),
+midiComponent(midiRelayManager, oscTargetManager),
 parameterComponent(parameterRelayManager)
 {
     Colour colour = Colours::black;

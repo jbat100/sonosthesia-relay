@@ -19,7 +19,15 @@
 #include <memory>
 
 
-class OSCTarget
+class OSCTarget;
+
+class OSCTargetListener {
+public:
+    virtual ~OSCTargetListener()  {}
+    virtual void targetInvalidated(OSCTarget* target) = 0;
+};
+
+class OSCTarget : public ListenerList<OSCTargetListener>
 {
 public:
     
@@ -32,13 +40,19 @@ public:
     void setPortNumber(int _portNumber);
     int getPortNumber();
     
-    bool reconnect();
+    // target can never be used again, doing so will cause an exception
+    void invalidate();
+    void checkValidity();
     
+    bool reconnect();
     bool isConnected();
     
     String getIdentifier();
     
-    OSCSender& getSender();
+    void sendMessage(const OSCMessage& message);
+    void sendBundle(const OSCBundle& message);
+    void enqueueMessage(const OSCMessage& message);
+    void purgeMessages();
     
 private:
     
@@ -46,7 +60,7 @@ private:
     int portNumber;
     OSCSender sender;
     bool connected;
-    
+    bool valid;
     String identifier;
     
     void updateSender();
@@ -55,7 +69,8 @@ private:
 
 class OSCTargetManager : public ListManager<OSCTarget>
 {
-
+public:
+    void invalidateAll();
 };
 
 

@@ -9,10 +9,14 @@
 */
 
 #include "../JuceLibraryCode/JuceHeader.h"
+
+#include "RelayComponent.h"
 #include "MIDIComponent.h"
 
 //==============================================================================
-MIDIComponent::MIDIComponent(MIDIRelayManager& _relayManager) : relayManager(_relayManager)
+MIDIComponent::MIDIComponent(MIDIRelayManager& _relayManager, OSCTargetManager& _targetManager) :
+relayManager(_relayManager),
+targetManager(_targetManager)
 {
     // In your constructor, you should add any child components, and
     // initialise any special settings that your component needs.
@@ -41,12 +45,13 @@ MIDIComponent::MIDIComponent(MIDIRelayManager& _relayManager) : relayManager(_re
     TableHeaderComponent::ColumnPropertyFlags buttonFlags = (TableHeaderComponent::ColumnPropertyFlags)
     (TableHeaderComponent::ColumnPropertyFlags::visible);
     
-    table.getHeader().addColumn ("Channel", channelColumnId, 250, 50, 400, flags);
-    table.getHeader().addColumn ("Target", targetColumnId, 60, 50, 400, flags);
+    table.getHeader().addColumn ("Channel", channelColumnId, 60, 50, 400, flags);
+    table.getHeader().addColumn ("Target", targetColumnId, 200, 50, 400, flags);
     table.getHeader().addColumn ("", buttonColumnId, 200, 50, 400, buttonFlags);
     
     table.setRowHeight(25);
     
+    targetManager.addChangeListener(this);
 }
 
 MIDIComponent::~MIDIComponent()
@@ -90,6 +95,16 @@ void MIDIComponent::resized()
     table.setBounds( getBounds().withX(0).withY(buttonHeight).withTrimmedBottom(buttonHeight).reduced(margin) );
 }
 
+
+void MIDIComponent::changeListenerCallback (ChangeBroadcaster *source)
+{
+    // if the targets change then we need to update the table so that the new targets are available
+    if (source == dynamic_cast<ChangeBroadcaster*>(&targetManager))
+    {
+        std::cout << "MIDIComponent updating table content on targetManager change\n";
+        table.updateContent();
+    }
+}
 
 // ======== Button::Listener =========
 
@@ -145,45 +160,49 @@ void MIDIComponent::onCellDetailsButton (const int rowNumber)
 Component* MIDIComponent::refreshComponentForCell (int rowNumber, int columnId, bool isRowSelected, Component* existingComponentToUpdate)
 {
     
-    /*
-    
     if (columnId == buttonColumnId) // For the ratings column, we return the custom combobox component
     {
-        ButtonCustomComponent* connectComponent = static_cast<ButtonCustomComponent*> (existingComponentToUpdate);
+        ButtonCustomComponent* component = static_cast<ButtonCustomComponent*> (existingComponentToUpdate);
         
         // If an existing component is being passed-in for updating, we'll re-use it, but
         // if not, we'll have to create one.
-        if (connectComponent == nullptr) connectComponent = new ButtonCustomComponent(*this);
+        if (component == nullptr) component = new ButtonCustomComponent(*this);
         
-        connectComponent->setRowAndColumn(rowNumber, columnId);
-        return connectComponent;
+        component->setRow(rowNumber);
+        return component;
     }
     
     if (columnId == channelColumnId) // For the ratings column, we return the custom combobox component
     {
-        ButtonCustomComponent* connectComponent = static_cast<ButtonCustomComponent*> (existingComponentToUpdate);
+        ChannelColumnCustomComponent* component = static_cast<ChannelColumnCustomComponent*> (existingComponentToUpdate);
         
         // If an existing component is being passed-in for updating, we'll re-use it, but
         // if not, we'll have to create one.
-        if (connectComponent == nullptr) connectComponent = new ButtonCustomComponent(*this);
+        if (component == nullptr) component = new ChannelColumnCustomComponent();
         
-        connectComponent->setRowAndColumn(rowNumber, columnId);
-        return connectComponent;
+        std::shared_ptr<MIDIRelay> relay = relayManager.getItem(rowNumber);
+        
+        component->setRelay(relay);
+        return component;
     }
     
     if (columnId == targetColumnId) // For the ratings column, we return the custom combobox component
     {
-        ButtonCustomComponent* connectComponent = static_cast<ButtonCustomComponent*> (existingComponentToUpdate);
+        TargetColumnCustomComponent* component = static_cast<TargetColumnCustomComponent*> (existingComponentToUpdate);
         
         // If an existing component is being passed-in for updating, we'll re-use it, but
         // if not, we'll have to create one.
-        if (connectComponent == nullptr) connectComponent = new ButtonCustomComponent(*this);
+        if (component == nullptr) component = new TargetColumnCustomComponent(targetManager);
         
-        connectComponent->setRowAndColumn(rowNumber, columnId);
-        return connectComponent;
+        std::shared_ptr<Relay> relay = std::static_pointer_cast<Relay>(relayManager.getItem(rowNumber));
+        
+        component->refresh();
+        component->setRelay(relay);
+        
+        return component;
     }
-     
-     */
+    
+    return nullptr;
     
 }
 
