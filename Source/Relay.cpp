@@ -11,16 +11,27 @@
 #include "Relay.h"
 
 
-Relay::Relay() : target(nullptr)
+Relay::Relay() : group("default")
 {
     identifier = Uuid().toString();
+    setTarget(nullptr);
 }
 
-Relay::Relay(std::shared_ptr<OSCTarget> _target) : target(_target)
+Relay::Relay(std::shared_ptr<OSCTarget> _target, String _group) : group(_group)
 {
     identifier = Uuid().toString();
-    setTarget(target);
+    setTarget(_target);
 }
+
+Relay::~Relay()
+{
+    if (target)
+    {
+        std::cout << "Relay removing target listener on destruction\n";
+        target->remove(this);
+    }
+}
+
 
 std::shared_ptr<OSCTarget> Relay::getTarget()
 {
@@ -43,6 +54,16 @@ void Relay::setTarget(std::shared_ptr<OSCTarget> _target)
     }
     
     target = _target;
+}
+
+void Relay::setGroup(String _group)
+{
+    group = _group;
+}
+
+String Relay::getGroup()
+{
+    return group;
 }
 
 String Relay::getIdentifier()

@@ -13,12 +13,13 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 
+#include "Utils.h"
 #include "MIDIRelay.h"
 
 //==============================================================================
 /*
 */
-class MIDIComponent : public Component, public Button::Listener, public TableListBoxModel, public ChangeListener
+class MIDIComponent : public Component, public Button::Listener, public TableListBoxModel, public ChangeListener, public TextCellManager
 {
 public:
     MIDIComponent(MIDIRelayManager& _relayManager, OSCTargetManager& _targetManager);
@@ -43,6 +44,11 @@ public:
     void paintCell (Graphics& g, int rowNumber, int columnId, int width, int height, bool rowIsSelected) override;
     int getColumnAutoSizeWidth (int columnId) override;
     
+    // ======= TextCellManager =========
+    
+    virtual String getCellText (const int columnNumber, const int rowNumber) override;
+    virtual void cellTextChanged (const int columnId, const int rowNumber, const String& newText) override;
+    
     // ======= TableListBox Helpers =========
     
     void onCellDeleteButton (const int rowNumber);
@@ -58,6 +64,7 @@ private:
     
     const int channelColumnId = 1;
     const int targetColumnId = 2;
+    const int groupColumnId = 3;
     const int buttonColumnId = 4;
     
     MIDIRelayManager& relayManager;

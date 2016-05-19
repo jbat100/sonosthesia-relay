@@ -47,6 +47,7 @@ targetManager(_targetManager)
     
     table.getHeader().addColumn ("Channel", channelColumnId, 60, 50, 400, flags);
     table.getHeader().addColumn ("Target", targetColumnId, 200, 50, 400, flags);
+    table.getHeader().addColumn ("Group", groupColumnId, 200, 50, 400, flags);
     table.getHeader().addColumn ("", buttonColumnId, 200, 50, 400, buttonFlags);
     
     table.setRowHeight(25);
@@ -137,6 +138,23 @@ void MIDIComponent::paintRowBackground (Graphics& g, int rowNumber, int width, i
     else if (rowNumber % 2) g.fillAll (Colour (0xffeeeeee));
 }
 
+String MIDIComponent::getCellText (const int columnId, const int rowNumber)
+{
+    std::shared_ptr<MIDIRelay> relay = relayManager.getItem(rowNumber);
+    
+    if (columnId == groupColumnId) return relay->getGroup();
+    
+    throw std::invalid_argument("unexpected columnId");
+}
+
+void MIDIComponent::cellTextChanged (const int columnId, const int rowNumber, const String& newText)
+{
+    std::shared_ptr<MIDIRelay> relay = relayManager.getItem(rowNumber);
+    
+    if (columnId == groupColumnId) return relay->setGroup(String(newText));
+    
+    throw std::invalid_argument("unexpected columnId");
+}
 
 void MIDIComponent::onCellDeleteButton (const int rowNumber)
 {
@@ -200,6 +218,19 @@ Component* MIDIComponent::refreshComponentForCell (int rowNumber, int columnId, 
         component->setRelay(relay);
         
         return component;
+    }
+    
+    if (columnId == groupColumnId)
+    {
+        // The other columns are editable text columns, for which we use the custom Label component
+        TextCellComponent* textLabel = static_cast<TextCellComponent*> (existingComponentToUpdate);
+        
+        // same as above...
+        if (textLabel == nullptr)
+            textLabel = new TextCellComponent (*this);
+        
+        textLabel->setRowAndColumn(rowNumber, columnId);
+        return textLabel;
     }
     
     return nullptr;

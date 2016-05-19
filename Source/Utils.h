@@ -78,7 +78,7 @@ public:
     
     std::shared_ptr<T> getItem(String identifier)
     {
-        std::cout << "ListManager getItem " << identifier;
+        //std::cout << "ListManager getItem " << identifier << "\n";
         
         for (auto i = items.begin(); i != items.end(); i++)
         {
@@ -103,6 +103,46 @@ private:
     
     std::vector< std::shared_ptr<T> > items;
     
+};
+
+//==============================================================================
+// This is a custom Label component, which we use for the table's editable text columns.
+
+class TextCellManager {
+    
+public:
+    
+    virtual ~TextCellManager() {}
+    virtual void cellTextChanged(const int newRow, const int newColumn, const String& newText) = 0;
+    virtual String getCellText(const int newRow, const int newColumn) = 0;
+    
+};
+
+class TextCellComponent  : public Label
+{
+public:
+    TextCellComponent (TextCellManager& _manager)  : manager (_manager)
+    {
+        // double click to edit the label text; single click handled below
+        setEditable (false, true, false);
+        setColour (textColourId, Colours::black);
+    }
+    
+    void textWasEdited() override
+    {
+        manager.cellTextChanged(columnId, row, getText());
+    }
+    
+    void setRowAndColumn (const int newRow, const int newColumn)
+    {
+        row = newRow;
+        columnId = newColumn;
+        setText (manager.getCellText(columnId, row), dontSendNotification);
+    }
+    
+private:
+    TextCellManager& manager;
+    int row, columnId;
 };
 
 

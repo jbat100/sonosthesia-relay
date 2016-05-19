@@ -13,12 +13,13 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 
+#include "Utils.h"
 #include "OSCTargetManager.h"
 
 //==============================================================================
 /*
 */
-class TargetComponent    : public Component, public Button::Listener, public TableListBoxModel
+class TargetComponent    : public Component, public Button::Listener, public TableListBoxModel, public TextCellManager
 {
 public:
     TargetComponent(OSCTargetManager& _oscTargetManager);
@@ -39,11 +40,13 @@ public:
     Component* refreshComponentForCell (int rowNumber, int columnId, bool isRowSelected, Component* existingComponentToUpdate) override;
     int getColumnAutoSizeWidth (int columnId) override;
     
+    // ======= TextCellManager =========
+    
+    virtual String getCellText (const int columnNumber, const int rowNumber) override;
+    virtual void cellTextChanged (const int columnId, const int rowNumber, const String& newText) override;
+    
     // ======= TableListBox Helpers =========
     
-    String getCellText (const int columnNumber, const int rowNumber) const;
-    
-    void onCellText (const int columnId, const int rowNumber, const String& newText);
     void onCellDeleteButton (const int rowNumber);
     void onCellConnectButton (const int rowNumber);
 
@@ -60,35 +63,6 @@ private:
     const int buttonColumnId = 4;
     
     OSCTargetManager& oscTargetManager;
-    
-    //==============================================================================
-    // This is a custom Label component, which we use for the table's editable text columns.
-    class EditableTextCustomComponent  : public Label
-    {
-    public:
-        EditableTextCustomComponent (TargetComponent& td)  : owner (td)
-        {
-            // double click to edit the label text; single click handled below
-            setEditable (false, true, false);
-            setColour (textColourId, Colours::black);
-        }
-        
-        void textWasEdited() override
-        {
-            owner.onCellText (columnId, row, getText());
-        }
-        
-        void setRowAndColumn (const int newRow, const int newColumn)
-        {
-            row = newRow;
-            columnId = newColumn;
-            setText (owner.getCellText(columnId, row), dontSendNotification);
-        }
-        
-    private:
-        TargetComponent& owner;
-        int row, columnId;
-    };
     
     //==============================================================================
     // This is a custom Label component, which we use for the table's editable text columns.

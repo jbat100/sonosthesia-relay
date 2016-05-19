@@ -10,9 +10,9 @@
 
 #include "MIDIRelay.h"
 
-MIDIRelay::MIDIRelay() : Relay(nullptr), channel(-1) {}
+MIDIRelay::MIDIRelay() : Relay(), channel(-1) {}
 
-MIDIRelay::MIDIRelay(int _channel, std::shared_ptr<OSCTarget> _target) : Relay(_target), channel(_channel) {}
+MIDIRelay::MIDIRelay(std::shared_ptr<OSCTarget> _target, String _group, int _channel) : Relay(_target, _group), channel(_channel) {}
     
 void MIDIRelay::setChannel(int _channel)
 {
@@ -24,8 +24,29 @@ int MIDIRelay::getChannel()
     return channel;
 }
 
-void MIDIRelay::relay(MidiMessage& message)
+void MIDIRelay::relay(MidiMessage& m)
 {
+    if (channel != m.getChannel() && channel != -1)
+    {
+        std::cout << "Relaying ignoring message " << m.getDescription() << "\n";
+        return;
+    }
     
+    OSCAddressPattern pattern = OSCAddressPattern("/" + getGroup() + "/midi/");
+    
+    if (m.isNoteOn())
+    {
+        OSCMessage message = OSCMessage(pattern, String("note_on"), (int)m.getChannel(), (int)m.getNoteNumber(), (int)m.getVelocity());
+        getTarget()->sendMessage(message);
+        
+        std::cout << "Relaying MIDI: " << m.getDescription() << "\n";
+    }
+    else if (m.isNoteOff())
+    {
+        OSCMessage message = OSCMessage(pattern, String("note_off"), (int)m.getChannel(), (int)m.getNoteNumber(), (int)m.getVelocity());
+        getTarget()->sendMessage(message);
+        
+        std::cout << "Relaying MIDI: " << m.getDescription() << "\n";
+    }
 }
 

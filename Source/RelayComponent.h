@@ -71,7 +71,7 @@ public:
             {
                 relay->setTarget (nullptr);
             }
-            else
+            else if (numericIdentifier > 0)
             {
                 String identifier = generator.getStringIdentifier(numericIdentifier);
                 std::shared_ptr<OSCTarget> target = manager.getItem(identifier);
@@ -80,7 +80,7 @@ public:
         }
         catch (std::invalid_argument& err)
         {
-            
+            std::cerr << "TargetColumnCustomComponent comboBoxChanged exception: " << &err << "\n";
         }
         
     }

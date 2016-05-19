@@ -25,7 +25,7 @@ class MIDIRelay : public Relay
 public:
     
     MIDIRelay();
-    MIDIRelay(int _channel, std::shared_ptr<OSCTarget> _target);
+    MIDIRelay(std::shared_ptr<OSCTarget> _target, String _group, int _channel);
     
     void setChannel(int _channel);
     int getChannel();

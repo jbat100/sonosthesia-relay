@@ -10,14 +10,14 @@
 
 #include "ParameterRelay.h"
 
-ParameterRelay::ParameterRelay() : Relay(nullptr), index(-1), address("")
+ParameterRelay::ParameterRelay() : Relay(), index(-1)
 {    
 }
 
-ParameterRelay::ParameterRelay(int _index, std::shared_ptr<OSCTarget> _target, OSCAddress _address) :
-Relay(_target),
-index(_index),
-address(_address)
+ParameterRelay::ParameterRelay(std::shared_ptr<OSCTarget> _target, String _group, String _descriptor, int _index) :
+Relay(_target, _group),
+descriptor(_descriptor),
+index(_index)
 {
 }
 
@@ -31,14 +31,14 @@ int ParameterRelay::getIndex()
     return index;
 }
 
-void ParameterRelay::setAddress(OSCAddress _address)
+void ParameterRelay::setDescriptor(String _descriptor)
 {
-    address = _address;
+    descriptor = _descriptor;
 }
 
-OSCAddress ParameterRelay::getAddress()
+String ParameterRelay::getDescriptor()
 {
-    return address;
+    return descriptor;
 }
 
 

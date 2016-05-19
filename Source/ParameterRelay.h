@@ -24,21 +24,20 @@ class ParameterRelay : public Relay
 public:
     
     ParameterRelay();
-    ParameterRelay(int _index, std::shared_ptr<OSCTarget> _target, OSCAddress address);
+    ParameterRelay(std::shared_ptr<OSCTarget> _target, String _group, String _descriptor, int _index);
     
     void setIndex(int _index);
     int getIndex();
     
-    void setAddress(OSCAddress _address);
-    OSCAddress getAddress();
+    void setDescriptor(String _descriptor);
+    String getDescriptor();
     
     void relay(int index, float value);
     
 private:
     
+    String descriptor;
     int index;
-    OSCAddress address;
-    
 };
 
 class ParameterRelayManager : public ListManager<ParameterRelay>

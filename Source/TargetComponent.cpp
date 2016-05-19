@@ -127,7 +127,7 @@ void TargetComponent::paintRowBackground (Graphics& g, int rowNumber, int width,
 }
 
 
-String TargetComponent::getCellText (const int columnId, const int rowNumber) const
+String TargetComponent::getCellText (const int columnId, const int rowNumber)
 {
     std::shared_ptr<OSCTarget> target = oscTargetManager.getItem(rowNumber);
     
@@ -137,7 +137,7 @@ String TargetComponent::getCellText (const int columnId, const int rowNumber) co
     return "";
 }
 
-void TargetComponent::onCellText (const int columnId, const int rowNumber, const String& newText)
+void TargetComponent::cellTextChanged (const int columnId, const int rowNumber, const String& newText)
 {
     std::shared_ptr<OSCTarget> target = oscTargetManager.getItem(rowNumber);
     
@@ -224,11 +224,11 @@ Component* TargetComponent::refreshComponentForCell (int rowNumber, int columnId
     }
     
     // The other columns are editable text columns, for which we use the custom Label component
-    EditableTextCustomComponent* textLabel = static_cast<EditableTextCustomComponent*> (existingComponentToUpdate);
+    TextCellComponent* textLabel = static_cast<TextCellComponent*> (existingComponentToUpdate);
     
     // same as above...
     if (textLabel == nullptr)
-        textLabel = new EditableTextCustomComponent (*this);
+        textLabel = new TextCellComponent (*this);
     
     textLabel->setRowAndColumn(rowNumber, columnId);
     return textLabel;
