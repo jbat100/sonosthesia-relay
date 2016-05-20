@@ -142,33 +142,14 @@ void RelayAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuffer& m
     int time;
     MidiMessage m;
     
+    auto items = midiRelayManager.getItems();
+    
     for (MidiBuffer::Iterator i (midiMessages); i.getNextEvent (m, time);)
     {
-        auto items = midiRelayManager.getItems();
-        
         for (auto i = items.begin(); i != items.end(); i++)
         {
             (*i)->relay(m);
         }
-        
-        /*
-        if (m.isNoteOn())
-        {
-            OSCAddressPattern pattern = OSCAddressPattern("/default/midi/");
-            OSCMessage message = OSCMessage(pattern, juce::String("note_on"), (int)m.getChannel(), (int)m.getNoteNumber(), (int)m.getVelocity());
-            sender.send(message);
-            
-            std::cout << "note_on " << m.getChannel() << " " << m.getNoteNumber() << " " << (int)m.getVelocity() << "\n";
-        }
-        else if (m.isNoteOff())
-        {
-            OSCAddressPattern pattern = OSCAddressPattern("/default/midi/");
-            OSCMessage message = OSCMessage(pattern, juce::String("note_on"), (int)m.getChannel(), (int)m.getNoteNumber(), (int)m.getVelocity());
-            sender.send(message);
-            
-            std::cout << "note_off " << m.getChannel() << " " << m.getNoteNumber() << " " << (int)m.getVelocity() << "\n";
-        }
-         */
     }
 
 }

@@ -11,39 +11,52 @@
               jucerVersion="4.2.1" pluginAUMainType="rlay">
   <MAINGROUP id="YN10nS" name="Relay">
     <GROUP id="{CA07BB16-3DC8-BFEA-3102-6340B6C296CD}" name="Source">
-      <FILE id="JoEvDK" name="Utils.cpp" compile="1" resource="0" file="Source/Utils.cpp"/>
-      <FILE id="dUtFC0" name="Utils.h" compile="0" resource="0" file="Source/Utils.h"/>
-      <FILE id="uZr28M" name="RelayComponent.cpp" compile="1" resource="0"
-            file="Source/RelayComponent.cpp"/>
-      <FILE id="gtNdRw" name="RelayComponent.h" compile="0" resource="0"
-            file="Source/RelayComponent.h"/>
-      <FILE id="tLxYtM" name="Relay.cpp" compile="1" resource="0" file="Source/Relay.cpp"/>
-      <FILE id="kp3MYl" name="Relay.h" compile="0" resource="0" file="Source/Relay.h"/>
-      <FILE id="FzERRw" name="CommonComponent.cpp" compile="1" resource="0"
-            file="Source/CommonComponent.cpp"/>
-      <FILE id="YUNSBC" name="CommonComponent.h" compile="0" resource="0"
-            file="Source/CommonComponent.h"/>
-      <FILE id="P89m54" name="ParameterRelay.cpp" compile="1" resource="0"
-            file="Source/ParameterRelay.cpp"/>
-      <FILE id="b0NHyr" name="ParameterRelay.h" compile="0" resource="0"
-            file="Source/ParameterRelay.h"/>
-      <FILE id="ltZ4ft" name="MIDIRelay.cpp" compile="1" resource="0" file="Source/MIDIRelay.cpp"/>
-      <FILE id="oKt4LM" name="MIDIRelay.h" compile="0" resource="0" file="Source/MIDIRelay.h"/>
-      <FILE id="VjHDz6" name="OSCTargetManager.cpp" compile="1" resource="0"
-            file="Source/OSCTargetManager.cpp"/>
-      <FILE id="hbLyRr" name="OSCTargetManager.h" compile="0" resource="0"
-            file="Source/OSCTargetManager.h"/>
-      <FILE id="cCDFVV" name="MIDIComponent.cpp" compile="1" resource="0"
-            file="Source/MIDIComponent.cpp"/>
-      <FILE id="LL4etf" name="MIDIComponent.h" compile="0" resource="0" file="Source/MIDIComponent.h"/>
-      <FILE id="fZSGVC" name="ParameterComponent.cpp" compile="1" resource="0"
-            file="Source/ParameterComponent.cpp"/>
-      <FILE id="SDAI3m" name="ParameterComponent.h" compile="0" resource="0"
-            file="Source/ParameterComponent.h"/>
-      <FILE id="dk3z4m" name="TargetComponent.cpp" compile="1" resource="0"
-            file="Source/TargetComponent.cpp"/>
-      <FILE id="RFQRMa" name="TargetComponent.h" compile="0" resource="0"
-            file="Source/TargetComponent.h"/>
+      <GROUP id="{5A6FCEDB-3722-FFD2-4E43-2026F21284C5}" name="Common">
+        <FILE id="uZr28M" name="RelayComponent.cpp" compile="1" resource="0"
+              file="Source/RelayComponent.cpp"/>
+        <FILE id="gtNdRw" name="RelayComponent.h" compile="0" resource="0"
+              file="Source/RelayComponent.h"/>
+        <FILE id="FzERRw" name="CommonComponent.cpp" compile="1" resource="0"
+              file="Source/CommonComponent.cpp"/>
+        <FILE id="YUNSBC" name="CommonComponent.h" compile="0" resource="0"
+              file="Source/CommonComponent.h"/>
+        <FILE id="JoEvDK" name="Utils.cpp" compile="1" resource="0" file="Source/Utils.cpp"/>
+        <FILE id="dUtFC0" name="Utils.h" compile="0" resource="0" file="Source/Utils.h"/>
+        <FILE id="tLxYtM" name="Relay.cpp" compile="1" resource="0" file="Source/Relay.cpp"/>
+        <FILE id="kp3MYl" name="Relay.h" compile="0" resource="0" file="Source/Relay.h"/>
+      </GROUP>
+      <GROUP id="{C2B25095-5E88-4D12-DD37-0B4332601FC7}" name="MIDI">
+        <FILE id="ltZ4ft" name="MIDIRelay.cpp" compile="1" resource="0" file="Source/MIDIRelay.cpp"/>
+        <FILE id="oKt4LM" name="MIDIRelay.h" compile="0" resource="0" file="Source/MIDIRelay.h"/>
+        <FILE id="cCDFVV" name="MIDIComponent.cpp" compile="1" resource="0"
+              file="Source/MIDIComponent.cpp"/>
+        <FILE id="LL4etf" name="MIDIComponent.h" compile="0" resource="0" file="Source/MIDIComponent.h"/>
+      </GROUP>
+      <GROUP id="{63382BC9-A0F0-DABE-56D0-B89BD13DB468}" name="Parameter">
+        <FILE id="fZSGVC" name="ParameterComponent.cpp" compile="1" resource="0"
+              file="Source/ParameterComponent.cpp"/>
+        <FILE id="SDAI3m" name="ParameterComponent.h" compile="0" resource="0"
+              file="Source/ParameterComponent.h"/>
+        <FILE id="P89m54" name="ParameterRelay.cpp" compile="1" resource="0"
+              file="Source/ParameterRelay.cpp"/>
+        <FILE id="b0NHyr" name="ParameterRelay.h" compile="0" resource="0"
+              file="Source/ParameterRelay.h"/>
+      </GROUP>
+      <GROUP id="{062EC740-1E3A-F109-7E8F-44AD80CEFD6C}" name="Target">
+        <FILE id="VjHDz6" name="OSCTargetManager.cpp" compile="1" resource="0"
+              file="Source/OSCTargetManager.cpp"/>
+        <FILE id="hbLyRr" name="OSCTargetManager.h" compile="0" resource="0"
+              file="Source/OSCTargetManager.h"/>
+        <FILE id="dk3z4m" name="TargetComponent.cpp" compile="1" resource="0"
+              file="Source/TargetComponent.cpp"/>
+        <FILE id="RFQRMa" name="TargetComponent.h" compile="0" resource="0"
+              file="Source/TargetComponent.h"/>
+      </GROUP>
+      <GROUP id="{C76A73C7-7192-89A4-BE15-7E13236017A6}" name="Test">
+        <FILE id="stvJlr" name="TestComponent.cpp" compile="1" resource="0"
+              file="Source/TestComponent.cpp"/>
+        <FILE id="yaZaVd" name="TestComponent.h" compile="0" resource="0" file="Source/TestComponent.h"/>
+      </GROUP>
       <FILE id="iREjjT" name="PluginProcessor.cpp" compile="1" resource="0"
             file="Source/PluginProcessor.cpp"/>
       <FILE id="MfJAW4" name="PluginProcessor.h" compile="0" resource="0"

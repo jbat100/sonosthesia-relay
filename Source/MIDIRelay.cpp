@@ -26,9 +26,16 @@ int MIDIRelay::getChannel()
 
 void MIDIRelay::relay(MidiMessage& m)
 {
+    
     if (channel != m.getChannel() && channel != -1)
     {
         std::cout << "Relaying ignoring message " << m.getDescription() << "\n";
+        return;
+    }
+    
+    if (!getTarget())
+    {
+        std::cout << "Relay has no target\n";
         return;
     }
     
