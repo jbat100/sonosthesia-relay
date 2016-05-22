@@ -19,9 +19,12 @@
 #include "Relay.h"
 #include "OSCTargetManager.h"
 
+
 class ParameterRelay : public Relay
 {
 public:
+    
+    static const int noIndex;
     
     ParameterRelay();
     ParameterRelay(std::shared_ptr<OSCTarget> _target, String _group, String _descriptor, int _index);
@@ -34,15 +37,37 @@ public:
     
     void relay(int index, float value);
     
+    void resend();
+    
+    // overrides for resends
+    
+    virtual void setTarget(std::shared_ptr<OSCTarget> _target) override;
+    virtual void setGroup(String _group) override;
+    
 private:
+    
+    void send(float value);
     
     String descriptor;
     int index;
+    float lastValue;
+    
+    static const float noValue;
+    static const float threshold;
+    
 };
 
 class ParameterRelayManager : public ListManager<ParameterRelay>
 {
+public:
     
+    ParameterRelayManager(AudioProcessor& processor);
+    
+    void refresh();
+    
+private:
+    
+    AudioProcessor& processor;
 };
 
 

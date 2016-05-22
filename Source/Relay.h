@@ -26,10 +26,10 @@ public:
     ~Relay();
     
     std::shared_ptr<OSCTarget> getTarget();
-    void setTarget(std::shared_ptr<OSCTarget> _target);
+    virtual void setTarget(std::shared_ptr<OSCTarget> _target);
     
     String getGroup();
-    void setGroup(String _group);
+    virtual void setGroup(String _group);
     
     String getIdentifier();
     

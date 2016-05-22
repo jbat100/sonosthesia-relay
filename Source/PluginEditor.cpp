@@ -12,19 +12,20 @@
 #include "PluginEditor.h"
 
 
-MainTabbedComponent::MainTabbedComponent(OSCTargetManager& oscTargetManager,
-                                         MIDIRelayManager& midiRelayManager,
-                                         ParameterRelayManager& parameterRelayManager) :
+MainTabbedComponent::MainTabbedComponent(RelayAudioProcessor& _processor) :
 TabbedComponent (TabbedButtonBar::TabsAtTop),
-targetComponent(oscTargetManager),
-midiComponent(midiRelayManager, oscTargetManager),
-parameterComponent(parameterRelayManager)
+processor(_processor),
+targetComponent(processor.getOSCTargetManager()),
+midiComponent(processor.getMIDIRelayManager(), processor.getOSCTargetManager()),
+parameterComponent(processor),
+testComponent(processor)
 {
     Colour colour = Colours::black;
     
     addTab ("MIDI", Colours::white, &midiComponent, true);
     addTab ("Parameters", Colours::white, &parameterComponent, true);
     addTab ("Targets", Colours::white, &targetComponent, true);
+    addTab ("Test", Colours::white, &testComponent, true);
 
 }
 
@@ -32,7 +33,7 @@ parameterComponent(parameterRelayManager)
 RelayAudioProcessorEditor::RelayAudioProcessorEditor (RelayAudioProcessor& p) :
 AudioProcessorEditor (&p),
 processor (p),
-tabbedComponent(p.getOSCTargetManager(), p.getMIDIRelayManager(), p.getParameterRelayManager())
+tabbedComponent(p)
 {
     setOpaque (true);
 

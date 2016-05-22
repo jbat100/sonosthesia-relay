@@ -93,6 +93,11 @@ void TestComponent::resized()
     table.setBounds( getBounds().withX(0).withY(0).withTrimmedBottom(0).reduced(margin) );
 }
 
+void TestComponent::update()
+{
+    table.updateContent();
+}
+
 
 // ======= TableListBoxModel =========
 
@@ -143,13 +148,14 @@ Component* TestComponent::refreshComponentForCell (int rowNumber, int columnId, 
     
     if (columnId == valueColumnId) // For the ratings column, we return the custom combobox component
     {
-        SliderCellComponent* component = static_cast<SliderCellComponent*> (existingComponentToUpdate);
+        AudioProcessorParameter* parameter = processor.getParameters()[rowNumber];
+        
+        ParameterSlider* component = static_cast<ParameterSlider*> (existingComponentToUpdate);
         
         // If an existing component is being passed-in for updating, we'll re-use it, but
         // if not, we'll have to create one.
-        if (component == nullptr) component = new SliderCellComponent(*this);
+        if (component == nullptr) component = new ParameterSlider(*parameter);
         
-        component->setRowAndColumn(rowNumber, columnId);
         return component;
     }
     
@@ -162,21 +168,4 @@ int TestComponent::getColumnAutoSizeWidth (int columnId)
     return 32;
 }
 
-void TestComponent::cellSliderValueChanged(const int rowNumber, const int columnId, const double value)
-{
-    if (columnId != valueColumnId) throw std::invalid_argument("unexpected column id");
-    
-    AudioProcessorParameter* parameter = processor.getParameters()[rowNumber];
-    
-    parameter->setValueNotifyingHost(value);
-}
-
-double TestComponent::getSliderCellValue(const int rowNumber, const int columnId)
-{
-    AudioProcessorParameter* parameter = processor.getParameters()[rowNumber];
-    
-    std::cout << "TestComponent getting value for parameter " << parameter->getName(20) << " : " << parameter->getValue() << "\n";
-    
-    return parameter->getValue();
-}
 

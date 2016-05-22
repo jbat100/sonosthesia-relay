@@ -16,6 +16,47 @@
 
 
 //==============================================================================
+// This is a handy slider subclass that controls an AudioProcessorParameter
+// Taken from the juce audio plugin demo
+
+class ParameterSlider   : public Slider, private Timer
+{
+public:
+    ParameterSlider (AudioProcessorParameter& p) : Slider (p.getName (256)), param (p)
+    {
+        setRange (0.0, 1.0, 0.0);
+        startTimerHz (30);
+        updateSliderPos();
+    }
+    
+    void valueChanged() override
+    {
+        std::cout << "ParameterSlider changed " << param.getName(20) << " to " << Slider::getValue() << "\n";
+        param.setValueNotifyingHost ((float) Slider::getValue());
+    }
+    
+    void timerCallback() override       { updateSliderPos(); }
+    
+    void startedDragging() override     { param.beginChangeGesture(); }
+    void stoppedDragging() override     { param.endChangeGesture();   }
+    
+    double getValueFromText (const String& text) override   { return param.getValueForText (text); }
+    String getTextFromValue (double value) override         { return param.getText ((float) value, 1024); }
+    
+    void updateSliderPos()
+    {
+        const float newValue = param.getValue();
+        
+        if (newValue != (float) Slider::getValue() && ! isMouseButtonDown())
+            Slider::setValue (newValue);
+    }
+    
+    AudioProcessorParameter& param;
+    
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ParameterSlider)
+};
+
+//==============================================================================
 // This is a custom Label manager and component, which we use for the table's editable text columns.
 
 class TextCellManager {
@@ -107,6 +148,13 @@ private:
     SliderCellManager& manager;
     int row, columnId;
 };
+
+
+
+//==============================================================================
+// This is a custom component containing used for selecting an audio parameter
+
+
 
 
 #endif  // COMMONCOMPONENT_H_INCLUDED

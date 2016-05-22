@@ -22,21 +22,24 @@
 #include "TargetComponent.h"
 #include "MIDIComponent.h"
 #include "ParameterComponent.h"
+#include "TestComponent.h"
 
 
 class MainTabbedComponent  : public TabbedComponent
 {
     
 public:
-    MainTabbedComponent(OSCTargetManager& oscTargetManager,
-                        MIDIRelayManager& midiRelayManager,
-                        ParameterRelayManager& parameterRelayManager);
+    
+    MainTabbedComponent(RelayAudioProcessor& processor);
     
 private:
+    
+    RelayAudioProcessor& processor;
     
     TargetComponent targetComponent;
     MIDIComponent midiComponent;
     ParameterComponent parameterComponent;
+    TestComponent testComponent;
 };
 
 

@@ -13,7 +13,7 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 
-#include "Utils.h"
+#include "CommonComponent.h"
 #include "OSCTargetManager.h"
 
 //==============================================================================

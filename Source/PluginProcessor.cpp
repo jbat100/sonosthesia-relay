@@ -11,12 +11,16 @@
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
 
+int RelayAudioProcessor::parameterCount = 10;
 
 //==============================================================================
 
-RelayAudioProcessor::RelayAudioProcessor() : lastUIWidth(600), lastUIHeight(300)
+RelayAudioProcessor::RelayAudioProcessor() : lastUIWidth(600), lastUIHeight(300), parameterRelayManager(*this)
 {
-    sender.connect( juce::String("127.0.0.1"), 3333);
+    for (int i = 0; i < parameterCount; i++)
+    {
+        addParameter(new AudioParameterFloat (String(i),  String("Parameter") + String(i), 0.0f, 1.0f, 0.0f));
+    }
 }
 
 RelayAudioProcessor::~RelayAudioProcessor()
@@ -151,6 +155,8 @@ void RelayAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuffer& m
             (*i)->relay(m);
         }
     }
+    
+    parameterRelayManager.refresh();
 
 }
 
