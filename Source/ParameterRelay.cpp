@@ -14,16 +14,31 @@ const int ParameterRelay::noIndex = -1;
 const float ParameterRelay::noValue = std::numeric_limits<float>::min();
 const float ParameterRelay::threshold = 1e-6;
 
-ParameterRelay::ParameterRelay() : Relay(), index(-1)
-{    
+ParameterRelay::ParameterRelay() :
+    Relay(),
+    descriptor("default"),
+    index(noIndex),
+    lastValue(noValue)
+{
+    
 }
 
 ParameterRelay::ParameterRelay(std::shared_ptr<OSCTarget> _target, String _group, String _descriptor, int _index) :
-Relay(_target, _group),
-descriptor(_descriptor),
-index(_index),
-lastValue(noValue)
+    Relay(_target, _group),
+    descriptor(_descriptor),
+    index(_index),
+    lastValue(noValue)
 {
+    
+}
+
+ParameterRelay::ParameterRelay(String _identifier, std::shared_ptr<OSCTarget> _target, String _group, String _descriptor, int _index) :
+    Relay(_identifier, _target, _group),
+    descriptor(_descriptor),
+    index(_index),
+    lastValue(noValue)
+{
+    
 }
 
 void ParameterRelay::setIndex(int _index)
@@ -51,8 +66,10 @@ String ParameterRelay::getDescriptor()
 
 void ParameterRelay::relay(int _index, float value)
 {
+    //std::cout << "ParameterRelay relay " << _index << " : " << value << "\n";
     if (_index == index && std::abs(value - lastValue) > threshold)
     {
+        std::cout << "ParameterRelay relay " << _index << " : " << value << "\n";
         send(value);
     }
 }

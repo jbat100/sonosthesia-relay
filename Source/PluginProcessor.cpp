@@ -17,9 +17,10 @@ int RelayAudioProcessor::parameterCount = 10;
 
 RelayAudioProcessor::RelayAudioProcessor() : lastUIWidth(600), lastUIHeight(300), parameterRelayManager(*this)
 {
-    for (int i = 0; i < parameterCount; i++)
+    for (int i = 1; i <= parameterCount; i++)
     {
-        addParameter(new AudioParameterFloat (String(i),  String("Parameter") + String(i), 0.0f, 1.0f, 0.0f));
+        // note that "0", "1" etc are not valid xml names according to juice and so they are undesirable as parameter ids
+        addParameter(new AudioParameterFloat (String("Parameter") + String(i),  String("Parameter") + String(i), 0.0f, 1.0f, 0.0f));
     }
 }
 
@@ -243,6 +244,76 @@ ParameterRelayManager& RelayAudioProcessor::getParameterRelayManager()
     return parameterRelayManager;
 }
 
+
+//==============================================================================
+
+void RelayAudioProcessor::saveOSCTarget(std::shared_ptr<OSCTarget> target, XmlElement* element)
+{
+    element->setAttribute("identifier", target->getIdentifier());
+    element->setAttribute("hostname", target->getHostName());
+    element->setAttribute("portnumber", target->getPortNumber());
+}
+
+std::shared_ptr<OSCTarget> RelayAudioProcessor::loadOSCTarget(XmlElement* element)
+{
+    String identifier = element->getStringAttribute("identifier");
+    String hostName = element->getStringAttribute("hostname");
+    int portNumber = element->getIntAttribute("portnumber");
+    return std::shared_ptr<OSCTarget> (new OSCTarget(identifier, hostName, portNumber));
+}
+
+void RelayAudioProcessor::saveMIDIRelay(std::shared_ptr<MIDIRelay> relay, XmlElement* element)
+{
+    element->setAttribute("identifier", relay->getIdentifier());
+    element->setAttribute("group", relay->getGroup());
+    element->setAttribute("channel", relay->getChannel());
+    if (relay->getTarget()) element->setAttribute("target", relay->getTarget()->getIdentifier());
+}
+
+std::shared_ptr<MIDIRelay> RelayAudioProcessor::loadMIDIRelay(XmlElement* element)
+{
+    String identifier = element->getStringAttribute("identifier");
+    String group = element->getStringAttribute("group");
+    int channel = element->getIntAttribute("channel");
+    std::shared_ptr<OSCTarget> target = getTargetForElement(element);
+    return std::shared_ptr<MIDIRelay> (new MIDIRelay(identifier, target, group, channel));
+}
+
+void RelayAudioProcessor::saveParameterRelay(std::shared_ptr<ParameterRelay> relay, XmlElement* element)
+{
+    element->setAttribute("identifier", relay->getIdentifier());
+    element->setAttribute("group", relay->getGroup());
+    element->setAttribute("descriptor", relay->getDescriptor());
+    element->setAttribute("index", relay->getIndex());
+    if (relay->getTarget()) element->setAttribute("target", relay->getTarget()->getIdentifier());
+}
+
+std::shared_ptr<ParameterRelay> RelayAudioProcessor::loadParameterRelay(XmlElement* element)
+{
+    String identifier = element->getStringAttribute("identifier");
+    String group = element->getStringAttribute("group");
+    String descriptor = element->getStringAttribute("descriptor");
+    int index = element->getIntAttribute("index");
+    std::shared_ptr<OSCTarget> target = getTargetForElement(element);
+    return std::shared_ptr<ParameterRelay> (new ParameterRelay(identifier, target, group, descriptor, index));
+}
+
+std::shared_ptr<OSCTarget> RelayAudioProcessor::getTargetForElement(XmlElement* element)
+{
+    std::shared_ptr<OSCTarget> target = nullptr;
+    if (element->hasAttribute("target"))
+    {
+        try
+        {
+            target = oscTargetManager.getItem(element->getStringAttribute("target"));
+        }
+        catch (std::invalid_argument& e)
+        {
+            std::cerr << "Invalid target identifier" << "\n";
+        }
+    }
+    return target;
+}
 
 //==============================================================================
 // This creates new instances of the plugin..

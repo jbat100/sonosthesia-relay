@@ -46,11 +46,11 @@ ParameterComponent::ParameterComponent(RelayAudioProcessor& _processor) : proces
     TableHeaderComponent::ColumnPropertyFlags buttonFlags = (TableHeaderComponent::ColumnPropertyFlags)
     (TableHeaderComponent::ColumnPropertyFlags::visible);
     
-    table.getHeader().addColumn ("Parameter", parameterColumnId, 60, 50, 400, flags);
-    table.getHeader().addColumn ("Target", targetColumnId, 200, 50, 400, flags);
-    table.getHeader().addColumn ("Group", groupColumnId, 200, 50, 400, flags);
-    table.getHeader().addColumn ("Descriptor", descriptorColumnId, 200, 50, 400, flags);
-    table.getHeader().addColumn ("", buttonColumnId, 200, 50, 400, buttonFlags);
+    table.getHeader().addColumn ("", buttonColumnId, 100, 50, 400, buttonFlags);
+    table.getHeader().addColumn ("Parameter", parameterColumnId, 100, 50, 400, flags);
+    table.getHeader().addColumn ("Target", targetColumnId, 150, 50, 400, flags);
+    table.getHeader().addColumn ("Group", groupColumnId, 150, 50, 400, flags);
+    table.getHeader().addColumn ("Descriptor", descriptorColumnId, 150, 50, 400, flags);
     
     table.setRowHeight(25);
     

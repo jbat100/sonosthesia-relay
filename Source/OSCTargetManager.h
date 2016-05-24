@@ -34,6 +34,10 @@ public:
     OSCTarget();
     OSCTarget(String _hostName, int _portNumber);
     
+    // should only use this for xml loading, otherwise should let the identifier be created internally
+    // should really be private with a friend writer class, but I'm lazy...
+    OSCTarget(String _identifier, String _hostName, int _portNumber);
+    
     void setHostName(String _hostName);
     String getHostName();
     

@@ -10,10 +10,27 @@
 
 #include "MIDIRelay.h"
 
-MIDIRelay::MIDIRelay() : Relay(), channel(-1) {}
+MIDIRelay::MIDIRelay() :
+    Relay(),
+    channel(-1)
+{
 
-MIDIRelay::MIDIRelay(std::shared_ptr<OSCTarget> _target, String _group, int _channel) : Relay(_target, _group), channel(_channel) {}
+}
+
+MIDIRelay::MIDIRelay(std::shared_ptr<OSCTarget> _target, String _group, int _channel) :
+    Relay(_target, _group),
+    channel(_channel)
+{
+
+}
+
+MIDIRelay::MIDIRelay(String _identifier, std::shared_ptr<OSCTarget> _target, String _group, int _channel) :
+    Relay(_identifier, _target, _group),
+    channel(_channel)
+{
     
+}
+
 void MIDIRelay::setChannel(int _channel)
 {
     channel = _channel;

@@ -21,9 +21,11 @@ class Relay : public OSCTargetListener
 public:
     
     Relay();
-    Relay(std::shared_ptr<OSCTarget> _target, String group);
+    Relay(std::shared_ptr<OSCTarget> _target, String _group);
     
-    ~Relay();
+    Relay(String _identifier, std::shared_ptr<OSCTarget> _target, String _group);
+    
+    virtual ~Relay();
     
     std::shared_ptr<OSCTarget> getTarget();
     virtual void setTarget(std::shared_ptr<OSCTarget> _target);
@@ -39,10 +41,9 @@ public:
     
 private:
     
-    String identifier;
     String group;
     std::shared_ptr<OSCTarget> target;
-    
+    String identifier;
 };
 
 

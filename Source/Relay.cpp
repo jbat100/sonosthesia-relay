@@ -11,15 +11,24 @@
 #include "Relay.h"
 
 
-Relay::Relay() : group("default")
+Relay::Relay() :
+    group("default"),
+    identifier(Uuid().toString())
 {
-    identifier = Uuid().toString();
     setTarget(nullptr);
 }
 
-Relay::Relay(std::shared_ptr<OSCTarget> _target, String _group) : group(_group)
+Relay::Relay(std::shared_ptr<OSCTarget> _target, String _group) :
+    group(_group),
+    identifier(Uuid().toString())
 {
-    identifier = Uuid().toString();
+    setTarget(_target);
+}
+
+Relay::Relay(String _identifier, std::shared_ptr<OSCTarget> _target, String _group) :
+    group(_group),
+    identifier(_identifier)
+{
     setTarget(_target);
 }
 

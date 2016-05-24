@@ -78,6 +78,19 @@ private:
     MIDIRelayManager midiRelayManager;
     ParameterRelayManager parameterRelayManager;
     
+    // state set/get helpers
+    
+    void saveOSCTarget(std::shared_ptr<OSCTarget> target, XmlElement* element);
+    std::shared_ptr<OSCTarget> loadOSCTarget(XmlElement* element);
+    
+    void saveMIDIRelay(std::shared_ptr<MIDIRelay> relay, XmlElement* element);
+    std::shared_ptr<MIDIRelay> loadMIDIRelay(XmlElement* element);
+    
+    void saveParameterRelay(std::shared_ptr<ParameterRelay> relay, XmlElement* element);
+    std::shared_ptr<ParameterRelay> loadParameterRelay(XmlElement* element);
+    
+    std::shared_ptr<OSCTarget> getTargetForElement(XmlElement* element);
+    
     static int parameterCount;
 };
 

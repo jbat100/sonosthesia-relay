@@ -29,6 +29,8 @@ public:
     ParameterRelay();
     ParameterRelay(std::shared_ptr<OSCTarget> _target, String _group, String _descriptor, int _index);
     
+    ParameterRelay(String _identifier, std::shared_ptr<OSCTarget> _target, String _group, String _descriptor, int _index);
+    
     void setIndex(int _index);
     int getIndex();
     

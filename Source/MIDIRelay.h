@@ -27,6 +27,8 @@ public:
     MIDIRelay();
     MIDIRelay(std::shared_ptr<OSCTarget> _target, String _group, int _channel);
     
+    MIDIRelay(String _identifier, std::shared_ptr<OSCTarget> _target, String _group, int _channel);
+    
     void setChannel(int _channel);
     int getChannel();
     

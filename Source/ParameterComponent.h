@@ -79,17 +79,27 @@ private:
             // just put a combo box inside this component
             addAndMakeVisible (comboBox);
             
-            comboBox.addItem ( "None" , ParameterRelay::noIndex );
+            comboBox.addItem ( "None" , parameterIndexToId(ParameterRelay::noIndex) );
             
             for (auto i = parameters.begin(); i != parameters.end(); i++)
             {
                 // can't have 0 as id so we offset by 1
-                comboBox.addItem ( (*i)->getName(20) , (*i)->getParameterIndex() );
+                comboBox.addItem ( (*i)->getName(20) , parameterIndexToId((*i)->getParameterIndex()) );
             }
             
             // when the combo is changed, we'll get a callback.
             comboBox.addListener (this);
             comboBox.setWantsKeyboardFocus (false);
+        }
+        
+        int parameterIndexToId(int parameterIndex)
+        {
+            return parameterIndex + 2; // we want to avoid 0
+        }
+        
+        int idToParameterIndex(int _id)
+        {
+            return _id - 2;
         }
         
         void resized() override
@@ -99,15 +109,14 @@ private:
         
         void comboBoxChanged (ComboBox*) override
         {
-            relay->setIndex ( comboBox.getSelectedId() );
+            relay->setIndex ( idToParameterIndex(comboBox.getSelectedId()) );
         }
         
         void setRelay(std::shared_ptr<ParameterRelay> _relay)
         {
             relay = _relay;
-            
-            if (relay) comboBox.setSelectedId( relay->getIndex() );
-            else comboBox.setSelectedId( ParameterRelay::noIndex );
+            if (relay) comboBox.setSelectedId( parameterIndexToId(relay->getIndex()) );
+            else comboBox.setSelectedId( parameterIndexToId(ParameterRelay::noIndex) );
         }
         
     private:

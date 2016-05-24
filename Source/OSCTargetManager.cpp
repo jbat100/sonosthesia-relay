@@ -30,6 +30,16 @@ OSCTarget::OSCTarget(String _hostName, int _portNumber) :
     updateSender();
 }
 
+OSCTarget::OSCTarget(String _identifier, String _hostName, int _portNumber) :
+    hostName(_hostName),
+    portNumber(_portNumber),
+    connected(false),
+    valid(true),
+    identifier(_identifier)
+{
+    updateSender();
+}
+
 void OSCTarget::invalidate()
 {
     std::cout << "OSCTarget invalidated\n";
