@@ -44,6 +44,7 @@
       allowLocationSimulation = "YES">
       <PathRunnable
          runnableDebuggingMode = "0"
+         BundleIdentifier = "com.roli.pluginhost"
          FilePath = "/Users/jonathanthorpe/Dev/juce/Plugin Host.app">
       </PathRunnable>
       <MacroExpansion>

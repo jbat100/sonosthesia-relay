@@ -8,8 +8,8 @@
   ==============================================================================
 */
 
-#ifndef TARGETCOMPONENT_H_INCLUDED
-#define TARGETCOMPONENT_H_INCLUDED
+#ifndef TARGETTABLECOMPONENT_H_INCLUDED
+#define TARGETTABLECOMPONENT_H_INCLUDED
 
 #include "../JuceLibraryCode/JuceHeader.h"
 
@@ -122,4 +122,4 @@ private:
 
 
 
-#endif  // TARGETCOMPONENT_H_INCLUDED
+#endif  // TARGETTABLECOMPONENT_H_INCLUDED

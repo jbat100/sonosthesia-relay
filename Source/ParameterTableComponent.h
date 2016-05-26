@@ -8,8 +8,8 @@
   ==============================================================================
 */
 
-#ifndef PARAMETERCOMPONENT_H_INCLUDED
-#define PARAMETERCOMPONENT_H_INCLUDED
+#ifndef PARAMETERTABLECOMPONENT_H_INCLUDED
+#define PARAMETERTABLECOMPONENT_H_INCLUDED
 
 #include "../JuceLibraryCode/JuceHeader.h"
 
@@ -179,4 +179,4 @@ private:
 };
 
 
-#endif  // PARAMETERCOMPONENT_H_INCLUDED
+#endif  // PARAMETERTABLECOMPONENT_H_INCLUDED

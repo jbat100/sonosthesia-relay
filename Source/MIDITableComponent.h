@@ -8,8 +8,8 @@
   ==============================================================================
 */
 
-#ifndef MIDICOMPONENT_H_INCLUDED
-#define MIDICOMPONENT_H_INCLUDED
+#ifndef MIDITABLECOMPONENT_H_INCLUDED
+#define MIDITABLECOMPONENT_H_INCLUDED
 
 #include "../JuceLibraryCode/JuceHeader.h"
 
@@ -183,4 +183,4 @@ private:
 };
 
 
-#endif  // MIDICOMPONENT_H_INCLUDED
+#endif  // MIDITABLECOMPONENT_H_INCLUDED
