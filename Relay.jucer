@@ -28,34 +28,52 @@
       <GROUP id="{C2B25095-5E88-4D12-DD37-0B4332601FC7}" name="MIDI">
         <FILE id="ltZ4ft" name="MIDIRelay.cpp" compile="1" resource="0" file="Source/MIDIRelay.cpp"/>
         <FILE id="oKt4LM" name="MIDIRelay.h" compile="0" resource="0" file="Source/MIDIRelay.h"/>
-        <FILE id="cCDFVV" name="MIDIComponent.cpp" compile="1" resource="0"
-              file="Source/MIDIComponent.cpp"/>
-        <FILE id="LL4etf" name="MIDIComponent.h" compile="0" resource="0" file="Source/MIDIComponent.h"/>
+        <FILE id="XgKKym" name="MIDIListComponent.cpp" compile="1" resource="0"
+              file="Source/MIDIListComponent.cpp"/>
+        <FILE id="UfWNiW" name="MIDIListComponent.h" compile="0" resource="0"
+              file="Source/MIDIListComponent.h"/>
+        <FILE id="cCDFVV" name="MIDITableComponent.cpp" compile="1" resource="0"
+              file="Source/MIDITableComponent.cpp"/>
+        <FILE id="LL4etf" name="MIDITableComponent.h" compile="0" resource="0"
+              file="Source/MIDITableComponent.h"/>
       </GROUP>
       <GROUP id="{63382BC9-A0F0-DABE-56D0-B89BD13DB468}" name="Parameter">
-        <FILE id="fZSGVC" name="ParameterComponent.cpp" compile="1" resource="0"
-              file="Source/ParameterComponent.cpp"/>
-        <FILE id="SDAI3m" name="ParameterComponent.h" compile="0" resource="0"
-              file="Source/ParameterComponent.h"/>
         <FILE id="P89m54" name="ParameterRelay.cpp" compile="1" resource="0"
               file="Source/ParameterRelay.cpp"/>
         <FILE id="b0NHyr" name="ParameterRelay.h" compile="0" resource="0"
               file="Source/ParameterRelay.h"/>
+        <FILE id="tdJID3" name="ParameterListComponent.cpp" compile="1" resource="0"
+              file="Source/ParameterListComponent.cpp"/>
+        <FILE id="xAew83" name="ParameterListComponent.h" compile="0" resource="0"
+              file="Source/ParameterListComponent.h"/>
+        <FILE id="fZSGVC" name="ParameterTableComponent.cpp" compile="1" resource="0"
+              file="Source/ParameterTableComponent.cpp"/>
+        <FILE id="SDAI3m" name="ParameterTableComponent.h" compile="0" resource="0"
+              file="Source/ParameterTableComponent.h"/>
       </GROUP>
       <GROUP id="{062EC740-1E3A-F109-7E8F-44AD80CEFD6C}" name="Target">
         <FILE id="VjHDz6" name="OSCTargetManager.cpp" compile="1" resource="0"
               file="Source/OSCTargetManager.cpp"/>
         <FILE id="hbLyRr" name="OSCTargetManager.h" compile="0" resource="0"
               file="Source/OSCTargetManager.h"/>
-        <FILE id="dk3z4m" name="TargetComponent.cpp" compile="1" resource="0"
-              file="Source/TargetComponent.cpp"/>
-        <FILE id="RFQRMa" name="TargetComponent.h" compile="0" resource="0"
-              file="Source/TargetComponent.h"/>
+        <FILE id="Eh33xQ" name="TargetListComponent.cpp" compile="1" resource="0"
+              file="Source/TargetListComponent.cpp"/>
+        <FILE id="B4Eryq" name="TargetListComponent.h" compile="0" resource="0"
+              file="Source/TargetListComponent.h"/>
+        <FILE id="dk3z4m" name="TargetTableComponent.cpp" compile="1" resource="0"
+              file="Source/TargetTableComponent.cpp"/>
+        <FILE id="RFQRMa" name="TargetTableComponent.h" compile="0" resource="0"
+              file="Source/TargetTableComponent.h"/>
       </GROUP>
       <GROUP id="{C76A73C7-7192-89A4-BE15-7E13236017A6}" name="Test">
-        <FILE id="stvJlr" name="TestComponent.cpp" compile="1" resource="0"
-              file="Source/TestComponent.cpp"/>
-        <FILE id="yaZaVd" name="TestComponent.h" compile="0" resource="0" file="Source/TestComponent.h"/>
+        <FILE id="Ry9EJ6" name="TestListComponent.cpp" compile="1" resource="0"
+              file="Source/TestListComponent.cpp"/>
+        <FILE id="VOhEA7" name="TestListComponent.h" compile="0" resource="0"
+              file="Source/TestListComponent.h"/>
+        <FILE id="stvJlr" name="TestTableComponent.cpp" compile="1" resource="0"
+              file="Source/TestTableComponent.cpp"/>
+        <FILE id="yaZaVd" name="TestTableComponent.h" compile="0" resource="0"
+              file="Source/TestTableComponent.h"/>
       </GROUP>
       <FILE id="iREjjT" name="PluginProcessor.cpp" compile="1" resource="0"
             file="Source/PluginProcessor.cpp"/>

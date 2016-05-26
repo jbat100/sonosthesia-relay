@@ -19,10 +19,10 @@
 #include "MIDIRelay.h"
 #include "ParameterRelay.h"
 
-#include "TargetComponent.h"
-#include "MIDIComponent.h"
-#include "ParameterComponent.h"
-#include "TestComponent.h"
+#include "TargetTableComponent.h"
+#include "MIDITableComponent.h"
+#include "ParameterTableComponent.h"
+#include "TestTableComponent.h"
 
 
 class MainTabbedComponent  : public TabbedComponent
@@ -36,10 +36,10 @@ private:
     
     RelayAudioProcessor& processor;
     
-    TargetComponent targetComponent;
-    MIDIComponent midiComponent;
-    ParameterComponent parameterComponent;
-    TestComponent testComponent;
+    TargetTableComponent targetComponent;
+    MIDITableComponent midiComponent;
+    ParameterTableComponent parameterComponent;
+    TestTableComponent testComponent;
 };
 
 

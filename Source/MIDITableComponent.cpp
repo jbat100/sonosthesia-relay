@@ -1,8 +1,8 @@
 /*
   ==============================================================================
 
-    ParameterComponent.cpp
-    Created: 12 May 2016 4:37:39pm
+    MIDITableComponent.cpp
+    Created: 12 May 2016 4:38:11pm
     Author:  Jonathan Thorpe
 
   ==============================================================================
@@ -10,15 +10,14 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 
-#include "ParameterComponent.h"
 #include "RelayComponent.h"
+#include "MIDITableComponent.h"
 
 //==============================================================================
-ParameterComponent::ParameterComponent(RelayAudioProcessor& _processor) : processor(_processor)
+MIDITableComponent::MIDITableComponent(MIDIRelayManager& _relayManager, OSCTargetManager& _targetManager) :
+relayManager(_relayManager),
+targetManager(_targetManager)
 {
-    // In your constructor, you should add any child components, and
-    // initialise any special settings that your component needs.
-    
     // In your constructor, you should add any child components, and
     // initialise any special settings that your component needs.
     
@@ -46,44 +45,42 @@ ParameterComponent::ParameterComponent(RelayAudioProcessor& _processor) : proces
     TableHeaderComponent::ColumnPropertyFlags buttonFlags = (TableHeaderComponent::ColumnPropertyFlags)
     (TableHeaderComponent::ColumnPropertyFlags::visible);
     
-    table.getHeader().addColumn ("", buttonColumnId, 100, 50, 400, buttonFlags);
-    table.getHeader().addColumn ("Parameter", parameterColumnId, 100, 50, 400, flags);
-    table.getHeader().addColumn ("Target", targetColumnId, 150, 50, 400, flags);
-    table.getHeader().addColumn ("Group", groupColumnId, 150, 50, 400, flags);
-    table.getHeader().addColumn ("Descriptor", descriptorColumnId, 150, 50, 400, flags);
+    table.getHeader().addColumn ("Channel", channelColumnId, 60, 50, 400, flags);
+    table.getHeader().addColumn ("Target", targetColumnId, 200, 50, 400, flags);
+    table.getHeader().addColumn ("Group", groupColumnId, 200, 50, 400, flags);
+    table.getHeader().addColumn ("", buttonColumnId, 200, 50, 400, buttonFlags);
     
     table.setRowHeight(25);
     
-    processor.getOSCTargetManager().addChangeListener(this);
-    
+    targetManager.addChangeListener(this);
 }
 
-ParameterComponent::~ParameterComponent()
+MIDITableComponent::~MIDITableComponent()
 {
 }
 
-void ParameterComponent::paint (Graphics& g)
+void MIDITableComponent::paint (Graphics& g)
 {
     /* This demo code just fills the component's background and
-       draws some placeholder text to get you started.
-
-       You should replace everything in this method with your own
-       drawing code..
-    */
-
+     draws some placeholder text to get you started.
+     
+     You should replace everything in this method with your own
+     drawing code..
+     */
+    
     g.fillAll (Colours::white);   // clear the background
-
+    
     g.setColour (Colours::grey);
     g.drawRect (getLocalBounds(), 1);   // draw an outline around the component
-
-    g.setColour (Colours::lightblue);
     
-    //g.setFont (14.0f);
-    //g.drawText ("ParameterComponent", getLocalBounds(), Justification::centred, true);
+    g.setColour (Colours::lightblue);
+    g.setFont(14.0f);
+    
+    // draw some placeholder text
+    // g.drawText ("MIDITableComponent", getLocalBounds(), Justification::centred, true);
 }
 
-
-void ParameterComponent::resized()
+void MIDITableComponent::resized()
 {
     // This method is where you should set the bounds of any child
     // components that your component contains...
@@ -100,81 +97,77 @@ void ParameterComponent::resized()
 }
 
 
-void ParameterComponent::changeListenerCallback (ChangeBroadcaster *source)
+void MIDITableComponent::changeListenerCallback (ChangeBroadcaster *source)
 {
     // if the targets change then we need to update the table so that the new targets are available
-    if (source == dynamic_cast<ChangeBroadcaster*>(&processor.getOSCTargetManager()))
+    if (source == dynamic_cast<ChangeBroadcaster*>(&targetManager))
     {
-        std::cout << "ParameterComponent updating table content on osc target manager change\n";
+        std::cout << "MIDITableComponent updating table content on targetManager change\n";
         table.updateContent();
     }
 }
 
 // ======== Button::Listener =========
 
-void ParameterComponent::buttonClicked (Button* button)
+void MIDITableComponent::buttonClicked (Button* button)
 {
     if (button == &newButton)
     {
         //std::cout << "Make new target!\n";
-        processor.getParameterRelayManager().newItem();
+        relayManager.newItem();
         table.updateContent();
     }
     else if (button == &clearButton)
     {
         //std::cout << "Clear targets!\n";
-        processor.getParameterRelayManager().clear();
+        relayManager.clear();
         table.updateContent();
     }
 }
 
 // ======= TableListBoxModel =========
 
-int ParameterComponent::getNumRows()
+int MIDITableComponent::getNumRows()
 {
-    return processor.getParameterRelayManager().count();
+    return relayManager.getItems().size();
 }
 
-void ParameterComponent::paintRowBackground (Graphics& g, int rowNumber, int width, int height, bool rowIsSelected)
+void MIDITableComponent::paintRowBackground (Graphics& g, int rowNumber, int width, int height, bool rowIsSelected)
 {
     if (rowIsSelected) g.fillAll (Colours::lightblue);
     else if (rowNumber % 2) g.fillAll (Colour (0xffeeeeee));
 }
 
-String ParameterComponent::getCellText (const int columnId, const int rowNumber)
+String MIDITableComponent::getCellText (const int columnId, const int rowNumber)
 {
-    std::shared_ptr<ParameterRelay> relay = processor.getParameterRelayManager().getItem(rowNumber);
+    std::shared_ptr<MIDIRelay> relay = relayManager.getItem(rowNumber);
     
     if (columnId == groupColumnId) return relay->getGroup();
     
-    else if (columnId == descriptorColumnId) return relay->getDescriptor();
-    
     throw std::invalid_argument("unexpected columnId");
 }
 
-void ParameterComponent::cellTextChanged (const int columnId, const int rowNumber, const String& newText)
+void MIDITableComponent::cellTextChanged (const int columnId, const int rowNumber, const String& newText)
 {
-    std::shared_ptr<ParameterRelay> relay = processor.getParameterRelayManager().getItem(rowNumber);
+    std::shared_ptr<MIDIRelay> relay = relayManager.getItem(rowNumber);
     
     if (columnId == groupColumnId) return relay->setGroup(String(newText));
     
-    else if (columnId == descriptorColumnId) return relay->setDescriptor(String(newText));
-    
     throw std::invalid_argument("unexpected columnId");
 }
 
-void ParameterComponent::onCellDeleteButton (const int rowNumber)
+void MIDITableComponent::onCellDeleteButton (const int rowNumber)
 {
     std::cout << "Delete row " << rowNumber << "\n";
     
-    std::shared_ptr<ParameterRelay> relay = processor.getParameterRelayManager().getItem(rowNumber);
+    std::shared_ptr<MIDIRelay> relay = relayManager.getItems().at(rowNumber);
     
-    processor.getParameterRelayManager().deleteItem(relay->getIdentifier());
+    relayManager.deleteItem(relay->getIdentifier());
     
     table.updateContent();
 }
 
-void ParameterComponent::onCellDetailsButton (const int rowNumber)
+void MIDITableComponent::onCellDetailsButton (const int rowNumber)
 {
     std::cout << "Details row " << rowNumber << "\n";
     
@@ -182,7 +175,7 @@ void ParameterComponent::onCellDetailsButton (const int rowNumber)
 }
 
 // This is overloaded from TableListBoxModel, and must update any custom components that we're using
-Component* ParameterComponent::refreshComponentForCell (int rowNumber, int columnId, bool isRowSelected, Component* existingComponentToUpdate)
+Component* MIDITableComponent::refreshComponentForCell (int rowNumber, int columnId, bool isRowSelected, Component* existingComponentToUpdate)
 {
     
     if (columnId == buttonColumnId) // For the ratings column, we return the custom combobox component
@@ -197,29 +190,29 @@ Component* ParameterComponent::refreshComponentForCell (int rowNumber, int colum
         return component;
     }
     
-    else if (columnId == parameterColumnId) // For the ratings column, we return the custom combobox component
+    if (columnId == channelColumnId) // For the ratings column, we return the custom combobox component
     {
-        ParameterCellComponent* component = static_cast<ParameterCellComponent*> (existingComponentToUpdate);
+        ChannelColumnCustomComponent* component = static_cast<ChannelColumnCustomComponent*> (existingComponentToUpdate);
         
         // If an existing component is being passed-in for updating, we'll re-use it, but
         // if not, we'll have to create one.
-        if (component == nullptr) component = new ParameterCellComponent(processor.getParameters());
+        if (component == nullptr) component = new ChannelColumnCustomComponent();
         
-        std::shared_ptr<ParameterRelay> relay = processor.getParameterRelayManager().getItem(rowNumber);
+        std::shared_ptr<MIDIRelay> relay = relayManager.getItem(rowNumber);
         
         component->setRelay(relay);
         return component;
     }
     
-    else if (columnId == targetColumnId) // For the ratings column, we return the custom combobox component
+    if (columnId == targetColumnId) // For the ratings column, we return the custom combobox component
     {
         TargetColumnCustomComponent* component = static_cast<TargetColumnCustomComponent*> (existingComponentToUpdate);
         
         // If an existing component is being passed-in for updating, we'll re-use it, but
         // if not, we'll have to create one.
-        if (component == nullptr) component = new TargetColumnCustomComponent(processor.getOSCTargetManager());
+        if (component == nullptr) component = new TargetColumnCustomComponent(targetManager);
         
-        std::shared_ptr<Relay> relay = std::static_pointer_cast<Relay>( processor.getParameterRelayManager().getItem(rowNumber) );
+        std::shared_ptr<Relay> relay = std::static_pointer_cast<Relay>(relayManager.getItem(rowNumber));
         
         component->refresh();
         component->setRelay(relay);
@@ -227,7 +220,7 @@ Component* ParameterComponent::refreshComponentForCell (int rowNumber, int colum
         return component;
     }
     
-    else if (columnId == groupColumnId || columnId == descriptorColumnId)
+    if (columnId == groupColumnId)
     {
         // The other columns are editable text columns, for which we use the custom Label component
         TextCellComponent* textLabel = static_cast<TextCellComponent*> (existingComponentToUpdate);
@@ -246,14 +239,13 @@ Component* ParameterComponent::refreshComponentForCell (int rowNumber, int colum
 
 
 // This is overloaded from TableListBoxModel, and must paint any cells that aren't using custom components.
-void ParameterComponent::paintCell (Graphics& g, int rowNumber, int columnId, int width, int height, bool rowIsSelected)
+void MIDITableComponent::paintCell (Graphics& g, int rowNumber, int columnId, int width, int height, bool rowIsSelected)
 {
     g.setColour (Colours::black);
 }
 
-int ParameterComponent::getColumnAutoSizeWidth (int columnId)
+int MIDITableComponent::getColumnAutoSizeWidth (int columnId)
 {
     return 32;
 }
-
 

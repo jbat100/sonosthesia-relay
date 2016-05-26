@@ -1,20 +1,20 @@
 /*
   ==============================================================================
 
-    TestComponent.cpp
+    TestTableComponent.cpp
     Created: 19 May 2016 6:12:20pm
     Author:  Jonathan Thorpe
 
   ==============================================================================
 */
 
-#include "TestComponent.h"
+#include "TestTableComponent.h"
 
 
 /*
  ==============================================================================
  
- TestComponent.cpp
+ TestTableComponent.cpp
  Created: 12 May 2016 4:38:11pm
  Author:  Jonathan Thorpe
  
@@ -25,10 +25,10 @@
 
 #include "CommonComponent.h"
 #include "RelayComponent.h"
-#include "TestComponent.h"
+#include "TestTableComponent.h"
 
 //==============================================================================
-TestComponent::TestComponent(RelayAudioProcessor& _processor) : processor(_processor)
+TestTableComponent::TestTableComponent(RelayAudioProcessor& _processor) : processor(_processor)
 {
     // In your constructor, you should add any child components, and
     // initialise any special settings that your component needs.
@@ -58,11 +58,11 @@ TestComponent::TestComponent(RelayAudioProcessor& _processor) : processor(_proce
     
 }
 
-TestComponent::~TestComponent()
+TestTableComponent::~TestTableComponent()
 {
 }
 
-void TestComponent::paint (Graphics& g)
+void TestTableComponent::paint (Graphics& g)
 {
     /* This demo code just fills the component's background and
      draws some placeholder text to get you started.
@@ -80,10 +80,10 @@ void TestComponent::paint (Graphics& g)
     g.setFont(14.0f);
     
     // draw some placeholder text
-    // g.drawText ("TestComponent", getLocalBounds(), Justification::centred, true);
+    // g.drawText ("TestTableComponent", getLocalBounds(), Justification::centred, true);
 }
 
-void TestComponent::resized()
+void TestTableComponent::resized()
 {
     // This method is where you should set the bounds of any child
     // components that your component contains...
@@ -93,7 +93,7 @@ void TestComponent::resized()
     table.setBounds( getBounds().withX(0).withY(0).withTrimmedBottom(0).reduced(margin) );
 }
 
-void TestComponent::update()
+void TestTableComponent::update()
 {
     table.updateContent();
 }
@@ -101,19 +101,19 @@ void TestComponent::update()
 
 // ======= TableListBoxModel =========
 
-int TestComponent::getNumRows()
+int TestTableComponent::getNumRows()
 {
     return processor.getParameters().size();
 }
 
-void TestComponent::paintRowBackground (Graphics& g, int rowNumber, int width, int height, bool rowIsSelected)
+void TestTableComponent::paintRowBackground (Graphics& g, int rowNumber, int width, int height, bool rowIsSelected)
 {
     if (rowIsSelected) g.fillAll (Colours::lightblue);
     else if (rowNumber % 2) g.fillAll (Colour (0xffeeeeee));
 }
 
 // This is overloaded from TableListBoxModel, and must paint any cells that aren't using custom components.
-void TestComponent::paintCell (Graphics& g, int rowNumber, int columnId, int width, int height, bool rowIsSelected)
+void TestTableComponent::paintCell (Graphics& g, int rowNumber, int columnId, int width, int height, bool rowIsSelected)
 {
     g.setColour (Colours::black);
     g.setFont (font);
@@ -143,7 +143,7 @@ void TestComponent::paintCell (Graphics& g, int rowNumber, int columnId, int wid
 }
 
 // This is overloaded from TableListBoxModel, and must update any custom components that we're using
-Component* TestComponent::refreshComponentForCell (int rowNumber, int columnId, bool isRowSelected, Component* existingComponentToUpdate)
+Component* TestTableComponent::refreshComponentForCell (int rowNumber, int columnId, bool isRowSelected, Component* existingComponentToUpdate)
 {
     
     if (columnId == valueColumnId) // For the ratings column, we return the custom combobox component
@@ -163,7 +163,7 @@ Component* TestComponent::refreshComponentForCell (int rowNumber, int columnId, 
     
 }
 
-int TestComponent::getColumnAutoSizeWidth (int columnId)
+int TestTableComponent::getColumnAutoSizeWidth (int columnId)
 {
     return 32;
 }

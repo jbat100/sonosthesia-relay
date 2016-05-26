@@ -88,6 +88,11 @@ public:
         throw std::invalid_argument( "unknown identifier" );
     }
     
+    void addItem(std::shared_ptr<T> item)
+    {
+        items.push_back(item);
+    }
+    
     std::shared_ptr<T> getItem(int index)
     {
         return items.at(index);

@@ -1,34 +1,33 @@
 /*
   ==============================================================================
 
-    ParameterComponent.h
-    Created: 12 May 2016 4:37:39pm
+    MIDITableComponent.h
+    Created: 12 May 2016 4:38:11pm
     Author:  Jonathan Thorpe
 
   ==============================================================================
 */
 
-#ifndef PARAMETERCOMPONENT_H_INCLUDED
-#define PARAMETERCOMPONENT_H_INCLUDED
+#ifndef MIDICOMPONENT_H_INCLUDED
+#define MIDICOMPONENT_H_INCLUDED
 
 #include "../JuceLibraryCode/JuceHeader.h"
 
-#include "PluginProcessor.h"
 #include "CommonComponent.h"
-#include "ParameterRelay.h"
+#include "MIDIRelay.h"
 
 //==============================================================================
 /*
 */
-class ParameterComponent : public Component, public Button::Listener, public TableListBoxModel, public ChangeListener, public TextCellManager
+class MIDITableComponent : public Component, public Button::Listener, public TableListBoxModel, public ChangeListener, public TextCellManager
 {
 public:
-    ParameterComponent(RelayAudioProcessor& processor);
-    ~ParameterComponent();
+    MIDITableComponent(MIDIRelayManager& _relayManager, OSCTargetManager& _targetManager);
+    ~MIDITableComponent();
 
     void paint (Graphics&) override;
     void resized() override;
-
+    
     // ======= ChangeListener ===========
     
     void changeListenerCallback (ChangeBroadcaster *source) override;
@@ -55,6 +54,7 @@ public:
     void onCellDeleteButton (const int rowNumber);
     void onCellDetailsButton (const int rowNumber);
     
+    
 private:
     
     TextButton newButton;
@@ -62,29 +62,30 @@ private:
     TableListBox table;
     Font font;
     
-    const int parameterColumnId = 1;
+    const int channelColumnId = 1;
     const int targetColumnId = 2;
     const int groupColumnId = 3;
-    const int descriptorColumnId = 4;
-    const int buttonColumnId = 5;
+    const int buttonColumnId = 4;
     
-    RelayAudioProcessor& processor;
+    MIDIRelayManager& relayManager;
+    OSCTargetManager& targetManager;
     
-    class ParameterCellComponent : public Component, private ComboBoxListener
+    //==============================================================================
+    // This is a custom component containing used for selecting a midi channel
+    class ChannelColumnCustomComponent : public Component, private ComboBoxListener
     {
     public:
-        ParameterCellComponent (const OwnedArray<AudioProcessorParameter>& _parameters) :
-        parameters(_parameters)
+        ChannelColumnCustomComponent ()
         {
             // just put a combo box inside this component
             addAndMakeVisible (comboBox);
             
-            comboBox.addItem ( "None" , parameterIndexToId(ParameterRelay::noIndex) );
+            comboBox.addItem ("All", -1);
             
-            for (auto i = parameters.begin(); i != parameters.end(); i++)
+            for (int i = 0; i < 16; i++)
             {
                 // can't have 0 as id so we offset by 1
-                comboBox.addItem ( (*i)->getName(20) , parameterIndexToId((*i)->getParameterIndex()) );
+                comboBox.addItem (String(i) , idForChannel(i));
             }
             
             // when the combo is changed, we'll get a callback.
@@ -92,14 +93,18 @@ private:
             comboBox.setWantsKeyboardFocus (false);
         }
         
-        int parameterIndexToId(int parameterIndex)
+        int idForChannel(int channel)
         {
-            return parameterIndex + 2; // we want to avoid 0
+            if (channel == -1) return channel;
+            else if (channel >= 0) return channel + 1;
+            throw std::invalid_argument("unexpected channel");
         }
         
-        int idToParameterIndex(int _id)
+        int channelForId(int _id)
         {
-            return _id - 2;
+            if (_id == -1) return _id;
+            else if (_id > 0) return _id - 1;
+            throw std::invalid_argument("unexpected _id");
         }
         
         void resized() override
@@ -107,30 +112,29 @@ private:
             comboBox.setBoundsInset (BorderSize<int> (2));
         }
         
-        void comboBoxChanged (ComboBox*) override
-        {
-            relay->setIndex ( idToParameterIndex(comboBox.getSelectedId()) );
-        }
-        
-        void setRelay(std::shared_ptr<ParameterRelay> _relay)
+        void setRelay (std::shared_ptr<MIDIRelay> _relay)
         {
             relay = _relay;
-            if (relay) comboBox.setSelectedId( parameterIndexToId(relay->getIndex()) );
-            else comboBox.setSelectedId( parameterIndexToId(ParameterRelay::noIndex) );
+            comboBox.setSelectedId (idForChannel(relay->getChannel()), dontSendNotification);
+        }
+        
+        void comboBoxChanged (ComboBox*) override
+        {
+            relay->setChannel ( channelForId(comboBox.getSelectedId()) );
         }
         
     private:
         ComboBox comboBox;
-        std::shared_ptr<ParameterRelay> relay;
-        const OwnedArray<AudioProcessorParameter>& parameters;
+        std::shared_ptr<MIDIRelay> relay;
     };
+    
     
     //==============================================================================
     // This is a custom Label component, which we use for the table's editable text columns.
     class ButtonCustomComponent  : public Component, public ButtonListener
     {
     public:
-        ButtonCustomComponent (ParameterComponent& td)  : owner (td)
+        ButtonCustomComponent (MIDITableComponent& td)  : owner (td)
         {
             addAndMakeVisible(deleteButton);
             deleteButton.setButtonText("Delete");
@@ -170,13 +174,13 @@ private:
         }
         
     private:
-        ParameterComponent& owner;
+        MIDITableComponent& owner;
         TextButton deleteButton, detailsButton;
         int row;
     };
     
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ParameterComponent)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MIDITableComponent)
 };
 
 
-#endif  // PARAMETERCOMPONENT_H_INCLUDED
+#endif  // MIDICOMPONENT_H_INCLUDED

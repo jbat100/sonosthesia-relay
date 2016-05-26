@@ -1,7 +1,7 @@
 /*
   ==============================================================================
 
-    TargetComponent.cpp
+    TargetTableComponent.cpp
     Created: 12 May 2016 4:37:10pm
     Author:  Jonathan Thorpe
 
@@ -9,10 +9,10 @@
 */
 
 #include "../JuceLibraryCode/JuceHeader.h"
-#include "TargetComponent.h"
+#include "TargetTableComponent.h"
 
 //==============================================================================
-TargetComponent::TargetComponent(OSCTargetManager& _oscTargetManager) : font (14.0f), oscTargetManager(_oscTargetManager)
+TargetTableComponent::TargetTableComponent(OSCTargetManager& _oscTargetManager) : font (14.0f), oscTargetManager(_oscTargetManager)
 {
     // In your constructor, you should add any child components, and
     // initialise any special settings that your component needs.
@@ -51,11 +51,11 @@ TargetComponent::TargetComponent(OSCTargetManager& _oscTargetManager) : font (14
     
 }
 
-TargetComponent::~TargetComponent()
+TargetTableComponent::~TargetTableComponent()
 {
 }
 
-void TargetComponent::paint (Graphics& g)
+void TargetTableComponent::paint (Graphics& g)
 {
     /* This demo code just fills the component's background and
        draws some placeholder text to get you started.
@@ -73,10 +73,10 @@ void TargetComponent::paint (Graphics& g)
     g.setFont(14.0f);
     
     // draw some placeholder text
-    // g.drawText ("TargetComponent", getLocalBounds(), Justification::centred, true);
+    // g.drawText ("TargetTableComponent", getLocalBounds(), Justification::centred, true);
 }
 
-void TargetComponent::resized()
+void TargetTableComponent::resized()
 {
     // This method is where you should set the bounds of any child
     // components that your component contains...
@@ -96,7 +96,7 @@ void TargetComponent::resized()
 
 // ======== Button::Listener =========
 
-void TargetComponent::buttonClicked (Button* button)
+void TargetTableComponent::buttonClicked (Button* button)
 {
     if (button == &newButton)
     {
@@ -115,19 +115,13 @@ void TargetComponent::buttonClicked (Button* button)
 
 // ======= TableListBoxModel =========
 
-int TargetComponent::getNumRows()
+int TargetTableComponent::getNumRows()
 {
     return oscTargetManager.count();
 }
 
-void TargetComponent::paintRowBackground (Graphics& g, int rowNumber, int width, int height, bool rowIsSelected)
-{
-    if (rowIsSelected) g.fillAll (Colours::lightblue);
-    else if (rowNumber % 2) g.fillAll (Colour (0xffeeeeee));
-}
 
-
-String TargetComponent::getCellText (const int columnId, const int rowNumber)
+String TargetTableComponent::getCellText (const int columnId, const int rowNumber)
 {
     std::shared_ptr<OSCTarget> target = oscTargetManager.getItem(rowNumber);
     
@@ -137,7 +131,7 @@ String TargetComponent::getCellText (const int columnId, const int rowNumber)
     return "";
 }
 
-void TargetComponent::cellTextChanged (const int columnId, const int rowNumber, const String& newText)
+void TargetTableComponent::cellTextChanged (const int columnId, const int rowNumber, const String& newText)
 {
     std::shared_ptr<OSCTarget> target = oscTargetManager.getItem(rowNumber);
     
@@ -151,7 +145,7 @@ void TargetComponent::cellTextChanged (const int columnId, const int rowNumber, 
     }
 }
 
-void TargetComponent::onCellDeleteButton (const int rowNumber)
+void TargetTableComponent::onCellDeleteButton (const int rowNumber)
 {
     std::cout << "Delete row " << rowNumber << "\n";
     
@@ -163,7 +157,7 @@ void TargetComponent::onCellDeleteButton (const int rowNumber)
     table.updateContent();
 }
 
-void TargetComponent::onCellConnectButton (const int rowNumber)
+void TargetTableComponent::onCellConnectButton (const int rowNumber)
 {
     std::cout << "Connect row " << rowNumber << "\n";
     
@@ -172,8 +166,14 @@ void TargetComponent::onCellConnectButton (const int rowNumber)
     target->reconnect();
 }
 
+void TargetTableComponent::paintRowBackground (Graphics& g, int rowNumber, int width, int height, bool rowIsSelected)
+{
+    if (rowIsSelected) g.fillAll (Colours::lightblue);
+    else if (rowNumber % 2) g.fillAll (Colour (0xffeeeeee));
+}
+
 // This is overloaded from TableListBoxModel, and must paint any cells that aren't using custom components.
-void TargetComponent::paintCell (Graphics& g, int rowNumber, int columnId, int width, int height, bool rowIsSelected)
+void TargetTableComponent::paintCell (Graphics& g, int rowNumber, int columnId, int width, int height, bool rowIsSelected)
 {
     g.setColour (Colours::black);
     g.setFont (font);
@@ -202,7 +202,7 @@ void TargetComponent::paintCell (Graphics& g, int rowNumber, int columnId, int w
 
 
 // This is overloaded from TableListBoxModel, and must update any custom components that we're using
-Component* TargetComponent::refreshComponentForCell (int rowNumber, int columnId, bool isRowSelected, Component* existingComponentToUpdate)
+Component* TargetTableComponent::refreshComponentForCell (int rowNumber, int columnId, bool isRowSelected, Component* existingComponentToUpdate)
 {
     if (columnId == statusColumnId)
     {
@@ -234,7 +234,7 @@ Component* TargetComponent::refreshComponentForCell (int rowNumber, int columnId
     return textLabel;
 }
 
-int TargetComponent::getColumnAutoSizeWidth (int columnId)
+int TargetTableComponent::getColumnAutoSizeWidth (int columnId)
 {
     if (columnId == buttonColumnId)
         return 150;

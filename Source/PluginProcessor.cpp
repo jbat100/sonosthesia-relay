@@ -194,6 +194,33 @@ void RelayAudioProcessor::getStateInformation (MemoryBlock& destData)
         if (AudioProcessorParameterWithID* p = dynamic_cast<AudioProcessorParameterWithID*> (getParameters().getUnchecked(i)))
             xml.setAttribute (p->paramID, p->getValue());
     
+    // Store targets...
+    XmlElement* targetsElement = xml.createNewChildElement("targets");
+    auto targets = oscTargetManager.getItems();
+    for (auto i = targets.begin(); i != targets.end(); i++)
+    {
+        XmlElement* targetElement = targetsElement->createNewChildElement("target");
+        saveOSCTarget((*i), targetElement);
+    }
+    
+    // Store midi relays...
+    XmlElement* midiRelaysElement = xml.createNewChildElement("midi_relays");
+    auto midiRelays = midiRelayManager.getItems();
+    for (auto i = midiRelays.begin(); i != midiRelays.end(); i++)
+    {
+        XmlElement* midiRelayElement = midiRelaysElement->createNewChildElement("midi_relay");
+        saveMIDIRelay((*i), midiRelayElement);
+    }
+    
+    // Store parameter relays...
+    XmlElement* parameterRelaysElement = xml.createNewChildElement("parameter_relays");
+    auto parameterRelays = parameterRelayManager.getItems();
+    for (auto i = parameterRelays.begin(); i != parameterRelays.end(); i++)
+    {
+        XmlElement* parameterRelayElement = parameterRelaysElement->createNewChildElement("parameter_relay");
+        saveParameterRelay((*i), parameterRelayElement);
+    }
+    
     // then use this helper function to stuff it into the binary blob and return it..
     copyXmlToBinary (xml, destData);
 }
@@ -223,6 +250,42 @@ void RelayAudioProcessor::setStateInformation (const void* data, int sizeInBytes
             for (int i = 0; i < getNumParameters(); ++i)
                 if (AudioProcessorParameterWithID* p = dynamic_cast<AudioProcessorParameterWithID*> (getParameters().getUnchecked(i)))
                     p->setValueNotifyingHost ((float) xmlState->getDoubleAttribute (p->paramID, p->getValue()));
+            
+            // order is important, targets must be loaded first, as the relays will need them
+            XmlElement* targetsElement = xmlState->getChildByName("targets");
+            if (targetsElement)
+            {
+                for (int i = 0; i < targetsElement->getNumChildElements(); i++)
+                {
+                    XmlElement* targetElement = targetsElement->getChildElement(i);
+                    auto target = loadOSCTarget(targetElement);
+                    oscTargetManager.addItem(target);
+                }
+            }
+            
+            // load midi relays
+            XmlElement* midiRelaysElement = xmlState->getChildByName("midi_relays");
+            if (midiRelaysElement)
+            {
+                for (int i = 0; i < midiRelaysElement->getNumChildElements(); i++)
+                {
+                    XmlElement* midiRelayElement = midiRelaysElement->getChildElement(i);
+                    auto midiRelay = loadMIDIRelay(midiRelayElement);
+                    midiRelayManager.addItem(midiRelay);
+                }
+            }
+            
+            // load parameter relays
+            XmlElement* parameterRelaysElement = xmlState->getChildByName("parameter_relays");
+            if (parameterRelaysElement)
+            {
+                for (int i = 0; i < parameterRelaysElement->getNumChildElements(); i++)
+                {
+                    XmlElement* parameterRelayElement = parameterRelaysElement->getChildElement(i);
+                    auto parameterRelay = loadParameterRelay(parameterRelayElement);
+                    parameterRelayManager.addItem(parameterRelay);
+                }
+            }
         }
     }
 }

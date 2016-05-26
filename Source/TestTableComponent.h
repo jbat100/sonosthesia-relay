@@ -1,7 +1,7 @@
 /*
   ==============================================================================
 
-    TestComponent.h
+    TestTableComponent.h
     Created: 19 May 2016 6:12:20pm
     Author:  Jonathan Thorpe
 
@@ -20,11 +20,11 @@
 //==============================================================================
 /*
  */
-class TestComponent : public Component, public TableListBoxModel
+class TestTableComponent : public Component, public TableListBoxModel
 {
 public:
-    TestComponent(RelayAudioProcessor& _processor);
-    ~TestComponent();
+    TestTableComponent(RelayAudioProcessor& _processor);
+    ~TestTableComponent();
     
     void paint (Graphics&) override;
     void resized() override;
@@ -50,7 +50,7 @@ private:
     
     RelayAudioProcessor& processor;
     
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (TestComponent)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (TestTableComponent)
 };
 
 

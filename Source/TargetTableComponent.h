@@ -1,7 +1,7 @@
 /*
   ==============================================================================
 
-    TargetComponent.h
+    TargetTableComponent.h
     Created: 12 May 2016 4:37:10pm
     Author:  Jonathan Thorpe
 
@@ -19,11 +19,11 @@
 //==============================================================================
 /*
 */
-class TargetComponent    : public Component, public Button::Listener, public TableListBoxModel, public TextCellManager
+class TargetTableComponent    : public Component, public Button::Listener, public TableListBoxModel, public TextCellManager
 {
 public:
-    TargetComponent(OSCTargetManager& _oscTargetManager);
-    ~TargetComponent();
+    TargetTableComponent(OSCTargetManager& _oscTargetManager);
+    ~TargetTableComponent();
 
     void paint (Graphics&) override;
     void resized() override;
@@ -69,7 +69,7 @@ private:
     class ButtonCustomComponent  : public Component, public ButtonListener
     {
     public:
-        ButtonCustomComponent (TargetComponent& td)  : owner (td)
+        ButtonCustomComponent (TargetTableComponent& td)  : owner (td)
         {
             addAndMakeVisible(deleteButton);
             deleteButton.setButtonText("Delete");
@@ -110,13 +110,13 @@ private:
         }
         
     private:
-        TargetComponent& owner;
+        TargetTableComponent& owner;
         TextButton deleteButton, connectButton;
         int row, columnId;
     };
     
     
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (TargetComponent)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (TargetTableComponent)
 };
 
 
