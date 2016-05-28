@@ -49,6 +49,8 @@ std::shared_ptr<OSCTarget> Relay::getTarget()
 
 void Relay::setTarget(std::shared_ptr<OSCTarget> _target)
 {
+    if (_target == target) return;
+    
     // if we already have a target then stop listening to notifications
     if (target)
     {

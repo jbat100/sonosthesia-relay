@@ -12,6 +12,8 @@
   <MAINGROUP id="YN10nS" name="Relay">
     <GROUP id="{CA07BB16-3DC8-BFEA-3102-6340B6C296CD}" name="Source">
       <GROUP id="{5A6FCEDB-3722-FFD2-4E43-2026F21284C5}" name="Common">
+        <FILE id="HZY0mQ" name="Theme.cpp" compile="1" resource="0" file="Source/Theme.cpp"/>
+        <FILE id="PvRHJR" name="Theme.h" compile="0" resource="0" file="Source/Theme.h"/>
         <FILE id="uZr28M" name="RelayComponent.cpp" compile="1" resource="0"
               file="Source/RelayComponent.cpp"/>
         <FILE id="gtNdRw" name="RelayComponent.h" compile="0" resource="0"

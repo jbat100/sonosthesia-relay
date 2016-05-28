@@ -61,8 +61,6 @@ public:
     
     void comboBoxChanged (ComboBox*) override
     {
-        std::cout << "TargetColumnCustomComponent comboBoxChanged\n";
-        
         try
         {
             int numericIdentifier = comboBox.getSelectedId();

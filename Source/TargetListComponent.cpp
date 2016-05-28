@@ -10,34 +10,56 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "TargetListComponent.h"
+#include "Theme.h"
 
+const int TargetComponent::desiredHeight = 50;
 
-TargetComponent::TargetComponent(OSCTargetManager& _manager, std::shared_ptr<OSCTarget> _target) :
-    manager(_manager),
-    target(_target)
+TargetComponent::TargetComponent(OSCTargetManager& _manager) : manager(_manager), target(nullptr)
 {
-    jassert(_target);
-    target->add(this);
+    Colour labelTextColour = Colours::whitesmoke;
     
     addAndMakeVisible(hostLabel);
+    hostLabel.setText("Host", dontSendNotification);
+    Appearence::theme()->label(hostLabel);
     
     addAndMakeVisible(hostField);
     hostField.setEditable(false, true, false);
-    hostField.setColour(Label::textColourId, Colours::black);
     hostField.addListener(this);
+    Appearence::theme()->field(hostField);
     
     addAndMakeVisible(portLabel);
+    portLabel.setText("Port", dontSendNotification);
+    Appearence::theme()->label(portLabel);
     
     addAndMakeVisible(portField);
     portField.setEditable(false, true, false);
-    portField.setColour(Label::textColourId, Colours::black);
     portField.addListener(this);
+    Appearence::theme()->field(portField);
     
     addAndMakeVisible(statusLabel);
     
     addAndMakeVisible(deleteButton);
     deleteButton.addListener(this);
+    deleteButton.setButtonText("Delete");
+    Appearence::theme()->textButton(deleteButton);
     
+}
+
+void TargetComponent::setTarget(std::shared_ptr<OSCTarget> _target)
+{
+    if (target)
+    {
+        target->remove(this);
+    }
+    
+    target = _target;
+    
+    if (target)
+    {
+        target->add(this);
+    }
+    
+    refresh();
 }
 
 void TargetComponent::paint (Graphics& g)
@@ -50,53 +72,25 @@ void TargetComponent::paint (Graphics& g)
     
 }
 
-/*
-
-void TargetComponent::resized()
-{
-    
-    int margin = 4;
-    int labelWidth = 100;
-    int buttonWidth = 200;
-    int labelHeight = 30;
-    
-    Rectangle<int> rootBounds = getBounds().reduced(margin*2, margin*2).translated(margin, margin);
-    
-    int fullWidth = rootBounds.getWidth();
-    //int fullHeight = rootBounds.getHeight();
-    
-    // labels are on the right
-    Rectangle<int> labelBounds = rootBounds.withWidth(labelWidth);
-    int labelMargin = 2;
-    Rectangle<int> hostnameLabelBounds = labelBounds.withHeight(labelHeight).reduced(labelMargin, labelMargin);
-    
-    // fields are in the middle, and will stretch with width
-    Rectangle<int> fieldBounds = rootBounds.translated(labelWidth, 0).withWidth(fullWidth - labelWidth - buttonWidth);
-    
-    // fields are in the middle, and will stretch with width
-    Rectangle<int> buttonBounds = rootBounds.translated(fullWidth - buttonWidth, 0).withWidth(buttonWidth);
-    
-    
-}
- 
- */
-
 void TargetComponent::resized()
 {
     
     int margin = 4;
     int spacing = 4;
     
-    int hostLabelWidth = 100;
+    int hostLabelWidth = 50;
     //int hostFieldWidth = 200; // hostname field will resize proportionally
     int portLabelWidth = 50;
     int portFieldWidth = 50;
     
-    int statusLabelWidth = 200;
+    int statusLabelWidth = 100;
     
     int labelHeight = 30;
     int buttonWidth = 60;
     int buttonHeight = 30;
+    
+    Rectangle<int> bounds = getBounds();
+    
     
     Rectangle<int> rootBounds = getBounds().reduced(margin*2, margin*2).translated(margin, margin);
     
@@ -108,7 +102,7 @@ void TargetComponent::resized()
     horizontalOffset = hostLabelBounds.getRight() + spacing;
     hostLabel.setBounds(hostLabelBounds);
 
-    int hostFieldWidth = fullWidth - hostLabelWidth - portLabelWidth - portFieldWidth - buttonWidth - (spacing*4);
+    int hostFieldWidth = fullWidth - hostLabelWidth - portLabelWidth - portFieldWidth - buttonWidth - statusLabelWidth - (spacing*5);
     Rectangle<int> hostFieldBounds = rootBounds.withX(horizontalOffset).withWidth(hostFieldWidth).withHeight(labelHeight);
     horizontalOffset = hostFieldBounds.getRight() + spacing;
     hostField.setBounds(hostFieldBounds);
@@ -119,7 +113,7 @@ void TargetComponent::resized()
     
     Rectangle<int> portFieldBounds = rootBounds.withX(horizontalOffset).withWidth(portFieldWidth).withHeight(labelHeight);
     horizontalOffset = portFieldBounds.getRight() + spacing;
-    portField.setBounds(portLabelBounds);
+    portField.setBounds(portFieldBounds);
     
     Rectangle<int> statusLabelBounds = rootBounds.withX(horizontalOffset).withWidth(statusLabelWidth).withHeight(labelHeight);
     horizontalOffset = statusLabelBounds.getRight() + spacing;
@@ -165,7 +159,10 @@ void TargetComponent::labelTextChanged(Label *label)
 
 void TargetComponent::targetInvalidated(OSCTarget* _target)
 {
-    target = nullptr;
+    if (target.get() == _target)
+    {
+        setTarget(nullptr);
+    }
 }
 
 void TargetComponent::refresh()
@@ -189,7 +186,26 @@ TargetListComponent::TargetListComponent(OSCTargetManager& _oscTargetManager) : 
 {
     // In your constructor, you should add any child components, and
     // initialise any special settings that your component needs.
-
+    
+    // In your constructor, you should add any child components, and
+    // initialise any special settings that your component needs.
+    
+    addAndMakeVisible(newButton);
+    newButton.addListener(this);
+    newButton.setButtonText("New");
+    
+    addAndMakeVisible(clearButton);
+    clearButton.addListener(this);
+    clearButton.setButtonText("Clear");
+    
+    // Create our table component and add it to this component..
+    addAndMakeVisible (listBox);
+    
+    listBox.setOutlineThickness(0);
+    listBox.setRowHeight(TargetComponent::desiredHeight);
+    
+    listBox.setModel (this);
+        
 }
 
 TargetListComponent::~TargetListComponent()
@@ -216,24 +232,71 @@ void TargetListComponent::resized()
 {
     // This method is where you should set the bounds of any child
     // components that your component contains..
-
+    
+    // This method is where you should set the bounds of any child
+    // components that your component contains...
+    
+    int buttonHeight = 25;
+    int margin = 4;
+    
+    Rectangle<int> bounds = getBounds();
+    
+    int halfWidth = bounds.getWidth() / 2;
+    
+    newButton.setBounds( getBounds().withX(0).withY(0).withHeight(buttonHeight).withWidth(halfWidth).reduced(margin) );
+    clearButton.setBounds( getBounds().withX(halfWidth).withY(0).withHeight(buttonHeight).withWidth(halfWidth).reduced(margin) );
+    
+    listBox.setBounds( getBounds().withX(0).withY(buttonHeight).withTrimmedBottom(buttonHeight).reduced(margin) );
+    
 }
 
 void TargetListComponent::buttonClicked (Button* button)
 {
-    
+    if (button == &newButton)
+    {
+        //std::cout << "Make new target!\n";
+        oscTargetManager.newItem();
+        listBox.updateContent();
+    }
+    else if (button == &clearButton)
+    {
+        //std::cout << "Clear targets!\n";
+        oscTargetManager.invalidateAll();
+        oscTargetManager.clear();
+        listBox.updateContent();
+    }
 }
 
 int TargetListComponent::getNumRows()
 {
-    return 0;
+    return oscTargetManager.count();
 }
+
 void TargetListComponent::paintListBoxItem (int rowNumber, Graphics &g, int width, int height, bool rowIsSelected)
 {
+    g.setColour(Colours::black);
     
+    g.drawRoundedRectangle(0, 0, width, height, 5, 2);
 }
 
 Component* TargetListComponent::refreshComponentForRow (int rowNumber, bool isRowSelected, Component *existingComponentToUpdate)
 {
-    return nullptr;
+    TargetComponent* targetComponent = static_cast<TargetComponent*> (existingComponentToUpdate);
+    
+    std::shared_ptr<OSCTarget> target = nullptr;
+    
+    if (rowNumber < oscTargetManager.count())
+    {
+        target = oscTargetManager.getItem(rowNumber);
+    }
+    
+    // If an existing component is being passed-in for updating, we'll re-use it, but
+    // if not, we'll have to create one.
+    if (targetComponent == nullptr)
+    {
+        targetComponent = new TargetComponent(oscTargetManager);
+    }
+    
+    targetComponent->setTarget(target);
+    return targetComponent;
 }

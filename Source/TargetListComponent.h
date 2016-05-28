@@ -21,10 +21,14 @@
 
 class TargetComponent : public Component, public LabelListener, public ButtonListener, public OSCTargetListener  {
     
-    TargetComponent(OSCTargetManager& _manager, std::shared_ptr<OSCTarget> _target);
+public:
+    
+    TargetComponent(OSCTargetManager& _manager);
     
     void paint (Graphics&) override;
     void resized() override;
+    
+    void setTarget(std::shared_ptr<OSCTarget> _target);
     
     // ======== ButtonListener =========
     
@@ -41,6 +45,10 @@ class TargetComponent : public Component, public LabelListener, public ButtonLis
     // ====== OSCTargetListener ========
     
     void targetInvalidated(OSCTarget* _target) override;
+    
+    // ====== Helpers ==================
+    
+    static const int desiredHeight;
     
 private:
     
@@ -89,7 +97,7 @@ private:
     
     TextButton newButton;
     TextButton clearButton;
-    ListBox table;
+    ListBox listBox;
     Font font;
     
     OSCTargetManager& oscTargetManager;

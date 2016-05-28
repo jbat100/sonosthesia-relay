@@ -70,10 +70,6 @@ void TargetTableComponent::paint (Graphics& g)
     g.drawRect (getLocalBounds(), 1);   // draw an outline around the component
 
     g.setColour (Colours::lightblue);
-    g.setFont(14.0f);
-    
-    // draw some placeholder text
-    // g.drawText ("TargetTableComponent", getLocalBounds(), Justification::centred, true);
 }
 
 void TargetTableComponent::resized()
