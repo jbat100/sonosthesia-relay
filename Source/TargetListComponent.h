@@ -74,7 +74,7 @@ private:
 /*  A component presenting a list of targets
 */
 
-class TargetListComponent : public Component, public ButtonListener, public ListBoxModel
+class TargetListComponent : public Component, public ButtonListener, public ListBoxModel, public ChangeListener
 {
 public:
     TargetListComponent(OSCTargetManager& oscTargetManager);
@@ -82,6 +82,10 @@ public:
 
     void paint (Graphics&) override;
     void resized() override;
+    
+    // ======= ChangeListener ===========
+    
+    void changeListenerCallback (ChangeBroadcaster *source) override;
     
     // ======== ButtonListener =========
     

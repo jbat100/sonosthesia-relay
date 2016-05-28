@@ -37,6 +37,7 @@ TargetComponent::TargetComponent(OSCTargetManager& _manager) : manager(_manager)
     Appearence::theme()->field(portField);
     
     addAndMakeVisible(statusLabel);
+    Appearence::theme()->indicator(statusLabel, Theme::Level::Warning);
     
     addAndMakeVisible(deleteButton);
     deleteButton.addListener(this);
@@ -74,25 +75,25 @@ void TargetComponent::paint (Graphics& g)
 
 void TargetComponent::resized()
 {
+    int vmargin = 4;
+    int hmargin = 10;
+    int spacing = 10;
     
-    int margin = 4;
-    int spacing = 4;
-    
-    int hostLabelWidth = 50;
+    int hostLabelWidth = 40;
     //int hostFieldWidth = 200; // hostname field will resize proportionally
-    int portLabelWidth = 50;
+    int portLabelWidth = 40;
     int portFieldWidth = 50;
     
     int statusLabelWidth = 100;
     
-    int labelHeight = 30;
+    int labelHeight = 20;
     int buttonWidth = 60;
-    int buttonHeight = 30;
+    int buttonHeight = 20;
     
     Rectangle<int> bounds = getBounds();
     
     
-    Rectangle<int> rootBounds = getBounds().reduced(margin*2, margin*2).translated(margin, margin);
+    Rectangle<int> rootBounds = getBounds().reduced(hmargin*2, vmargin*2).translated(hmargin, vmargin);
     
     int fullWidth = rootBounds.getWidth();
     //int fullHeight = rootBounds.getHeight();
@@ -171,7 +172,9 @@ void TargetComponent::refresh()
     {
         hostField.setText(target->getHostName(), dontSendNotification);
         portField.setText(String(target->getPortNumber()), dontSendNotification);
+        
         statusLabel.setText(target->isConnected() ? "Connected" : "Disconnected", dontSendNotification);
+        Appearence::theme()->indicator(statusLabel, target->isConnected() ? Theme::Level::Primary : Theme::Level::Warning);
     }
     else
     {
@@ -190,6 +193,7 @@ TargetListComponent::TargetListComponent(OSCTargetManager& _oscTargetManager) : 
     // In your constructor, you should add any child components, and
     // initialise any special settings that your component needs.
     
+    
     addAndMakeVisible(newButton);
     newButton.addListener(this);
     newButton.setButtonText("New");
@@ -203,8 +207,12 @@ TargetListComponent::TargetListComponent(OSCTargetManager& _oscTargetManager) : 
     
     listBox.setOutlineThickness(0);
     listBox.setRowHeight(TargetComponent::desiredHeight);
+    listBox.setOpaque(false);
     
     listBox.setModel (this);
+    
+    
+    oscTargetManager.addChangeListener(this);
         
 }
 
@@ -214,17 +222,7 @@ TargetListComponent::~TargetListComponent()
 
 void TargetListComponent::paint (Graphics& g)
 {
-    /* This demo code just fills the component's background and
-       draws some placeholder text to get you started.
 
-       You should replace everything in this method with your own
-       drawing code..
-    */
-
-    g.fillAll (Colours::grey);   // clear the background
-
-    g.setColour (Colours::white);
-    g.drawRect (getLocalBounds(), 1);   // draw an outline around the component
 
 }
 
@@ -299,4 +297,13 @@ Component* TargetListComponent::refreshComponentForRow (int rowNumber, bool isRo
     
     targetComponent->setTarget(target);
     return targetComponent;
+}
+
+void TargetListComponent::changeListenerCallback (ChangeBroadcaster *source)
+{
+    // if the targets change then we need to update the table so that the new targets are available
+    if (source == dynamic_cast<ChangeBroadcaster*>(&oscTargetManager))
+    {
+        listBox.updateContent();
+    }
 }

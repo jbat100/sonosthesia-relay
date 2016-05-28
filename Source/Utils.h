@@ -91,6 +91,7 @@ public:
     void addItem(std::shared_ptr<T> item)
     {
         items.push_back(item);
+        sendChangeMessage();
     }
     
     std::shared_ptr<T> getItem(int index)

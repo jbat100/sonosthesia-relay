@@ -33,9 +33,18 @@ void Appearence::setTheme(Name name)
     }
 }
 
+SpaceTheme::SpaceTheme() :
+    defaultFont(12, Font::FontStyleFlags::plain),
+    boldFont(12, Font::FontStyleFlags::bold),
+    titleFont(14, Font::FontStyleFlags::plain)
+{
+    
+}
+
 void SpaceTheme::label(Label& label, Level level)
 {
     label.setColour(Label::ColourIds::textColourId, Colours::whitesmoke);
+    label.setJustificationType(Justification::verticallyCentred | Justification::right);
 }
 
 void SpaceTheme::field(Label& label, Level level)
@@ -43,6 +52,29 @@ void SpaceTheme::field(Label& label, Level level)
     label.setColour( Label::ColourIds::textColourId, Colours::darkgrey);
     label.setColour( Label::ColourIds::backgroundColourId, Colours::whitesmoke);
     label.setColour( Label::ColourIds::backgroundWhenEditingColourId, Colours::lightblue);
+    label.setJustificationType(Justification::verticallyCentred | Justification::left);
+}
+
+void SpaceTheme::indicator(Label& label, Level level)
+{
+    switch (level) {
+        
+        case Theme::Primary:
+            label.setColour( Label::ColourIds::textColourId, Colours::whitesmoke);
+            label.setColour( Label::ColourIds::backgroundColourId, Colours::deepskyblue);
+            break;
+            
+        case Theme::Warning:
+            label.setColour( Label::ColourIds::textColourId, Colours::whitesmoke);
+            label.setColour( Label::ColourIds::backgroundColourId, Colours::lightcoral);
+            break;
+            
+        default:
+            break;
+    }
+    
+    label.setJustificationType(Justification::centred);
+    
 }
 
 void SpaceTheme::textButton(TextButton& textButton, Level level)

@@ -51,8 +51,7 @@ public:
     
     virtual void label(Label& label, Level level = Default) = 0;
     virtual void field(Label& label, Level level = Default) = 0;
-    
-    // TODO : have an indicator mode for labels for example for connected/disconnected
+    virtual void indicator(Label& label, Level level = Default) = 0;
     
     virtual void textButton(TextButton& textButton, Level level = Default) = 0;
     
@@ -62,14 +61,28 @@ public:
 
 class SpaceTheme : public Theme {
     
+public:
+    
+    // blue dark :
+    // blue good : 94 201 201 - 149 253 253 - 122 198 179
+    // red warn : 243 109 48 - 250 185 109
+    
+    
+    SpaceTheme();
+    
     void label(Label& label, Level level = Default) override;
     void field(Label& label, Level level = Default) override;
-    
-    
+    void indicator(Label& label, Level level = Default) override;
     
     void textButton(TextButton& textButton, Level level = Default) override;
     
     void paintListBoxItem (int rowNumber, Graphics &g, int width, int height, bool rowIsSelected, Level level = Default) override;
+    
+private:
+    
+    Font defaultFont;
+    Font boldFont;
+    Font titleFont;
     
 };
 
