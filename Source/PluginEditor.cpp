@@ -13,27 +13,30 @@
 
 
 MainTabbedComponent::MainTabbedComponent(RelayAudioProcessor& _processor) :
-TabbedComponent (TabbedButtonBar::TabsAtTop),
-processor(_processor),
-targetComponent(processor.getOSCTargetManager()),
-midiComponent(processor.getMIDIRelayManager(), processor.getOSCTargetManager()),
-parameterComponent(processor),
-testComponent(processor)
+    TabbedComponent (TabbedButtonBar::TabsAtTop),
+    processor(_processor),
+    targetComponent(processor.getOSCTargetManager()),
+    midiComponent(processor.getMIDIRelayManager(), processor.getOSCTargetManager()),
+    parameterComponent(processor),
+    testComponent(processor)
 {
-    Colour colour = Colours::black;
+    File applicationFile = File::getSpecialLocation(File::SpecialLocationType::currentApplicationFile);
+    std::cout << "Plugin path : " << applicationFile.getFullPathName() << "\n";
     
-    addTab ("MIDI", Colours::white, &midiComponent, true);
-    addTab ("Parameters", Colours::white, &parameterComponent, true);
-    addTab ("Targets", Colours::white, &targetComponent, true);
-    addTab ("Test", Colours::white, &testComponent, true);
+    Colour colour = Colours::transparentBlack; // Colour(Colours::black).withAlpha(0.0f);
+    
+    addTab ("MIDI", colour, &midiComponent, true);
+    addTab ("Parameters", colour, &parameterComponent, true);
+    addTab ("Targets", colour, &targetComponent, true);
+    addTab ("Test", colour, &testComponent, true);
 
 }
 
 //==============================================================================
 RelayAudioProcessorEditor::RelayAudioProcessorEditor (RelayAudioProcessor& p) :
-AudioProcessorEditor (&p),
-processor (p),
-tabbedComponent(p)
+    AudioProcessorEditor (&p),
+    processor (p),
+    tabbedComponent(p)
 {
     setOpaque (true);
 
@@ -57,10 +60,21 @@ RelayAudioProcessorEditor::~RelayAudioProcessorEditor()
 //==============================================================================
 void RelayAudioProcessorEditor::paint (Graphics& g)
 {
-    g.fillAll (Colours::black);
-    g.setColour (Colours::black);
-    g.setFont (15.0f);
-    g.drawFittedText ("Hello World!", getLocalBounds(), Justification::centred, 1);
+    //g.fillAll (Colours::black);
+    //g.setColour (Colours::black);
+    
+    
+    //File file = File::getCurrentWorkingDirectory().getChildFile ("partial or full path");
+    
+    File applicationFile = File::getSpecialLocation(File::SpecialLocationType::currentApplicationFile);
+    
+    File imageFile = applicationFile.getChildFile("Contents/Resources/space-dense.png");
+    
+    Image image = ImageCache::getFromFile(imageFile);
+    
+    g.setTiledImageFill (image, 0, 0, 1.0);
+    
+    g.fillAll();
 }
 
 void RelayAudioProcessorEditor::resized()

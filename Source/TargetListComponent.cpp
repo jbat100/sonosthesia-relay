@@ -18,6 +18,8 @@ TargetComponent::TargetComponent(OSCTargetManager& _manager) : manager(_manager)
 {
     Colour labelTextColour = Colours::whitesmoke;
     
+    setOpaque(false);
+    
     addAndMakeVisible(hostLabel);
     hostLabel.setText("Host", dontSendNotification);
     Appearence::theme()->label(hostLabel);
@@ -66,17 +68,31 @@ void TargetComponent::setTarget(std::shared_ptr<OSCTarget> _target)
 void TargetComponent::paint (Graphics& g)
 {
 
-    g.fillAll (Colours::grey);   // clear the background
+    float hmargin = 10.0f;
     
-    g.setColour (Colours::white);
-    g.drawRect (getLocalBounds(), 1);   // draw an outline around the component
+    g.fillAll (Colours::transparentBlack);   // clear the background
+    
+    Rectangle<float> b = getLocalBounds().toFloat();
+    
+    b.setX(hmargin);
+    b.setWidth( b.getWidth() - (hmargin*2) );
+    
+    b.setHeight( b.getHeight() - 10);
+    
+    g.setColour (Colours::grey);
+    
+    g.drawRoundedRectangle(b, 5, 1);
+    
+    g.setColour(Colours::black.withAlpha(0.5f));
+    
+    g.fillRoundedRectangle(b.reduced(1), 5);
     
 }
 
 void TargetComponent::resized()
 {
     int vmargin = 4;
-    int hmargin = 10;
+    int hmargin = 20;
     int spacing = 10;
     
     int hostLabelWidth = 40;
@@ -194,6 +210,8 @@ TargetListComponent::TargetListComponent(OSCTargetManager& _oscTargetManager) : 
     // initialise any special settings that your component needs.
     
     
+    setOpaque(false);
+    
     addAndMakeVisible(newButton);
     newButton.addListener(this);
     newButton.setButtonText("New");
@@ -206,8 +224,10 @@ TargetListComponent::TargetListComponent(OSCTargetManager& _oscTargetManager) : 
     addAndMakeVisible (listBox);
     
     listBox.setOutlineThickness(0);
-    listBox.setRowHeight(TargetComponent::desiredHeight);
+    listBox.setRowHeight(TargetComponent::desiredHeight + 10);
+    
     listBox.setOpaque(false);
+    listBox.setColour(ListBox::ColourIds::backgroundColourId, Colours::transparentBlack);
     
     listBox.setModel (this);
     
@@ -222,7 +242,11 @@ TargetListComponent::~TargetListComponent()
 
 void TargetListComponent::paint (Graphics& g)
 {
-
+    Colour colour = Colours::black.withAlpha(0.2f);
+    
+    g.setColour(colour);
+    
+    g.fillAll();
 
 }
 
@@ -274,7 +298,7 @@ void TargetListComponent::paintListBoxItem (int rowNumber, Graphics &g, int widt
 {
     g.setColour(Colours::black);
     
-    g.drawRoundedRectangle(0, 0, width, height, 5, 2);
+    //g.drawRoundedRectangle(0, 0, width, height, 5, 2);
 }
 
 Component* TargetListComponent::refreshComponentForRow (int rowNumber, bool isRowSelected, Component *existingComponentToUpdate)

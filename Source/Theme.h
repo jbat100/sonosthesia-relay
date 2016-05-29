@@ -57,6 +57,8 @@ public:
     
     virtual void paintListBoxItem (int rowNumber, Graphics &g, int width, int height, bool rowIsSelected, Level level = Default) = 0;
     
+    virtual void paintMainBackground (Component& component, Graphics& g) = 0;
+    
 };
 
 class SpaceTheme : public Theme {
@@ -77,6 +79,8 @@ public:
     void textButton(TextButton& textButton, Level level = Default) override;
     
     void paintListBoxItem (int rowNumber, Graphics &g, int width, int height, bool rowIsSelected, Level level = Default) override;
+    
+    void paintMainBackground (Component& component, Graphics& g) {};
     
 private:
     

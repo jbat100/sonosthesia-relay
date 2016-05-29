@@ -10,6 +10,12 @@
               pluginRTASCategory="" aaxIdentifier="com.sonosthesia.relay" pluginAAXCategory="AAX_ePlugInCategory_Dynamics"
               jucerVersion="4.2.1" pluginAUMainType="rlay">
   <MAINGROUP id="YN10nS" name="Relay">
+    <GROUP id="{0E2329F2-2D9C-5A97-59AE-D3D144B88AFF}" name="Images">
+      <FILE id="SLQozq" name="metallic-surface.png" compile="0" resource="1"
+            file="Images/metallic-surface.png" xcodeResource="1"/>
+      <FILE id="Y9Uenq" name="space-dense.png" compile="0" resource="1" file="Images/space-dense.png"
+            xcodeResource="1"/>
+    </GROUP>
     <GROUP id="{CA07BB16-3DC8-BFEA-3102-6340B6C296CD}" name="Source">
       <GROUP id="{5A6FCEDB-3722-FFD2-4E43-2026F21284C5}" name="Common">
         <FILE id="HZY0mQ" name="Theme.cpp" compile="1" resource="0" file="Source/Theme.cpp"/>
