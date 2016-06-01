@@ -23,7 +23,9 @@ MainTabbedComponent::MainTabbedComponent(RelayAudioProcessor& _processor) :
     File applicationFile = File::getSpecialLocation(File::SpecialLocationType::currentApplicationFile);
     std::cout << "Plugin path : " << applicationFile.getFullPathName() << "\n";
     
-    Colour colour = Colours::transparentBlack; // Colour(Colours::black).withAlpha(0.0f);
+    setOpaque(false);
+    
+    Colour colour = Colours::black.withAlpha(0.3f); // Colour(Colours::black).withAlpha(0.0f);
     
     addTab ("MIDI", colour, &midiComponent, true);
     addTab ("Parameters", colour, &parameterComponent, true);
@@ -60,19 +62,17 @@ RelayAudioProcessorEditor::~RelayAudioProcessorEditor()
 //==============================================================================
 void RelayAudioProcessorEditor::paint (Graphics& g)
 {
-    //g.fillAll (Colours::black);
-    //g.setColour (Colours::black);
     
+    Colour dark = Colour(70, 70, 70);
     
-    //File file = File::getCurrentWorkingDirectory().getChildFile ("partial or full path");
+    g.setColour (dark);
     
+    /*
     File applicationFile = File::getSpecialLocation(File::SpecialLocationType::currentApplicationFile);
-    
     File imageFile = applicationFile.getChildFile("Contents/Resources/space-dense.png");
-    
     Image image = ImageCache::getFromFile(imageFile);
-    
     g.setTiledImageFill (image, 0, 0, 1.0);
+    */
     
     g.fillAll();
 }

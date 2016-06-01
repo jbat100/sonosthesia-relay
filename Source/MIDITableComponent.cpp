@@ -206,11 +206,11 @@ Component* MIDITableComponent::refreshComponentForCell (int rowNumber, int colum
     
     if (columnId == targetColumnId) // For the ratings column, we return the custom combobox component
     {
-        TargetColumnCustomComponent* component = static_cast<TargetColumnCustomComponent*> (existingComponentToUpdate);
+        TargetSelectionComponent* component = static_cast<TargetSelectionComponent*> (existingComponentToUpdate);
         
         // If an existing component is being passed-in for updating, we'll re-use it, but
         // if not, we'll have to create one.
-        if (component == nullptr) component = new TargetColumnCustomComponent(targetManager);
+        if (component == nullptr) component = new TargetSelectionComponent(targetManager);
         
         std::shared_ptr<Relay> relay = std::static_pointer_cast<Relay>(relayManager.getItem(rowNumber));
         

@@ -13,11 +13,11 @@
 #include "Theme.h"
 
 const int TargetComponent::desiredHeight = 50;
+const int TargetComponent::hmargin = 10;
+const int TargetComponent::buttonHeight = 20;
 
 TargetComponent::TargetComponent(OSCTargetManager& _manager) : manager(_manager), target(nullptr)
 {
-    Colour labelTextColour = Colours::whitesmoke;
-    
     setOpaque(false);
     
     addAndMakeVisible(hostLabel);
@@ -67,9 +67,6 @@ void TargetComponent::setTarget(std::shared_ptr<OSCTarget> _target)
 
 void TargetComponent::paint (Graphics& g)
 {
-
-    float hmargin = 10.0f;
-    
     g.fillAll (Colours::transparentBlack);   // clear the background
     
     Rectangle<float> b = getLocalBounds().toFloat();
@@ -104,12 +101,11 @@ void TargetComponent::resized()
     
     int labelHeight = 20;
     int buttonWidth = 60;
-    int buttonHeight = 20;
     
     Rectangle<int> bounds = getBounds();
     
-    
-    Rectangle<int> rootBounds = getBounds().reduced(hmargin*2, vmargin*2).translated(hmargin, vmargin);
+    int hackyAdjust = 20;
+    Rectangle<int> rootBounds = getBounds().reduced(hmargin*2, vmargin*2).translated(hmargin - hackyAdjust, vmargin);
     
     int fullWidth = rootBounds.getWidth();
     //int fullHeight = rootBounds.getHeight();
@@ -242,11 +238,11 @@ TargetListComponent::~TargetListComponent()
 
 void TargetListComponent::paint (Graphics& g)
 {
-    Colour colour = Colours::black.withAlpha(0.2f);
+    //Colour colour = Colours::black.withAlpha(0.2f);
     
-    g.setColour(colour);
+    //g.setColour(colour);
     
-    g.fillAll();
+    //g.fillAll();
 
 }
 
@@ -258,17 +254,18 @@ void TargetListComponent::resized()
     // This method is where you should set the bounds of any child
     // components that your component contains...
     
-    int buttonHeight = 25;
-    int margin = 4;
+    int buttonHeight = TargetComponent::buttonHeight;
+    int buttonWidth = 50;
+    int margin = 10;
     
     Rectangle<int> bounds = getBounds();
     
-    int halfWidth = bounds.getWidth() / 2;
+    int buttonXOffset = bounds.getWidth() - (2*margin) - (2*buttonWidth);
     
-    newButton.setBounds( getBounds().withX(0).withY(0).withHeight(buttonHeight).withWidth(halfWidth).reduced(margin) );
-    clearButton.setBounds( getBounds().withX(halfWidth).withY(0).withHeight(buttonHeight).withWidth(halfWidth).reduced(margin) );
+    newButton.setBounds( getBounds().withX(buttonXOffset).withY(margin).withHeight(buttonHeight).withWidth(buttonWidth) );
+    clearButton.setBounds( getBounds().withX(buttonXOffset + margin + buttonWidth).withY(margin).withHeight(buttonHeight).withWidth(buttonWidth) );
     
-    listBox.setBounds( getBounds().withX(0).withY(buttonHeight).withTrimmedBottom(buttonHeight).reduced(margin) );
+    listBox.setBounds( getBounds().withX(0).withY(buttonHeight + (2*margin)).withTrimmedBottom(buttonHeight + (2*margin)) );
     
 }
 

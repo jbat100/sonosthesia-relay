@@ -213,11 +213,11 @@ Component* ParameterTableComponent::refreshComponentForCell (int rowNumber, int 
     
     else if (columnId == targetColumnId) // For the ratings column, we return the custom combobox component
     {
-        TargetColumnCustomComponent* component = static_cast<TargetColumnCustomComponent*> (existingComponentToUpdate);
+        TargetSelectionComponent* component = static_cast<TargetSelectionComponent*> (existingComponentToUpdate);
         
         // If an existing component is being passed-in for updating, we'll re-use it, but
         // if not, we'll have to create one.
-        if (component == nullptr) component = new TargetColumnCustomComponent(processor.getOSCTargetManager());
+        if (component == nullptr) component = new TargetSelectionComponent(processor.getOSCTargetManager());
         
         std::shared_ptr<Relay> relay = std::static_pointer_cast<Relay>( processor.getParameterRelayManager().getItem(rowNumber) );
         

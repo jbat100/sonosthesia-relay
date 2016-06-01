@@ -11,41 +11,72 @@
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "MIDIListComponent.h"
 
-//==============================================================================
-MIDIListComponent::MIDIListComponent()
-{
-    // In your constructor, you should add any child components, and
-    // initialise any special settings that your component needs.
 
+void MIDIRelayComponent::setMIDIRelay(std::shared_ptr<MIDIRelay> _relay)
+{
+    
 }
 
-MIDIListComponent::~MIDIListComponent()
+std::shared_ptr<MIDIRelay> MIDIRelayComponent::getMIDIRelay()
 {
+    return nullptr;
 }
 
-void MIDIListComponent::paint (Graphics& g)
+void MIDIRelayComponent::refresh()
 {
-    /* This demo code just fills the component's background and
-       draws some placeholder text to get you started.
+    
+}
 
-       You should replace everything in this method with your own
-       drawing code..
-    */
+void MIDIRelayComponent::labelTextChanged(Label *label)
+{
+    
+}
 
-    g.fillAll (Colours::white);   // clear the background
+void MIDIRelayComponent::buttonClicked (Button* button)
+{
+    
+}
 
-    g.setColour (Colours::grey);
-    g.drawRect (getLocalBounds(), 1);   // draw an outline around the component
 
-    g.setColour (Colours::lightblue);
-    g.setFont (14.0f);
-    g.drawText ("MIDIListComponent", getLocalBounds(),
-                Justification::centred, true);   // draw some placeholder text
+MIDIListComponent::MIDIListComponent(MIDIRelayManager& _relayManager, OSCTargetManager& _targetManager) :
+    targetManager(_targetManager),
+    relayManager(_relayManager)
+{
+    
+}
+
+void MIDIListComponent::paint (Graphics&)
+{
+    
 }
 
 void MIDIListComponent::resized()
 {
-    // This method is where you should set the bounds of any child
-    // components that your component contains..
-
+    
 }
+
+void MIDIListComponent::changeListenerCallback (ChangeBroadcaster *source)
+{
+    
+}
+
+void MIDIListComponent::buttonClicked (Button* button)
+{
+    
+}
+
+int MIDIListComponent::getNumRows()
+{
+    
+}
+
+void MIDIListComponent::paintListBoxItem (int rowNumber, Graphics &g, int width, int height, bool rowIsSelected)
+{
+    
+}
+
+Component* MIDIListComponent::refreshComponentForRow (int rowNumber, bool isRowSelected, Component *existingComponentToUpdate)
+{
+    
+}
+

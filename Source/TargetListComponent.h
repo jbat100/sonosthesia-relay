@@ -48,7 +48,9 @@ public:
     
     // ====== Helpers ==================
     
+    static const int buttonHeight;
     static const int desiredHeight;
+    static const int hmargin;
     
 private:
     

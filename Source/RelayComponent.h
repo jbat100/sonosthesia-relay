@@ -15,14 +15,13 @@
 #include "Relay.h"
 #include "OSCTargetManager.h"
 
-#include <map>
 
 //==============================================================================
 // This is a custom component containing used for selecting a midi channel
-class TargetColumnCustomComponent : public Component, private ComboBoxListener
+class TargetSelectionComponent : public Component, private ComboBoxListener
 {
 public:
-    TargetColumnCustomComponent (OSCTargetManager& _manager) : manager(_manager)
+    TargetSelectionComponent (OSCTargetManager& _manager) : manager(_manager)
     {
         // just put a combo box inside this component
         addAndMakeVisible (comboBox);
@@ -106,7 +105,51 @@ private:
     std::shared_ptr<Relay> relay;
     OSCTargetManager& manager;
     NumericIdentifierGenerator generator;
+    
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (TargetSelectionComponent)
 };
+
+
+
+
+//==============================================================================
+/*  A component associated with a target
+ */
+
+class RelayComponent : public Component, protected LabelListener, protected ButtonListener  {
+    
+public:
+    
+    RelayComponent(OSCTargetManager& _targetManager);
+    
+    void setRelay(std::shared_ptr<Relay> _relay);
+    
+    virtual void refresh();
+    
+    // ======== LabelListener ==========
+    
+    virtual void labelTextChanged(Label *label) override;
+    
+    // ======== ButtonListener =========
+    
+    virtual void buttonClicked (Button* button) override;
+    
+protected:
+    
+    OSCTargetManager& targetManager;
+    std::shared_ptr<Relay> relay;
+    
+    Label groupLabel;
+    Label groupField;
+    
+    TextButton deleteButton;
+    TargetSelectionComponent targetSelectionComponent;
+    
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (RelayComponent)
+    
+};
+
+
 
 
 

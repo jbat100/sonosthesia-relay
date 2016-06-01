@@ -28,8 +28,6 @@
 		3B907C1B7458C68D365B6514 = {isa = PBXBuildFile; fileRef = 9A7DE633B24E05948DF5D8F2; };
 		EB01D66E42D63C3658D89EA9 = {isa = PBXBuildFile; fileRef = 4E306DE387EDE515AC3D3604; };
 		DCACFA8DA5C08AA7F4322B21 = {isa = PBXBuildFile; fileRef = 3A05DA9FD0E60EE5F45A5FD3; };
-		62CEE63FCB496CE1100885EC = {isa = PBXBuildFile; fileRef = E8FE92C197E6BCD8CB1D6901; };
-		DCAFB40CA0AFE578290E9C39 = {isa = PBXBuildFile; fileRef = 6645A1DA9DBC4A9A279814C9; };
 		9ED090B9C292F9F0FE5039FF = {isa = PBXBuildFile; fileRef = ECCA48529ED0F02BB131AA7A; };
 		53B2864F487D4E1DA2B8BE16 = {isa = PBXBuildFile; fileRef = 32CE295DA50A6464A53027A1; };
 		C743A48BAC74EA276ED9ED54 = {isa = PBXBuildFile; fileRef = 1FC3A9823805C001B49CF059; };
@@ -3077,9 +3075,7 @@
 					B678FCC3A36B2F5F41AB3150,
 					01D25EADDB36515A927EBC93,
 					4E306DE387EDE515AC3D3604,
-					3A05DA9FD0E60EE5F45A5FD3,
-					E8FE92C197E6BCD8CB1D6901,
-					6645A1DA9DBC4A9A279814C9, ); name = Resources; sourceTree = "<group>"; };
+					3A05DA9FD0E60EE5F45A5FD3, ); name = Resources; sourceTree = "<group>"; };
 		9E1857A47288C129B2D8E906 = {isa = PBXGroup; children = (
 					E7D4273A37EB584052F328D7,
 					CB5AB20AA54E67989DB9E59F,
@@ -3481,9 +3477,7 @@
 					974A533645DD693864F39C8B, ); defaultConfigurationIsVisible = 0; defaultConfigurationName = Debug; };
 		87944AA77B37460576FBF2F8 = {isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (
 					EB01D66E42D63C3658D89EA9,
-					DCACFA8DA5C08AA7F4322B21,
-					62CEE63FCB496CE1100885EC,
-					DCAFB40CA0AFE578290E9C39, ); runOnlyForDeploymentPostprocessing = 0; };
+					DCACFA8DA5C08AA7F4322B21, ); runOnlyForDeploymentPostprocessing = 0; };
 		82D7A97616605BD3C3F69A6E = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (
 					2DBF977B7A5314D61F208186, ); runOnlyForDeploymentPostprocessing = 0; };
 		867D4C5B30ED86D94D7580C6 = {isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (
@@ -3509,9 +3503,7 @@
 					AE9B6E6C87186D1F675847FD, ); defaultConfigurationIsVisible = 0; defaultConfigurationName = Debug; };
 		EB3EFCEA212FCFFA59EEF779 = {isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (
 					EB01D66E42D63C3658D89EA9,
-					DCACFA8DA5C08AA7F4322B21,
-					62CEE63FCB496CE1100885EC,
-					DCAFB40CA0AFE578290E9C39, ); runOnlyForDeploymentPostprocessing = 0; };
+					DCACFA8DA5C08AA7F4322B21, ); runOnlyForDeploymentPostprocessing = 0; };
 		765163D6C1E012D503CC7D86 = {isa = PBXRezBuildPhase; buildActionMask = 2147483647; files = (
 					522CE928A484A7315370F877, ); runOnlyForDeploymentPostprocessing = 0; };
 		B56B8776A60C08F323356AFD = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (
@@ -3543,9 +3535,7 @@
 					0FA72DAC42B310C23F0B30DF, ); defaultConfigurationIsVisible = 0; defaultConfigurationName = Debug; };
 		FFB187C18B24AC850299C0B1 = {isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (
 					EB01D66E42D63C3658D89EA9,
-					DCACFA8DA5C08AA7F4322B21,
-					62CEE63FCB496CE1100885EC,
-					DCAFB40CA0AFE578290E9C39, ); runOnlyForDeploymentPostprocessing = 0; };
+					DCACFA8DA5C08AA7F4322B21, ); runOnlyForDeploymentPostprocessing = 0; };
 		3AF0478EE8B9CB98C224F6AF = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (
 					407894DBA314523B4FC98F16, ); runOnlyForDeploymentPostprocessing = 0; };
 		C3A3112D0CA481667ACE89B3 = {isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (
@@ -3574,9 +3564,7 @@
 					56680F5C9E15359FEC231C41, ); defaultConfigurationIsVisible = 0; defaultConfigurationName = Debug; };
 		5679CD4FBFE0F08403E5939A = {isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (
 					EB01D66E42D63C3658D89EA9,
-					DCACFA8DA5C08AA7F4322B21,
-					62CEE63FCB496CE1100885EC,
-					DCAFB40CA0AFE578290E9C39, ); runOnlyForDeploymentPostprocessing = 0; };
+					DCACFA8DA5C08AA7F4322B21, ); runOnlyForDeploymentPostprocessing = 0; };
 		9E8B0EDFF1818A5BEA2C5426 = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (
 					A7F0568E06E8E93F5369622B, ); runOnlyForDeploymentPostprocessing = 0; };
 		F17DE4494CB5B98913719B20 = {isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (
