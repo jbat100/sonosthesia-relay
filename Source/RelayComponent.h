@@ -19,7 +19,7 @@
 //==============================================================================
 // This is a custom component containing used for selecting a midi channel
 
-class TargetSelectionComponent : public Component, private ComboBoxListener, private ChangeListener
+class TargetSelectionComponent : public Component, private ComboBoxListener, private ChangeListener, OSCTargetListener
 {
 public:
     TargetSelectionComponent (OSCTargetManager& _manager);
@@ -40,9 +40,17 @@ public:
     
     virtual void changeListenerCallback (ChangeBroadcaster* source) override;
     
+    // === OSCTargetListener ==
+    
+    virtual void targetInvalidated(OSCTarget* target) override;
+    
+    virtual void targetChanged(OSCTarget* target) override;
+    
 private:
     
     void updateComboBox();
+    
+    void listenToAllTargets();
     
     ComboBox comboBox;
     std::shared_ptr<Relay> relay;

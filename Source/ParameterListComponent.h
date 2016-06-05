@@ -13,21 +13,124 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 
-//==============================================================================
-/*
-*/
-class ParameterListComponent    : public Component
+#include "OSCTargetManager.h"
+#include "ParameterRelay.h"
+#include "RelayComponent.h"
+#include "PluginProcessor.h"
+
+
+class ParameterSelectionComponent : public Component, private ComboBoxListener
 {
 public:
-    ParameterListComponent();
-    ~ParameterListComponent();
-
-    void paint (Graphics&);
-    void resized();
-
+    
+    ParameterSelectionComponent (const OwnedArray<AudioProcessorParameter>& _parameters);
+    virtual ~ParameterSelectionComponent() {}
+    
+    void setRelay(std::shared_ptr<ParameterRelay> _relay);
+    
+    void refresh();
+    
+    // ======== Component ==========
+    
+    virtual void resized() override;
+    
+    // ===== ComboBoxListener ======
+    
+    virtual void comboBoxChanged (ComboBox*) override;
+    
 private:
+    
+    int parameterIndexToId(int parameterIndex);
+    int idToParameterIndex(int _id);
+    
+    ComboBox comboBox;
+    std::shared_ptr<ParameterRelay> relay;
+    const OwnedArray<AudioProcessorParameter>& parameters;
+};
+
+
+//==============================================================================
+/*  A component associated with a target
+ */
+
+class ParameterRelayComponent : public RelayComponent {
+    
+public:
+    
+    ParameterRelayComponent(RelayAudioProcessor& _processor);
+    
+    virtual ~ParameterRelayComponent() {}
+    
+    virtual void refresh() override;
+    
+    virtual void setRelay (std::shared_ptr<Relay> _relay) override;
+    
+    // ======== Component ==========
+    
+    virtual void paint (Graphics&) override;
+    
+    virtual void resized() override;
+    
+    // ======== ButtonListener =========
+    
+    virtual void buttonClicked (Button* button) override;
+    
+    static const int desiredHeight;
+    static const int hmargin;
+    static const int vmargin;
+    
+private:
+    
+    RelayAudioProcessor& processor;
+    
+    Label descriptorLabel;
+    Label descriptorField;
+    
+    Label parameterLabel;
+    ParameterSelectionComponent parameterSelectionComponent;
+    
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ParameterRelayComponent)
+    
+};
+
+//==============================================================================
+/*  A component presenting a list of targets
+ */
+
+class ParameterListComponent : public Component, public ButtonListener, public ListBoxModel, public ChangeListener
+{
+public:
+    ParameterListComponent(RelayAudioProcessor& _processor);
+    ~ParameterListComponent() {}
+    
+    void resized() override;
+    
+    // ======= ChangeListener ===========
+    
+    void changeListenerCallback (ChangeBroadcaster *source) override;
+    
+    // ======== ButtonListener =========
+    
+    void buttonClicked (Button* button) override;
+    
+    // ======== ListBoxModel ===========
+    
+    int getNumRows() override;
+    void paintListBoxItem (int rowNumber, Graphics &g, int width, int height, bool rowIsSelected) override;
+    Component* refreshComponentForRow (int rowNumber, bool isRowSelected, Component *existingComponentToUpdate) override;
+    
+private:
+    
+    TextButton newButton;
+    TextButton clearButton;
+    ListBox listBox;
+    Font font;
+    
+    RelayAudioProcessor& processor;
+    
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ParameterListComponent)
 };
+
 
 
 #endif  // PARAMETERLISTCOMPONENT_H_INCLUDED

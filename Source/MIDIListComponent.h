@@ -24,7 +24,9 @@
 class MIDIChannelSelectionComponent : public Component, private ComboBoxListener
 {
 public:
+    
     MIDIChannelSelectionComponent ();
+    virtual ~MIDIChannelSelectionComponent() {}
     
     void refresh();
     
@@ -54,6 +56,7 @@ class MIDIRelayComponent : public RelayComponent {
 public:
     
     MIDIRelayComponent(OSCTargetManager& _targetManager, MIDIRelayManager& _relayManager);
+    virtual ~MIDIRelayComponent() {}
     
     virtual void refresh() override;
     

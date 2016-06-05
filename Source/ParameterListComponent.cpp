@@ -10,42 +10,328 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "ParameterListComponent.h"
+#include "Theme.h"
 
-//==============================================================================
-ParameterListComponent::ParameterListComponent()
+ParameterSelectionComponent::ParameterSelectionComponent (const OwnedArray<AudioProcessorParameter>& _parameters) :
+    parameters(_parameters)
 {
-    // In your constructor, you should add any child components, and
-    // initialise any special settings that your component needs.
-
+    // just put a combo box inside this component
+    addAndMakeVisible (comboBox);
+    
+    comboBox.addItem ( "None" , parameterIndexToId(ParameterRelay::noIndex) );
+    
+    for (auto i = parameters.begin(); i != parameters.end(); i++)
+    {
+        // can't have 0 as id so we offset by 1
+        comboBox.addItem ( (*i)->getName(20) , parameterIndexToId((*i)->getParameterIndex()) );
+    }
+    
+    // when the combo is changed, we'll get a callback.
+    comboBox.addListener (this);
+    comboBox.setWantsKeyboardFocus (false);
 }
 
-ParameterListComponent::~ParameterListComponent()
+int ParameterSelectionComponent::parameterIndexToId(int parameterIndex)
 {
+    return parameterIndex + 2; // we want to avoid 0
 }
 
-void ParameterListComponent::paint (Graphics& g)
+int ParameterSelectionComponent::idToParameterIndex(int _id)
 {
-    /* This demo code just fills the component's background and
-       draws some placeholder text to get you started.
+    return _id - 2;
+}
 
-       You should replace everything in this method with your own
-       drawing code..
-    */
+void ParameterSelectionComponent::resized()
+{
+    comboBox.setBounds ( getLocalBounds() );
+}
 
-    g.fillAll (Colours::white);   // clear the background
+void ParameterSelectionComponent::comboBoxChanged (ComboBox*)
+{
+    if (relay)
+    {
+        relay->setIndex ( idToParameterIndex(comboBox.getSelectedId()) );
+    }
+}
 
+void ParameterSelectionComponent::refresh()
+{
+    if (relay)
+    {
+        comboBox.setSelectedId( parameterIndexToId(relay->getIndex()) );
+    }
+    else
+    {
+        comboBox.setSelectedId( parameterIndexToId(ParameterRelay::noIndex) );
+    }
+}
+
+void ParameterSelectionComponent::setRelay(std::shared_ptr<ParameterRelay> _relay)
+{
+    relay = _relay;
+    refresh();
+}
+
+
+
+const int ParameterRelayComponent::desiredHeight = 60;
+const int ParameterRelayComponent::hmargin = 10;
+const int ParameterRelayComponent::vmargin = 4;
+
+// ParameterRelayComponent
+
+
+ParameterRelayComponent::ParameterRelayComponent(RelayAudioProcessor& _processor) :
+    RelayComponent(_processor.getOSCTargetManager()),
+    processor(_processor),
+    parameterSelectionComponent(_processor.getParameters())
+{
+    setOpaque(false);
+    
+    addAndMakeVisible(parameterLabel);
+    parameterLabel.setText("Parameter", dontSendNotification);
+    Appearence::theme()->label(parameterLabel);
+    
+    addAndMakeVisible(parameterSelectionComponent);
+    
+    addAndMakeVisible(descriptorLabel);
+    descriptorLabel.setText("Descriptor", dontSendNotification);
+    Appearence::theme()->label(descriptorLabel);
+    
+    addAndMakeVisible(descriptorField);
+    descriptorField.setEditable(false, true, false);
+    descriptorField.addListener(this);
+    Appearence::theme()->field(descriptorField);
+}
+
+void ParameterRelayComponent::paint (Graphics& g)
+{
+    g.fillAll (Colours::transparentBlack);   // clear the background
+    
+    Rectangle<float> b = getLocalBounds().toFloat();
+    Rectangle<float> cellBounds(hmargin, vmargin, b.getWidth() - (hmargin*2), b.getHeight() - (vmargin*2));
+    
     g.setColour (Colours::grey);
-    g.drawRect (getLocalBounds(), 1);   // draw an outline around the component
-
-    g.setColour (Colours::lightblue);
-    g.setFont (14.0f);
-    g.drawText ("ParameterListComponent", getLocalBounds(),
-                Justification::centred, true);   // draw some placeholder text
+    g.drawRoundedRectangle(cellBounds, 5, 1);
+    g.setColour(Colours::black.withAlpha(0.5f));
+    g.fillRoundedRectangle(cellBounds.reduced(1), 5);
 }
+
+void ParameterRelayComponent::resized()
+{
+    int hspacing = 10;
+    int vspacing = 6;
+    
+    // target   <__________________> parameter ______ | Del |
+    // group <____________> descriptor <____________> |     |
+    
+    int targetLabelWidth = 60;
+    int parameterLabelWidth = 80;
+    int parameterSelectionWidth = 100;
+    int groupLabelWidth = 60;
+    int descriptorLabelWidth = 80;
+    int buttonWidth = 60;
+    int rowHeight = 20;
+    
+    Rectangle<int> bounds = getBounds();
+    
+    // double margin, for the outer and inner component cell
+    //Rectangle<int> rootBounds = getBounds().reduced(hmargin*4, vmargin*4).translated(hmargin*2, vmargin*2);
+    
+    int hackyOffset = 10;
+    Rectangle<int> rootBounds = getBounds().reduced(hmargin*2, vmargin*2).translated(hmargin - hackyOffset, vmargin);
+    int fullWidth = rootBounds.getWidth();
+    
+    // ROW1
+    
+    int horizontalOffset = rootBounds.getX();
+    int verticalOffset = rootBounds.getY();
+    
+    int flexWidth = (fullWidth - targetLabelWidth - parameterLabelWidth - buttonWidth - (hspacing*4)) / 2;
+    
+    Rectangle<int> targetLabelBounds(horizontalOffset, verticalOffset, targetLabelWidth, rowHeight);
+    horizontalOffset = targetLabelBounds.getRight() + hspacing;
+    targetLabel.setBounds(targetLabelBounds);
+    
+    Rectangle<int> targetSelectorBounds(horizontalOffset, verticalOffset, flexWidth, rowHeight);
+    horizontalOffset = targetSelectorBounds.getRight() + hspacing;
+    targetSelectionComponent.setBounds(targetSelectorBounds);
+    
+    Rectangle<int> parameterLabelBounds(horizontalOffset, verticalOffset, parameterLabelWidth, rowHeight);
+    horizontalOffset = parameterLabelBounds.getRight() + hspacing;
+    parameterLabel.setBounds(parameterLabelBounds);
+    
+    Rectangle<int> parameterSelectionBounds(horizontalOffset, verticalOffset, flexWidth, rowHeight);
+    horizontalOffset = parameterSelectionBounds.getRight() + hspacing;
+    parameterSelectionComponent.setBounds(parameterSelectionBounds);
+    
+    // ROW2
+    
+    horizontalOffset = rootBounds.getX();
+    verticalOffset = rootBounds.getY() + vspacing + rowHeight;
+    
+    flexWidth = (fullWidth - groupLabelWidth - descriptorLabelWidth - buttonWidth - (hspacing*4)) / 2;
+    
+    Rectangle<int> groupLabelBounds(horizontalOffset, verticalOffset, groupLabelWidth, rowHeight);
+    horizontalOffset = groupLabelBounds.getRight() + hspacing;
+    groupLabel.setBounds(groupLabelBounds);
+    
+    Rectangle<int> groupFieldBounds(horizontalOffset, verticalOffset, flexWidth, rowHeight);
+    horizontalOffset = groupFieldBounds.getRight() + hspacing;
+    groupField.setBounds(groupFieldBounds);
+    
+    Rectangle<int> descriptorLabelBounds(horizontalOffset, verticalOffset, descriptorLabelWidth, rowHeight);
+    horizontalOffset = descriptorLabelBounds.getRight() + hspacing;
+    descriptorLabel.setBounds(descriptorLabelBounds);
+    
+    Rectangle<int> descriptorFieldBounds(horizontalOffset, verticalOffset, flexWidth, rowHeight);
+    horizontalOffset = descriptorFieldBounds.getRight() + hspacing;
+    descriptorField.setBounds(descriptorFieldBounds);
+    
+    
+    // BUTTON
+    
+    horizontalOffset = rootBounds.getX() + fullWidth - buttonWidth;
+    verticalOffset = rootBounds.getY();
+    
+    //int buttonHeight = (rowHeight * 2) + vspacing; // spans two rows
+    Rectangle<int> buttonBounds(horizontalOffset, verticalOffset, buttonWidth, rowHeight);
+    deleteButton.setBounds(buttonBounds);
+    
+}
+
+void ParameterRelayComponent::setRelay(std::shared_ptr<Relay> _relay)
+{
+    std::shared_ptr<ParameterRelay> parameterRelay = std::dynamic_pointer_cast<ParameterRelay>(_relay);
+    parameterSelectionComponent.setRelay(parameterRelay);
+    RelayComponent::setRelay( _relay );
+}
+
+
+void ParameterRelayComponent::refresh()
+{
+    RelayComponent::refresh();
+    
+    std::shared_ptr<ParameterRelay> parameterRelay = std::dynamic_pointer_cast<ParameterRelay>(relay);
+    
+    if (parameterRelay)
+    {
+        descriptorField.setText(parameterRelay->getDescriptor(), dontSendNotification);
+    }
+    else
+    {
+        descriptorField.setText("", dontSendNotification);
+    }
+    
+    parameterSelectionComponent.refresh();
+}
+
+void ParameterRelayComponent::buttonClicked (Button* button)
+{
+    if (button == &deleteButton)
+    {
+        if (relay) processor.getParameterRelayManager().deleteItem(relay->getIdentifier());
+    }
+}
+
+
+ParameterListComponent::ParameterListComponent(RelayAudioProcessor& _processor) : processor(_processor)
+{
+    processor.getParameterRelayManager().addChangeListener(this);
+    
+    setOpaque(false);
+    
+    addAndMakeVisible(newButton);
+    newButton.addListener(this);
+    newButton.setButtonText("New");
+    
+    addAndMakeVisible(clearButton);
+    clearButton.addListener(this);
+    clearButton.setButtonText("Clear");
+    
+    // Create our table component and add it to this component..
+    addAndMakeVisible (listBox);
+    
+    listBox.setOutlineThickness(0);
+    listBox.setRowHeight(ParameterRelayComponent::desiredHeight + 10);
+    
+    listBox.setOpaque(false);
+    listBox.setColour(ListBox::ColourIds::backgroundColourId, Colours::transparentBlack);
+    
+    listBox.setModel (this);
+}
+
 
 void ParameterListComponent::resized()
 {
-    // This method is where you should set the bounds of any child
-    // components that your component contains..
-
+    int buttonHeight = 20;
+    int buttonWidth = 50;
+    int margin = 10;
+    
+    Rectangle<int> bounds = getBounds();
+    
+    int buttonXOffset = bounds.getWidth() - (2*margin) - (2*buttonWidth);
+    
+    newButton.setBounds( getBounds().withX(buttonXOffset).withY(margin).withHeight(buttonHeight).withWidth(buttonWidth) );
+    clearButton.setBounds( getBounds().withX(buttonXOffset + margin + buttonWidth).withY(margin).withHeight(buttonHeight).withWidth(buttonWidth) );
+    
+    listBox.setBounds( getBounds().withX(0).withY(buttonHeight + (2*margin)).withTrimmedBottom(buttonHeight + (2*margin)) );
 }
+
+void ParameterListComponent::changeListenerCallback (ChangeBroadcaster *source)
+{
+    // if the targets change then we need to update the table so that the new targets are available
+    if (source == dynamic_cast<ChangeBroadcaster*>(&(processor.getParameterRelayManager())))
+    {
+        std::cout << "ParameterListComponent updating table content on targetManager change\n";
+        listBox.updateContent();
+    }
+}
+
+void ParameterListComponent::buttonClicked (Button* button)
+{
+    if (button == &newButton)
+    {
+        //std::cout << "Make new target!\n";
+        processor.getParameterRelayManager().newItem();
+        listBox.updateContent();
+    }
+    else if (button == &clearButton)
+    {
+        //std::cout << "Clear targets!\n";
+        processor.getParameterRelayManager().clear();
+        listBox.updateContent();
+    }
+}
+
+int ParameterListComponent::getNumRows()
+{
+    return processor.getParameterRelayManager().getItems().size();
+}
+
+void ParameterListComponent::paintListBoxItem (int rowNumber, Graphics &g, int width, int height, bool rowIsSelected)
+{
+    
+}
+
+Component* ParameterListComponent::refreshComponentForRow (int rowNumber, bool isRowSelected, Component *existingComponentToUpdate)
+{
+    ParameterRelayComponent* relayComponent = static_cast<ParameterRelayComponent*> (existingComponentToUpdate);
+    
+    std::shared_ptr<ParameterRelay> relay = nullptr;
+    
+    if (rowNumber < processor.getParameterRelayManager().count())
+    {
+        relay = processor.getParameterRelayManager().getItem(rowNumber);
+    }
+    
+    // If an existing component is being passed-in for updating, we'll re-use it, if not, we'll have to create one.
+    if (relayComponent == nullptr)
+    {
+        relayComponent = new ParameterRelayComponent(processor);
+    }
+    
+    relayComponent->setRelay(relay);
+    return relayComponent;
+}
+

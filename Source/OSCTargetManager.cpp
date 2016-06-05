@@ -68,6 +68,7 @@ void OSCTarget::setHostName(String _hostName)
     checkValidity();
     hostName = _hostName;
     updateSender();
+    call(&OSCTargetListener::targetChanged, this);
 }
 
 String OSCTarget::getHostName()
@@ -80,6 +81,7 @@ void OSCTarget::setPortNumber(int _portNumber)
     checkValidity();
     portNumber = _portNumber;
     updateSender();
+    call(&OSCTargetListener::targetChanged, this);
 }
 
 int OSCTarget::getPortNumber()

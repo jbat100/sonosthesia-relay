@@ -24,6 +24,7 @@
 #include "MIDITableComponent.h"
 #include "MIDIListComponent.h"
 #include "ParameterTableComponent.h"
+#include "ParameterListComponent.h"
 #include "TestTableComponent.h"
 
 
@@ -40,7 +41,7 @@ private:
     
     TargetListComponent targetComponent;
     MIDIListComponent midiComponent;
-    ParameterTableComponent parameterComponent;
+    ParameterListComponent parameterComponent;
     TestTableComponent testComponent;
 };
 

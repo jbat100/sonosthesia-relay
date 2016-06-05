@@ -18,6 +18,10 @@ TargetSelectionComponent::TargetSelectionComponent (OSCTargetManager& _manager) 
 {
     addAndMakeVisible (comboBox);
     
+    manager.addChangeListener(this);
+    
+    listenToAllTargets();
+    
     comboBox.setTextWhenNothingSelected("None");
     comboBox.addListener (this);
     comboBox.setWantsKeyboardFocus (false);
@@ -62,8 +66,19 @@ void TargetSelectionComponent::changeListenerCallback (ChangeBroadcaster* source
 {
     if (source == dynamic_cast<ChangeBroadcaster*>(&manager))
     {
+        listenToAllTargets();
         updateComboBox();
     }
+}
+
+void TargetSelectionComponent::targetInvalidated(OSCTarget* target)
+{
+    updateComboBox();
+}
+
+void TargetSelectionComponent::targetChanged(OSCTarget* target)
+{
+    updateComboBox();
 }
 
 void TargetSelectionComponent::comboBoxChanged (ComboBox*)
@@ -93,7 +108,19 @@ void TargetSelectionComponent::comboBoxChanged (ComboBox*)
 }
 
 
-void TargetSelectionComponent::updateComboBox() {
+void TargetSelectionComponent::listenToAllTargets()
+{
+    auto targets = manager.getItems();
+    // whenever a target changes we want to update the combo box to reflect the changes
+    // perhaps overkill, but better safe than inconsistant...
+    for (auto i = targets.begin(); i != targets.end(); i++)
+    {
+        (*i)->add(this);
+    }
+}
+
+void TargetSelectionComponent::updateComboBox()
+{
     
     const std::vector< std::shared_ptr<OSCTarget> > targets = manager.getItems();
     

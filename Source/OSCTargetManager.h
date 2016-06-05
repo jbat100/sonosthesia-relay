@@ -21,10 +21,15 @@
 
 class OSCTarget;
 
-class OSCTargetListener {
+class OSCTargetListener
+{
 public:
+    
     virtual ~OSCTargetListener()  {}
-    virtual void targetInvalidated(OSCTarget* target) = 0;
+    
+    virtual void targetInvalidated(OSCTarget* target) {};
+    
+    virtual void targetChanged(OSCTarget* target) {};
 };
 
 class OSCTarget : public ListenerList<OSCTargetListener>
