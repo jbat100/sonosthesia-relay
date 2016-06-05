@@ -22,6 +22,7 @@
 #include "TargetTableComponent.h"
 #include "TargetListComponent.h"
 #include "MIDITableComponent.h"
+#include "MIDIListComponent.h"
 #include "ParameterTableComponent.h"
 #include "TestTableComponent.h"
 
@@ -38,7 +39,7 @@ private:
     RelayAudioProcessor& processor;
     
     TargetListComponent targetComponent;
-    MIDITableComponent midiComponent;
+    MIDIListComponent midiComponent;
     ParameterTableComponent parameterComponent;
     TestTableComponent testComponent;
 };

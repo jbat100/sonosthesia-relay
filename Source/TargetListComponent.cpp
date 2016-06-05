@@ -73,15 +73,11 @@ void TargetComponent::paint (Graphics& g)
     
     b.setX(hmargin);
     b.setWidth( b.getWidth() - (hmargin*2) );
-    
     b.setHeight( b.getHeight() - 10);
     
     g.setColour (Colours::grey);
-    
     g.drawRoundedRectangle(b, 5, 1);
-    
     g.setColour(Colours::black.withAlpha(0.5f));
-    
     g.fillRoundedRectangle(b.reduced(1), 5);
     
 }
@@ -184,7 +180,6 @@ void TargetComponent::refresh()
     {
         hostField.setText(target->getHostName(), dontSendNotification);
         portField.setText(String(target->getPortNumber()), dontSendNotification);
-        
         statusLabel.setText(target->isConnected() ? "Connected" : "Disconnected", dontSendNotification);
         Appearence::theme()->indicator(statusLabel, target->isConnected() ? Theme::Level::Primary : Theme::Level::Warning);
     }
@@ -199,13 +194,6 @@ void TargetComponent::refresh()
 //==============================================================================
 TargetListComponent::TargetListComponent(OSCTargetManager& _oscTargetManager) : oscTargetManager(_oscTargetManager)
 {
-    // In your constructor, you should add any child components, and
-    // initialise any special settings that your component needs.
-    
-    // In your constructor, you should add any child components, and
-    // initialise any special settings that your component needs.
-    
-    
     setOpaque(false);
     
     addAndMakeVisible(newButton);
@@ -227,9 +215,7 @@ TargetListComponent::TargetListComponent(OSCTargetManager& _oscTargetManager) : 
     
     listBox.setModel (this);
     
-    
     oscTargetManager.addChangeListener(this);
-        
 }
 
 TargetListComponent::~TargetListComponent()
@@ -238,22 +224,11 @@ TargetListComponent::~TargetListComponent()
 
 void TargetListComponent::paint (Graphics& g)
 {
-    //Colour colour = Colours::black.withAlpha(0.2f);
-    
-    //g.setColour(colour);
-    
-    //g.fillAll();
 
 }
 
 void TargetListComponent::resized()
 {
-    // This method is where you should set the bounds of any child
-    // components that your component contains..
-    
-    // This method is where you should set the bounds of any child
-    // components that your component contains...
-    
     int buttonHeight = TargetComponent::buttonHeight;
     int buttonWidth = 50;
     int margin = 10;
@@ -266,7 +241,6 @@ void TargetListComponent::resized()
     clearButton.setBounds( getBounds().withX(buttonXOffset + margin + buttonWidth).withY(margin).withHeight(buttonHeight).withWidth(buttonWidth) );
     
     listBox.setBounds( getBounds().withX(0).withY(buttonHeight + (2*margin)).withTrimmedBottom(buttonHeight + (2*margin)) );
-    
 }
 
 void TargetListComponent::buttonClicked (Button* button)
@@ -293,9 +267,7 @@ int TargetListComponent::getNumRows()
 
 void TargetListComponent::paintListBoxItem (int rowNumber, Graphics &g, int width, int height, bool rowIsSelected)
 {
-    g.setColour(Colours::black);
-    
-    //g.drawRoundedRectangle(0, 0, width, height, 5, 2);
+
 }
 
 Component* TargetListComponent::refreshComponentForRow (int rowNumber, bool isRowSelected, Component *existingComponentToUpdate)

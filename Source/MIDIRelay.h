@@ -34,6 +34,9 @@ public:
     
     void relay(MidiMessage& message);
     
+    static const int allChannels;
+    static const int noChannel;
+    
 private:
 
     int channel;

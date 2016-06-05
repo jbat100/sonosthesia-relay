@@ -80,7 +80,7 @@ public:
     
     void paintListBoxItem (int rowNumber, Graphics &g, int width, int height, bool rowIsSelected, Level level = Default) override;
     
-    void paintMainBackground (Component& component, Graphics& g) {};
+    void paintMainBackground (Component& component, Graphics& g) override {};
     
 private:
     

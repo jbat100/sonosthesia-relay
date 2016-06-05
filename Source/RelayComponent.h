@@ -18,93 +18,39 @@
 
 //==============================================================================
 // This is a custom component containing used for selecting a midi channel
-class TargetSelectionComponent : public Component, private ComboBoxListener
+
+class TargetSelectionComponent : public Component, private ComboBoxListener, private ChangeListener
 {
 public:
-    TargetSelectionComponent (OSCTargetManager& _manager) : manager(_manager)
-    {
-        // just put a combo box inside this component
-        addAndMakeVisible (comboBox);
-        
-        comboBox.setTextWhenNothingSelected("None");
-        comboBox.addListener (this);
-        comboBox.setWantsKeyboardFocus (false);
-    }
+    TargetSelectionComponent (OSCTargetManager& _manager);
     
-    void resized() override
-    {
-        comboBox.setBoundsInset (BorderSize<int> (2));
-    }
+    void refresh();
     
-    void refresh()
-    {
-        updateComboBox();
-    }
+    void setRelay (std::shared_ptr<Relay> _relay);
     
-    void setRelay (std::shared_ptr<Relay> _relay)
-    {
-        relay = _relay;
-        if (relay)
-        {
-            std::shared_ptr<OSCTarget> target = relay->getTarget();
-            if (target)
-            {
-                int numericIdentifier = generator.getNumericIdentifier(target->getIdentifier());
-                comboBox.setSelectedId (numericIdentifier, dontSendNotification);
-                return;
-            }
-        }
-        comboBox.setSelectedId (-1, dontSendNotification);
-        
-    }
+    // ======== Component =======
     
-    void comboBoxChanged (ComboBox*) override
-    {
-        try
-        {
-            int numericIdentifier = comboBox.getSelectedId();
-            
-            if (numericIdentifier == -1)
-            {
-                relay->setTarget (nullptr);
-            }
-            else if (numericIdentifier > 0)
-            {
-                String identifier = generator.getStringIdentifier(numericIdentifier);
-                std::shared_ptr<OSCTarget> target = manager.getItem(identifier);
-                relay->setTarget (target);
-            }
-        }
-        catch (std::invalid_argument& err)
-        {
-            std::cerr << "TargetColumnCustomComponent comboBoxChanged exception: " << &err << "\n";
-        }
-        
-    }
+    virtual void resized() override;
+    
+    // ==== ComboBoxListener ====
+    
+    virtual void comboBoxChanged (ComboBox*) override;
+    
+    // ==== ChangeListener ====
+    
+    virtual void changeListenerCallback (ChangeBroadcaster* source) override;
     
 private:
     
-    void updateComboBox() {
-        
-        const std::vector< std::shared_ptr<OSCTarget> > targets = manager.getItems();
-        
-        comboBox.clear();
-        
-        for (auto i = targets.begin(); i != targets.end(); i++)
-        {
-            int numericIdentifier = generator.getNumericIdentifier( (*i)->getIdentifier() );
-            String description = (*i)->getHostName() + ":" + String((*i)->getPortNumber());
-            comboBox.addItem(description, numericIdentifier);
-        }
-        
-        setRelay(relay);
-        
-    }
+    void updateComboBox();
     
     ComboBox comboBox;
     std::shared_ptr<Relay> relay;
     OSCTargetManager& manager;
     NumericIdentifierGenerator generator;
+    
+    static const int noSelection;
+    static const String noSelectionText;
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (TargetSelectionComponent)
 };
@@ -122,7 +68,9 @@ public:
     
     RelayComponent(OSCTargetManager& _targetManager);
     
-    void setRelay(std::shared_ptr<Relay> _relay);
+    virtual void setRelay(std::shared_ptr<Relay> _relay);
+    
+    std::shared_ptr<Relay> getRelay();
     
     virtual void refresh();
     
@@ -142,8 +90,10 @@ protected:
     Label groupLabel;
     Label groupField;
     
-    TextButton deleteButton;
+    Label targetLabel;
     TargetSelectionComponent targetSelectionComponent;
+    
+    TextButton deleteButton;
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (RelayComponent)
     
