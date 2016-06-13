@@ -11,8 +11,8 @@
 
 */
 
-#ifndef __JUCE_APPCONFIG_RZAFUX__
-#define __JUCE_APPCONFIG_RZAFUX__
+#ifndef __JUCE_APPCONFIG_WCGO9G__
+#define __JUCE_APPCONFIG_WCGO9G__
 
 //==============================================================================
 // [BEGIN_USER_CODE_SECTION]
@@ -110,6 +110,13 @@
 
 #ifndef    JUCE_USE_WINDOWS_MEDIA_FORMAT
  //#define JUCE_USE_WINDOWS_MEDIA_FORMAT
+#endif
+
+//==============================================================================
+// juce_audio_plugin_client flags:
+
+#ifndef    JUCE_FORCE_USE_LEGACY_PARAM_IDS
+ //#define JUCE_FORCE_USE_LEGACY_PARAM_IDS
 #endif
 
 //==============================================================================
@@ -219,7 +226,7 @@
 // Audio plugin settings..
 
 #ifndef  JucePlugin_Build_VST
- #define JucePlugin_Build_VST              1
+ #define JucePlugin_Build_VST              0
 #endif
 #ifndef  JucePlugin_Build_VST3
  #define JucePlugin_Build_VST3             0
@@ -246,7 +253,7 @@
  #define JucePlugin_Desc                   "relay"
 #endif
 #ifndef  JucePlugin_Manufacturer
- #define JucePlugin_Manufacturer           "sonosthesia"
+ #define JucePlugin_Manufacturer           "Sonosthesia"
 #endif
 #ifndef  JucePlugin_ManufacturerWebsite
  #define JucePlugin_ManufacturerWebsite    ""
@@ -255,10 +262,10 @@
  #define JucePlugin_ManufacturerEmail      ""
 #endif
 #ifndef  JucePlugin_ManufacturerCode
- #define JucePlugin_ManufacturerCode       'snst'
+ #define JucePlugin_ManufacturerCode       'Manu'
 #endif
 #ifndef  JucePlugin_PluginCode
- #define JucePlugin_PluginCode             'rlay'
+ #define JucePlugin_PluginCode             'Wcgo'
 #endif
 #ifndef  JucePlugin_IsSynth
  #define JucePlugin_IsSynth                0
@@ -276,13 +283,13 @@
  #define JucePlugin_EditorRequiresKeyboardFocus  0
 #endif
 #ifndef  JucePlugin_Version
- #define JucePlugin_Version                0.0.1
+ #define JucePlugin_Version                1.0.0
 #endif
 #ifndef  JucePlugin_VersionCode
- #define JucePlugin_VersionCode            0x1
+ #define JucePlugin_VersionCode            0x10000
 #endif
 #ifndef  JucePlugin_VersionString
- #define JucePlugin_VersionString          "0.0.1"
+ #define JucePlugin_VersionString          "1.0.0"
 #endif
 #ifndef  JucePlugin_VSTUniqueID
  #define JucePlugin_VSTUniqueID            JucePlugin_PluginCode
@@ -291,22 +298,22 @@
  #define JucePlugin_VSTCategory            kPlugCategEffect
 #endif
 #ifndef  JucePlugin_AUMainType
- #define JucePlugin_AUMainType             rlay
+ #define JucePlugin_AUMainType             kAudioUnitType_MusicEffect
 #endif
 #ifndef  JucePlugin_AUSubType
  #define JucePlugin_AUSubType              JucePlugin_PluginCode
 #endif
 #ifndef  JucePlugin_AUExportPrefix
- #define JucePlugin_AUExportPrefix         RelayAU
+ #define JucePlugin_AUExportPrefix         relayAU
 #endif
 #ifndef  JucePlugin_AUExportPrefixQuoted
- #define JucePlugin_AUExportPrefixQuoted   "RelayAU"
+ #define JucePlugin_AUExportPrefixQuoted   "relayAU"
 #endif
 #ifndef  JucePlugin_AUManufacturerCode
  #define JucePlugin_AUManufacturerCode     JucePlugin_ManufacturerCode
 #endif
 #ifndef  JucePlugin_CFBundleIdentifier
- #define JucePlugin_CFBundleIdentifier     com.sonosthesia.relay
+ #define JucePlugin_CFBundleIdentifier     com.yourcompany.relay
 #endif
 #ifndef  JucePlugin_RTASCategory
  #define JucePlugin_RTASCategory           ePlugInCategory_None
@@ -324,7 +331,7 @@
  #define JucePlugin_RTASDisableMultiMono   0
 #endif
 #ifndef  JucePlugin_AAXIdentifier
- #define JucePlugin_AAXIdentifier          com.sonosthesia.relay
+ #define JucePlugin_AAXIdentifier          com.yourcompany.relay
 #endif
 #ifndef  JucePlugin_AAXManufacturerCode
  #define JucePlugin_AAXManufacturerCode    JucePlugin_ManufacturerCode
@@ -342,4 +349,4 @@
  #define JucePlugin_AAXDisableMultiMono    0
 #endif
 
-#endif  // __JUCE_APPCONFIG_RZAFUX__
+#endif  // __JUCE_APPCONFIG_WCGO9G__

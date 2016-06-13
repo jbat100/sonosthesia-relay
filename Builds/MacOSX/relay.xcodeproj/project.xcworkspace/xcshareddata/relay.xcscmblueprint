@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "29048BA668D50E45FC62612E648A09D6267E3849",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "DEBAC9C6799FD4E8074B3BAF720718E3C3499FA0" : 0,
+    "29048BA668D50E45FC62612E648A09D6267E3849" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "2260AAD7-0E09-4F1A-A993-6B0C694FB3EC",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "DEBAC9C6799FD4E8074B3BAF720718E3C3499FA0" : "..\/juce\/juce-git",
+    "29048BA668D50E45FC62612E648A09D6267E3849" : "sonosthesia-relay\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "relay",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "Builds\/MacOSX\/relay.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/jbat100\/sonosthesia-relay.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "29048BA668D50E45FC62612E648A09D6267E3849"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/julianstorer\/JUCE.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "DEBAC9C6799FD4E8074B3BAF720718E3C3499FA0"
+    }
+  ]
+}

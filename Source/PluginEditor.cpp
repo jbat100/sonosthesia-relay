@@ -30,7 +30,7 @@ MainTabbedComponent::MainTabbedComponent(RelayAudioProcessor& _processor) :
     addTab ("MIDI", colour, &midiComponent, true);
     addTab ("Parameters", colour, &parameterComponent, true);
     addTab ("Targets", colour, &targetComponent, true);
-    addTab ("Test", colour, &testComponent, true);
+    addTab ("Manual", colour, &testComponent, true);
 
 }
 

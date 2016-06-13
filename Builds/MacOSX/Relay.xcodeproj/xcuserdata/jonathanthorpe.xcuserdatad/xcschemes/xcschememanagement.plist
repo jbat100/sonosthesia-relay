@@ -4,65 +4,55 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>Relay (AU).xcscheme</key>
-		<dict>
-			<key>orderHint</key>
-			<integer>2</integer>
-		</dict>
-		<key>Relay (AUv3 AppExtension).xcscheme</key>
-		<dict>
-			<key>orderHint</key>
-			<integer>3</integer>
-		</dict>
-		<key>Relay (AUv3 Standalone).xcscheme</key>
-		<dict>
-			<key>orderHint</key>
-			<integer>4</integer>
-		</dict>
-		<key>Relay (All).xcscheme</key>
-		<dict>
-			<key>orderHint</key>
-			<integer>0</integer>
-		</dict>
-		<key>Relay (Shared Code).xcscheme</key>
-		<dict>
-			<key>orderHint</key>
-			<integer>5</integer>
-		</dict>
-		<key>Relay (VST).xcscheme</key>
+		<key>relay (AU).xcscheme</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>1</integer>
 		</dict>
+		<key>relay (AUv3 AppExtension).xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>2</integer>
+		</dict>
+		<key>relay (AUv3 Standalone).xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>3</integer>
+		</dict>
+		<key>relay (All).xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>0</integer>
+		</dict>
+		<key>relay (Shared Code).xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>4</integer>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>1B45F1B4B64EB88CB46DF67F</key>
+		<key>22C3150041C3E139CF15D8CA</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>6EB5AE518EF71BE85C56A04C</key>
+		<key>725E1BBFD52D09EC53A8594C</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>C08320FB3D65569284C03546</key>
+		<key>9050ACB0DCE5651E29D45888</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>CC16ABCB11BBC000997741BE</key>
+		<key>CD91FB9C7B4B10ED6BE09055</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>D061727367FD0966F0E7B961</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>ED214ED01F9D9B522D105FFD</key>
+		<key>F0D3E0369081C60AEEC0C34F</key>
 		<dict>
 			<key>primary</key>
 			<true/>

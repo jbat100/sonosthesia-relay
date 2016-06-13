@@ -10,8 +10,8 @@
 
 */
 
-#ifndef __APPHEADERFILE_RZAFUX__
-#define __APPHEADERFILE_RZAFUX__
+#ifndef __APPHEADERFILE_WCGO9G__
+#define __APPHEADERFILE_WCGO9G__
 
 #include "AppConfig.h"
 
@@ -32,7 +32,6 @@
 #include <juce_osc/juce_osc.h>
 #include <juce_video/juce_video.h>
 
-#include "BinaryData.h"
 
 #if ! DONT_SET_USING_JUCE_NAMESPACE
  // If your code uses a lot of JUCE classes, then this will obviously save you
@@ -43,10 +42,10 @@
 #if ! JUCE_DONT_DECLARE_PROJECTINFO
 namespace ProjectInfo
 {
-    const char* const  projectName    = "Relay";
-    const char* const  versionString  = "0.0.1";
-    const int          versionNumber  = 0x1;
+    const char* const  projectName    = "relay";
+    const char* const  versionString  = "1.0.0";
+    const int          versionNumber  = 0x10000;
 }
 #endif
 
-#endif   // __APPHEADERFILE_RZAFUX__
+#endif   // __APPHEADERFILE_WCGO9G__

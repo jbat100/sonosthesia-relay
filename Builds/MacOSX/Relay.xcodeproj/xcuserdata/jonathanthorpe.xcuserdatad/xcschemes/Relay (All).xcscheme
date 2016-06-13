@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "6EB5AE518EF71BE85C56A04C"
-               BuildableName = "Relay (All)"
-               BlueprintName = "Relay (All)"
-               ReferencedContainer = "container:Relay.xcodeproj">
+               BlueprintIdentifier = "725E1BBFD52D09EC53A8594C"
+               BuildableName = "relay (All)"
+               BlueprintName = "relay (All)"
+               ReferencedContainer = "container:relay.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -44,16 +44,15 @@
       allowLocationSimulation = "YES">
       <PathRunnable
          runnableDebuggingMode = "0"
-         BundleIdentifier = "com.roli.pluginhost"
-         FilePath = "/Users/jonathanthorpe/Dev/juce/Plugin Host.app">
+         FilePath = "/Users/jonathanthorpe/Dev/juce/juce-git/Plugin Host.app">
       </PathRunnable>
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "6EB5AE518EF71BE85C56A04C"
-            BuildableName = "Relay (All)"
-            BlueprintName = "Relay (All)"
-            ReferencedContainer = "container:Relay.xcodeproj">
+            BlueprintIdentifier = "725E1BBFD52D09EC53A8594C"
+            BuildableName = "relay (All)"
+            BlueprintName = "relay (All)"
+            ReferencedContainer = "container:relay.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -68,10 +67,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "6EB5AE518EF71BE85C56A04C"
-            BuildableName = "Relay (All)"
-            BlueprintName = "Relay (All)"
-            ReferencedContainer = "container:Relay.xcodeproj">
+            BlueprintIdentifier = "725E1BBFD52D09EC53A8594C"
+            BuildableName = "relay (All)"
+            BlueprintName = "relay (All)"
+            ReferencedContainer = "container:relay.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>

@@ -15,10 +15,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "1B45F1B4B64EB88CB46DF67F"
-               BuildableName = "Relay.appex"
-               BlueprintName = "Relay (AUv3 AppExtension)"
-               ReferencedContainer = "container:Relay.xcodeproj">
+               BlueprintIdentifier = "9050ACB0DCE5651E29D45888"
+               BuildableName = "relay.appex"
+               BlueprintName = "relay (AUv3 AppExtension)"
+               ReferencedContainer = "container:relay.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
@@ -29,10 +29,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "D061727367FD0966F0E7B961"
-               BuildableName = "Relay.app"
-               BlueprintName = "Relay (AUv3 Standalone)"
-               ReferencedContainer = "container:Relay.xcodeproj">
+               BlueprintIdentifier = "CD91FB9C7B4B10ED6BE09055"
+               BuildableName = "relay.app"
+               BlueprintName = "relay (AUv3 Standalone)"
+               ReferencedContainer = "container:relay.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -47,10 +47,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "1B45F1B4B64EB88CB46DF67F"
-            BuildableName = "Relay.appex"
-            BlueprintName = "Relay (AUv3 AppExtension)"
-            ReferencedContainer = "container:Relay.xcodeproj">
+            BlueprintIdentifier = "9050ACB0DCE5651E29D45888"
+            BuildableName = "relay.appex"
+            BlueprintName = "relay (AUv3 AppExtension)"
+            ReferencedContainer = "container:relay.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -71,10 +71,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "D061727367FD0966F0E7B961"
-            BuildableName = "Relay.app"
-            BlueprintName = "Relay (AUv3 Standalone)"
-            ReferencedContainer = "container:Relay.xcodeproj">
+            BlueprintIdentifier = "CD91FB9C7B4B10ED6BE09055"
+            BuildableName = "relay.app"
+            BlueprintName = "relay (AUv3 Standalone)"
+            ReferencedContainer = "container:relay.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -91,10 +91,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "D061727367FD0966F0E7B961"
-            BuildableName = "Relay.app"
-            BlueprintName = "Relay (AUv3 Standalone)"
-            ReferencedContainer = "container:Relay.xcodeproj">
+            BlueprintIdentifier = "CD91FB9C7B4B10ED6BE09055"
+            BuildableName = "relay.app"
+            BlueprintName = "relay (AUv3 Standalone)"
+            ReferencedContainer = "container:relay.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

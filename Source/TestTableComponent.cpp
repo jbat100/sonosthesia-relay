@@ -154,7 +154,7 @@ Component* TestTableComponent::refreshComponentForCell (int rowNumber, int colum
         
         // If an existing component is being passed-in for updating, we'll re-use it, but
         // if not, we'll have to create one.
-        if (component == nullptr) component = new ParameterSlider(*parameter);
+        if (component == nullptr) component = new ParameterSlider(parameter);
         
         return component;
     }

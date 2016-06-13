@@ -26,7 +26,7 @@
 #include "ParameterTableComponent.h"
 #include "ParameterListComponent.h"
 #include "TestTableComponent.h"
-
+#include "TestListComponent.h"
 
 class MainTabbedComponent  : public TabbedComponent
 {
@@ -42,7 +42,7 @@ private:
     TargetListComponent targetComponent;
     MIDIListComponent midiComponent;
     ParameterListComponent parameterComponent;
-    TestTableComponent testComponent;
+    TestListComponent testComponent;
 };
 
 

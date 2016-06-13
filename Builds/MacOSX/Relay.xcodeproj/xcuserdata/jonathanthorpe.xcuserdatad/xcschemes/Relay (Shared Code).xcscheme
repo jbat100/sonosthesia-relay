@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "C08320FB3D65569284C03546"
-               BuildableName = "libRelay.a"
-               BlueprintName = "Relay (Shared Code)"
-               ReferencedContainer = "container:Relay.xcodeproj">
+               BlueprintIdentifier = "F0D3E0369081C60AEEC0C34F"
+               BuildableName = "librelay.a"
+               BlueprintName = "relay (Shared Code)"
+               ReferencedContainer = "container:relay.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -45,10 +45,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "C08320FB3D65569284C03546"
-            BuildableName = "libRelay.a"
-            BlueprintName = "Relay (Shared Code)"
-            ReferencedContainer = "container:Relay.xcodeproj">
+            BlueprintIdentifier = "F0D3E0369081C60AEEC0C34F"
+            BuildableName = "librelay.a"
+            BlueprintName = "relay (Shared Code)"
+            ReferencedContainer = "container:relay.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -63,10 +63,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "C08320FB3D65569284C03546"
-            BuildableName = "libRelay.a"
-            BlueprintName = "Relay (Shared Code)"
-            ReferencedContainer = "container:Relay.xcodeproj">
+            BlueprintIdentifier = "F0D3E0369081C60AEEC0C34F"
+            BuildableName = "librelay.a"
+            BlueprintName = "relay (Shared Code)"
+            ReferencedContainer = "container:relay.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>

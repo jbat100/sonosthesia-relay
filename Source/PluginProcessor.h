@@ -11,8 +11,12 @@
 #ifndef PLUGINPROCESSOR_H_INCLUDED
 #define PLUGINPROCESSOR_H_INCLUDED
 
-#include "../JuceLibraryCode/JuceHeader.h"
+#define COMP_TYPE		kAudioUnitComponentType
+#define COMP_SUBTYPE	kAudioUnitOutputSubType
+#define COMP_MANUF		kAudioUnitAudioHardwareOutputSubSubType
 
+
+#include "../JuceLibraryCode/JuceHeader.h"
 #include "OSCTargetManager.h"
 #include "MidiRelay.h"
 #include "ParameterRelay.h"

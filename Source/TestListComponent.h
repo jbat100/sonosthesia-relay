@@ -13,19 +13,64 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 
+#include "CommonComponent.h"
+#include "PluginProcessor.h"
+
+
+class ParameterTestComponent : public Component {
+    
+public:
+    
+    ParameterTestComponent(AudioProcessorParameter* _parameter);
+    
+    virtual ~ParameterTestComponent() {};
+    
+    void paint (Graphics& g) override;
+    void resized() override;
+    
+    void setParameter(AudioProcessorParameter* _parameter);
+    
+    static const int desiredHeight;
+    static const int hmargin;
+    
+private:
+    
+    Label nameLabel;
+    
+    ParameterSlider slider;
+    
+    AudioProcessorParameter* parameter;
+    
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ParameterTestComponent)
+};
+
 //==============================================================================
 /*
 */
-class TestListComponent    : public Component
+class TestListComponent : public Component, public ListBoxModel
 {
 public:
-    TestListComponent();
+    TestListComponent(RelayAudioProcessor& _processor);
     ~TestListComponent();
-
-    void paint (Graphics&);
-    void resized();
-
+    
+    void paint (Graphics&) override;
+    void resized() override;
+    
+    void update();
+    
+    // ======== ListBoxModel ===========
+    
+    int getNumRows() override;
+    void paintListBoxItem (int rowNumber, Graphics &g, int width, int height, bool rowIsSelected) override;
+    Component* refreshComponentForRow (int rowNumber, bool isRowSelected, Component *existingComponentToUpdate) override;
+    
 private:
+    
+    ListBox listBox;
+    Font font;
+    
+    RelayAudioProcessor& processor;
+    
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (TestListComponent)
 };
 

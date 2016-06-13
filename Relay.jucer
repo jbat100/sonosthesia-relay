@@ -1,120 +1,102 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="rZAfux" name="Relay" projectType="audioplug" version="0.0.1"
-              bundleIdentifier="com.sonosthesia.relay" includeBinaryInAppConfig="1"
-              buildVST="1" buildVST3="0" buildAU="1" buildAUv3="1" buildRTAS="0"
-              buildAAX="0" pluginName="relay" pluginDesc="relay" pluginManufacturer="sonosthesia"
-              pluginManufacturerCode="snst" pluginCode="rlay" pluginChannelConfigs=""
+<JUCERPROJECT id="WCGo9g" name="relay" projectType="audioplug" version="1.0.0"
+              bundleIdentifier="com.yourcompany.relay" includeBinaryInAppConfig="1"
+              buildVST="0" buildVST3="0" buildAU="1" buildAUv3="1" buildRTAS="0"
+              buildAAX="0" pluginName="relay" pluginDesc="relay" pluginManufacturer="Sonosthesia"
+              pluginManufacturerCode="Manu" pluginCode="Wcgo" pluginChannelConfigs=""
               pluginIsSynth="0" pluginWantsMidiIn="1" pluginProducesMidiOut="0"
-              pluginIsMidiEffectPlugin="0" pluginEditorRequiresKeys="0" pluginAUExportPrefix="RelayAU"
-              pluginRTASCategory="" aaxIdentifier="com.sonosthesia.relay" pluginAAXCategory="AAX_ePlugInCategory_Dynamics"
-              jucerVersion="4.2.1" pluginAUMainType="rlay">
-  <MAINGROUP id="YN10nS" name="Relay">
-    <GROUP id="{0E2329F2-2D9C-5A97-59AE-D3D144B88AFF}" name="Images">
-      <FILE id="SLQozq" name="metallic-surface.png" compile="0" resource="1"
-            file="Images/metallic-surface.png" xcodeResource="0"/>
-      <FILE id="Y9Uenq" name="space-dense.png" compile="0" resource="1" file="Images/space-dense.png"
-            xcodeResource="0"/>
-    </GROUP>
-    <GROUP id="{CA07BB16-3DC8-BFEA-3102-6340B6C296CD}" name="Source">
-      <GROUP id="{5A6FCEDB-3722-FFD2-4E43-2026F21284C5}" name="Common">
-        <FILE id="HZY0mQ" name="Theme.cpp" compile="1" resource="0" file="Source/Theme.cpp"/>
-        <FILE id="PvRHJR" name="Theme.h" compile="0" resource="0" file="Source/Theme.h"/>
-        <FILE id="uZr28M" name="RelayComponent.cpp" compile="1" resource="0"
-              file="Source/RelayComponent.cpp"/>
-        <FILE id="gtNdRw" name="RelayComponent.h" compile="0" resource="0"
-              file="Source/RelayComponent.h"/>
-        <FILE id="FzERRw" name="CommonComponent.cpp" compile="1" resource="0"
-              file="Source/CommonComponent.cpp"/>
-        <FILE id="YUNSBC" name="CommonComponent.h" compile="0" resource="0"
-              file="Source/CommonComponent.h"/>
-        <FILE id="JoEvDK" name="Utils.cpp" compile="1" resource="0" file="Source/Utils.cpp"/>
-        <FILE id="dUtFC0" name="Utils.h" compile="0" resource="0" file="Source/Utils.h"/>
-        <FILE id="tLxYtM" name="Relay.cpp" compile="1" resource="0" file="Source/Relay.cpp"/>
-        <FILE id="kp3MYl" name="Relay.h" compile="0" resource="0" file="Source/Relay.h"/>
-      </GROUP>
-      <GROUP id="{C2B25095-5E88-4D12-DD37-0B4332601FC7}" name="MIDI">
-        <FILE id="ltZ4ft" name="MIDIRelay.cpp" compile="1" resource="0" file="Source/MIDIRelay.cpp"/>
-        <FILE id="oKt4LM" name="MIDIRelay.h" compile="0" resource="0" file="Source/MIDIRelay.h"/>
-        <FILE id="XgKKym" name="MIDIListComponent.cpp" compile="1" resource="0"
-              file="Source/MIDIListComponent.cpp"/>
-        <FILE id="UfWNiW" name="MIDIListComponent.h" compile="0" resource="0"
-              file="Source/MIDIListComponent.h"/>
-        <FILE id="cCDFVV" name="MIDITableComponent.cpp" compile="1" resource="0"
-              file="Source/MIDITableComponent.cpp"/>
-        <FILE id="LL4etf" name="MIDITableComponent.h" compile="0" resource="0"
-              file="Source/MIDITableComponent.h"/>
-      </GROUP>
-      <GROUP id="{63382BC9-A0F0-DABE-56D0-B89BD13DB468}" name="Parameter">
-        <FILE id="P89m54" name="ParameterRelay.cpp" compile="1" resource="0"
-              file="Source/ParameterRelay.cpp"/>
-        <FILE id="b0NHyr" name="ParameterRelay.h" compile="0" resource="0"
-              file="Source/ParameterRelay.h"/>
-        <FILE id="tdJID3" name="ParameterListComponent.cpp" compile="1" resource="0"
-              file="Source/ParameterListComponent.cpp"/>
-        <FILE id="xAew83" name="ParameterListComponent.h" compile="0" resource="0"
-              file="Source/ParameterListComponent.h"/>
-        <FILE id="fZSGVC" name="ParameterTableComponent.cpp" compile="1" resource="0"
-              file="Source/ParameterTableComponent.cpp"/>
-        <FILE id="SDAI3m" name="ParameterTableComponent.h" compile="0" resource="0"
-              file="Source/ParameterTableComponent.h"/>
-      </GROUP>
-      <GROUP id="{062EC740-1E3A-F109-7E8F-44AD80CEFD6C}" name="Target">
-        <FILE id="VjHDz6" name="OSCTargetManager.cpp" compile="1" resource="0"
-              file="Source/OSCTargetManager.cpp"/>
-        <FILE id="hbLyRr" name="OSCTargetManager.h" compile="0" resource="0"
-              file="Source/OSCTargetManager.h"/>
-        <FILE id="Eh33xQ" name="TargetListComponent.cpp" compile="1" resource="0"
-              file="Source/TargetListComponent.cpp"/>
-        <FILE id="B4Eryq" name="TargetListComponent.h" compile="0" resource="0"
-              file="Source/TargetListComponent.h"/>
-        <FILE id="dk3z4m" name="TargetTableComponent.cpp" compile="1" resource="0"
-              file="Source/TargetTableComponent.cpp"/>
-        <FILE id="RFQRMa" name="TargetTableComponent.h" compile="0" resource="0"
-              file="Source/TargetTableComponent.h"/>
-      </GROUP>
-      <GROUP id="{C76A73C7-7192-89A4-BE15-7E13236017A6}" name="Test">
-        <FILE id="Ry9EJ6" name="TestListComponent.cpp" compile="1" resource="0"
-              file="Source/TestListComponent.cpp"/>
-        <FILE id="VOhEA7" name="TestListComponent.h" compile="0" resource="0"
-              file="Source/TestListComponent.h"/>
-        <FILE id="stvJlr" name="TestTableComponent.cpp" compile="1" resource="0"
-              file="Source/TestTableComponent.cpp"/>
-        <FILE id="yaZaVd" name="TestTableComponent.h" compile="0" resource="0"
-              file="Source/TestTableComponent.h"/>
-      </GROUP>
-      <FILE id="iREjjT" name="PluginProcessor.cpp" compile="1" resource="0"
-            file="Source/PluginProcessor.cpp"/>
-      <FILE id="MfJAW4" name="PluginProcessor.h" compile="0" resource="0"
-            file="Source/PluginProcessor.h"/>
-      <FILE id="Jjv9C1" name="PluginEditor.cpp" compile="1" resource="0"
-            file="Source/PluginEditor.cpp"/>
-      <FILE id="WHhIfh" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
-    </GROUP>
+              pluginIsMidiEffectPlugin="0" pluginEditorRequiresKeys="0" pluginAUExportPrefix="relayAU"
+              pluginRTASCategory="" aaxIdentifier="com.yourcompany.relay" pluginAAXCategory="AAX_ePlugInCategory_Dynamics"
+              jucerVersion="4.2.1">
+  <MAINGROUP id="OAWDY0" name="relay">
+    <FILE id="oRLtLa" name="CommonComponent.cpp" compile="1" resource="0"
+          file="Source/CommonComponent.cpp"/>
+    <FILE id="e4acO8" name="CommonComponent.h" compile="0" resource="0"
+          file="Source/CommonComponent.h"/>
+    <FILE id="rpGcQg" name="MIDIListComponent.cpp" compile="1" resource="0"
+          file="Source/MIDIListComponent.cpp"/>
+    <FILE id="NtBacD" name="MIDIListComponent.h" compile="0" resource="0"
+          file="Source/MIDIListComponent.h"/>
+    <FILE id="hxKZ2Z" name="MIDIRelay.cpp" compile="1" resource="0" file="Source/MIDIRelay.cpp"/>
+    <FILE id="eXi1Dp" name="MIDIRelay.h" compile="0" resource="0" file="Source/MIDIRelay.h"/>
+    <FILE id="jm2LZS" name="MIDITableComponent.cpp" compile="1" resource="0"
+          file="Source/MIDITableComponent.cpp"/>
+    <FILE id="zicrhz" name="MIDITableComponent.h" compile="0" resource="0"
+          file="Source/MIDITableComponent.h"/>
+    <FILE id="xuA17Y" name="OSCTargetManager.cpp" compile="1" resource="0"
+          file="Source/OSCTargetManager.cpp"/>
+    <FILE id="o01fmY" name="OSCTargetManager.h" compile="0" resource="0"
+          file="Source/OSCTargetManager.h"/>
+    <FILE id="pDTLyb" name="ParameterListComponent.cpp" compile="1" resource="0"
+          file="Source/ParameterListComponent.cpp"/>
+    <FILE id="ZhVX7K" name="ParameterListComponent.h" compile="0" resource="0"
+          file="Source/ParameterListComponent.h"/>
+    <FILE id="hT3dph" name="ParameterRelay.cpp" compile="1" resource="0"
+          file="Source/ParameterRelay.cpp"/>
+    <FILE id="BzbWwL" name="ParameterRelay.h" compile="0" resource="0"
+          file="Source/ParameterRelay.h"/>
+    <FILE id="nzO2R0" name="ParameterTableComponent.cpp" compile="1" resource="0"
+          file="Source/ParameterTableComponent.cpp"/>
+    <FILE id="s3bWqL" name="ParameterTableComponent.h" compile="0" resource="0"
+          file="Source/ParameterTableComponent.h"/>
+    <FILE id="WZ4gmX" name="PluginEditor.cpp" compile="1" resource="0"
+          file="Source/PluginEditor.cpp"/>
+    <FILE id="PuG6Re" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
+    <FILE id="oQOK2L" name="PluginProcessor.cpp" compile="1" resource="0"
+          file="Source/PluginProcessor.cpp"/>
+    <FILE id="pxuhKq" name="PluginProcessor.h" compile="0" resource="0"
+          file="Source/PluginProcessor.h"/>
+    <FILE id="bWNAGu" name="Relay.cpp" compile="1" resource="0" file="Source/Relay.cpp"/>
+    <FILE id="DqrzAg" name="Relay.h" compile="0" resource="0" file="Source/Relay.h"/>
+    <FILE id="JEB45j" name="RelayComponent.cpp" compile="1" resource="0"
+          file="Source/RelayComponent.cpp"/>
+    <FILE id="iJJWKp" name="RelayComponent.h" compile="0" resource="0"
+          file="Source/RelayComponent.h"/>
+    <FILE id="PDZzvY" name="TargetListComponent.cpp" compile="1" resource="0"
+          file="Source/TargetListComponent.cpp"/>
+    <FILE id="xVHoOj" name="TargetListComponent.h" compile="0" resource="0"
+          file="Source/TargetListComponent.h"/>
+    <FILE id="PQhkUv" name="TargetTableComponent.cpp" compile="1" resource="0"
+          file="Source/TargetTableComponent.cpp"/>
+    <FILE id="RZP8tz" name="TargetTableComponent.h" compile="0" resource="0"
+          file="Source/TargetTableComponent.h"/>
+    <FILE id="LMw3aj" name="TestListComponent.cpp" compile="1" resource="0"
+          file="Source/TestListComponent.cpp"/>
+    <FILE id="zcw0eV" name="TestListComponent.h" compile="0" resource="0"
+          file="Source/TestListComponent.h"/>
+    <FILE id="vtgk4Q" name="TestTableComponent.cpp" compile="1" resource="0"
+          file="Source/TestTableComponent.cpp"/>
+    <FILE id="JGAJfW" name="TestTableComponent.h" compile="0" resource="0"
+          file="Source/TestTableComponent.h"/>
+    <FILE id="QX7rA4" name="Theme.cpp" compile="1" resource="0" file="Source/Theme.cpp"/>
+    <FILE id="xVrntc" name="Theme.h" compile="0" resource="0" file="Source/Theme.h"/>
+    <FILE id="m9i2TK" name="Utils.cpp" compile="1" resource="0" file="Source/Utils.cpp"/>
+    <FILE id="KkJjTr" name="Utils.h" compile="0" resource="0" file="Source/Utils.h"/>
   </MAINGROUP>
   <EXPORTFORMATS>
-    <XCODE_MAC targetFolder="Builds/MacOSX" vstFolder="/Developer/VST3">
+    <XCODE_MAC targetFolder="Builds/MacOSX">
       <CONFIGURATIONS>
-        <CONFIGURATION name="Debug" isDebug="1" optimisation="1" targetName="Relay"/>
-        <CONFIGURATION name="Release" isDebug="0" optimisation="3" targetName="Relay"/>
+        <CONFIGURATION name="Debug" isDebug="1" optimisation="1" targetName="relay"/>
+        <CONFIGURATION name="Release" isDebug="0" optimisation="3" targetName="relay"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
-        <MODULEPATH id="juce_core" path="../../juce/juce-grapefruit-osx/modules"/>
-        <MODULEPATH id="juce_events" path="../../juce/juce-grapefruit-osx/modules"/>
-        <MODULEPATH id="juce_graphics" path="../../juce/juce-grapefruit-osx/modules"/>
-        <MODULEPATH id="juce_data_structures" path="../../juce/juce-grapefruit-osx/modules"/>
-        <MODULEPATH id="juce_gui_basics" path="../../juce/juce-grapefruit-osx/modules"/>
-        <MODULEPATH id="juce_gui_extra" path="../../juce/juce-grapefruit-osx/modules"/>
-        <MODULEPATH id="juce_cryptography" path="../../juce/juce-grapefruit-osx/modules"/>
-        <MODULEPATH id="juce_video" path="../../juce/juce-grapefruit-osx/modules"/>
-        <MODULEPATH id="juce_opengl" path="../../juce/juce-grapefruit-osx/modules"/>
-        <MODULEPATH id="juce_audio_basics" path="../../juce/juce-grapefruit-osx/modules"/>
-        <MODULEPATH id="juce_audio_devices" path="../../juce/juce-grapefruit-osx/modules"/>
-        <MODULEPATH id="juce_audio_formats" path="../../juce/juce-grapefruit-osx/modules"/>
-        <MODULEPATH id="juce_audio_processors" path="../../juce/juce-grapefruit-osx/modules"/>
-        <MODULEPATH id="juce_audio_plugin_client" path="../../juce/juce-grapefruit-osx/modules"/>
-        <MODULEPATH id="juce_audio_utils" path="../../juce/juce-grapefruit-osx/modules"/>
-        <MODULEPATH id="juce_osc" path="../../juce/juce-grapefruit-osx/modules"/>
+        <MODULEPATH id="juce_core" path="../../juce/juce-git/modules"/>
+        <MODULEPATH id="juce_events" path="../../juce/juce-git/modules"/>
+        <MODULEPATH id="juce_graphics" path="../../juce/juce-git/modules"/>
+        <MODULEPATH id="juce_data_structures" path="../../juce/juce-git/modules"/>
+        <MODULEPATH id="juce_gui_basics" path="../../juce/juce-git/modules"/>
+        <MODULEPATH id="juce_gui_extra" path="../../juce/juce-git/modules"/>
+        <MODULEPATH id="juce_cryptography" path="../../juce/juce-git/modules"/>
+        <MODULEPATH id="juce_video" path="../../juce/juce-git/modules"/>
+        <MODULEPATH id="juce_opengl" path="../../juce/juce-git/modules"/>
+        <MODULEPATH id="juce_audio_basics" path="../../juce/juce-git/modules"/>
+        <MODULEPATH id="juce_audio_devices" path="../../juce/juce-git/modules"/>
+        <MODULEPATH id="juce_audio_formats" path="../../juce/juce-git/modules"/>
+        <MODULEPATH id="juce_audio_processors" path="../../juce/juce-git/modules"/>
+        <MODULEPATH id="juce_audio_plugin_client" path="../../juce/juce-git/modules"/>
+        <MODULEPATH id="juce_osc" path="../../juce/juce-git/modules"/>
+        <MODULEPATH id="juce_audio_utils" path="../../juce/juce-git/modules"/>
       </MODULEPATHS>
     </XCODE_MAC>
   </EXPORTFORMATS>
@@ -137,7 +119,4 @@
     <MODULE id="juce_video" showAllCode="1" useLocalCopy="1"/>
   </MODULES>
   <JUCEOPTIONS JUCE_QUICKTIME="disabled"/>
-  <LIVE_SETTINGS>
-    <OSX/>
-  </LIVE_SETTINGS>
 </JUCERPROJECT>
