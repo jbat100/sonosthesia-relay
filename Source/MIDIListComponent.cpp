@@ -205,6 +205,7 @@ void MIDIRelayComponent::buttonClicked (Button* button)
 
 
 MIDIListComponent::MIDIListComponent(MIDIRelayManager& _relayManager, OSCTargetManager& _targetManager) :
+    listController("Relay MIDI messages to OSC targets"),
     targetManager(_targetManager),
     relayManager(_relayManager)
 {
@@ -212,6 +213,7 @@ MIDIListComponent::MIDIListComponent(MIDIRelayManager& _relayManager, OSCTargetM
     
     setOpaque(false);
     
+    /*
     addAndMakeVisible(newButton);
     newButton.addListener(this);
     newButton.setButtonText("New");
@@ -219,6 +221,10 @@ MIDIListComponent::MIDIListComponent(MIDIRelayManager& _relayManager, OSCTargetM
     addAndMakeVisible(clearButton);
     clearButton.addListener(this);
     clearButton.setButtonText("Clear");
+     */
+    
+    addAndMakeVisible(listController);
+    listController.add(this);
     
     // Create our table component and add it to this component..
     addAndMakeVisible (listBox);
@@ -235,18 +241,22 @@ MIDIListComponent::MIDIListComponent(MIDIRelayManager& _relayManager, OSCTargetM
 
 void MIDIListComponent::resized()
 {
-    int buttonHeight = 20;
-    int buttonWidth = 50;
-    int margin = 10;
+    int controllerHeight = 45;
+    int hmargin = 4;
+    int vmargin = 4;
+    int vspacing = 4;
     
-    Rectangle<int> bounds = getBounds();
+    Rectangle<int> rootBounds = getBounds();
+    //Rectangle<int> rootBounds = getBounds().reduced(hmargin*2, vmargin*2).translated(hmargin, vmargin);
+    int verticalOffset = vmargin;
+    int width = rootBounds.getWidth();
     
-    int buttonXOffset = bounds.getWidth() - (2*margin) - (2*buttonWidth);
+    int listHeight = rootBounds.getHeight() - controllerHeight;
     
-    newButton.setBounds( getBounds().withX(buttonXOffset).withY(margin).withHeight(buttonHeight).withWidth(buttonWidth) );
-    clearButton.setBounds( getBounds().withX(buttonXOffset + margin + buttonWidth).withY(margin).withHeight(buttonHeight).withWidth(buttonWidth) );
+    listBox.setBounds( Rectangle<int>(hmargin, vmargin, width, listHeight) );
+    verticalOffset = listBox.getBottom() + vspacing;
     
-    listBox.setBounds( getBounds().withX(0).withY(buttonHeight + (2*margin)).withTrimmedBottom(buttonHeight + (2*margin)) );
+    listController.setBounds( Rectangle<int>(0, verticalOffset, width, controllerHeight) );
 }
 
 void MIDIListComponent::changeListenerCallback (ChangeBroadcaster *source)
@@ -257,6 +267,18 @@ void MIDIListComponent::changeListenerCallback (ChangeBroadcaster *source)
         std::cout << "MIDIListComponent updating table content on targetManager change\n";
         listBox.updateContent();
     }
+}
+
+void MIDIListComponent::newItemRequest(Component* sender)
+{
+    relayManager.newItem();
+    listBox.updateContent();
+}
+
+void MIDIListComponent::clearItemsRequest(Component* sender)
+{
+    relayManager.clear();
+    listBox.updateContent();
 }
 
 void MIDIListComponent::buttonClicked (Button* button)

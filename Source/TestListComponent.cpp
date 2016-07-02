@@ -100,7 +100,7 @@ void TestListComponent::paint (Graphics& g)
 void TestListComponent::resized()
 {
     int margin = 4;
-    listBox.setBounds( getBounds().withX(0).withY(0).withTrimmedBottom(0).reduced(margin) );
+    listBox.setBounds( getBounds().withX(0).withY(10).withTrimmedBottom(10).reduced(margin) );
 }
 
 int TestListComponent::getNumRows()

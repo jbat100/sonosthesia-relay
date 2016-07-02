@@ -16,6 +16,7 @@
 #include "OSCTargetManager.h"
 #include "MIDIRelay.h"
 #include "RelayComponent.h"
+#include "ListControllerComponent.h"
 
 
 //==============================================================================
@@ -91,7 +92,7 @@ private:
 /*  A component presenting a list of targets
  */
 
-class MIDIListComponent : public Component, public ButtonListener, public ListBoxModel, public ChangeListener
+class MIDIListComponent : public Component, public ButtonListener, public ListBoxModel, public ChangeListener, public ListControllerListener
 {
 public:
     MIDIListComponent(MIDIRelayManager& _relayManager, OSCTargetManager& _targetManager);
@@ -113,8 +114,14 @@ public:
     void paintListBoxItem (int rowNumber, Graphics &g, int width, int height, bool rowIsSelected) override;
     Component* refreshComponentForRow (int rowNumber, bool isRowSelected, Component *existingComponentToUpdate) override;
     
+    // ======== ListControllerListener ===========
+    
+    virtual void newItemRequest(Component* sender) override;
+    virtual void clearItemsRequest(Component* sender) override;
+    
 private:
     
+    ListControllerComponent listController;
     TextButton newButton;
     TextButton clearButton;
     ListBox listBox;
