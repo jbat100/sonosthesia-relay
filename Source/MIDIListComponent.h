@@ -92,7 +92,7 @@ private:
 /*  A component presenting a list of targets
  */
 
-class MIDIListComponent : public Component, public ButtonListener, public ListBoxModel, public ChangeListener, public ListControllerListener
+class MIDIListComponent : public Component, public ListBoxModel, public ChangeListener, public ListControllerListener
 {
 public:
     MIDIListComponent(MIDIRelayManager& _relayManager, OSCTargetManager& _targetManager);
@@ -103,10 +103,6 @@ public:
     // ======= ChangeListener ===========
     
     void changeListenerCallback (ChangeBroadcaster *source) override;
-    
-    // ======== ButtonListener =========
-    
-    void buttonClicked (Button* button) override;
     
     // ======== ListBoxModel ===========
     
@@ -122,8 +118,6 @@ public:
 private:
     
     ListControllerComponent listController;
-    TextButton newButton;
-    TextButton clearButton;
     ListBox listBox;
     Font font;
     

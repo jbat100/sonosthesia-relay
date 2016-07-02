@@ -46,7 +46,7 @@ void ParameterTestComponent::paint (Graphics& g)
 
 void ParameterTestComponent::resized()
 {
-    int vmargin = 4;
+    int vmargin = 3;
     int hmargin = 10;
     int spacing = 10;
     

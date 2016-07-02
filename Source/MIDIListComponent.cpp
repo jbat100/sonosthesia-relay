@@ -213,16 +213,6 @@ MIDIListComponent::MIDIListComponent(MIDIRelayManager& _relayManager, OSCTargetM
     
     setOpaque(false);
     
-    /*
-    addAndMakeVisible(newButton);
-    newButton.addListener(this);
-    newButton.setButtonText("New");
-    
-    addAndMakeVisible(clearButton);
-    clearButton.addListener(this);
-    clearButton.setButtonText("Clear");
-     */
-    
     addAndMakeVisible(listController);
     listController.add(this);
     
@@ -279,22 +269,6 @@ void MIDIListComponent::clearItemsRequest(Component* sender)
 {
     relayManager.clear();
     listBox.updateContent();
-}
-
-void MIDIListComponent::buttonClicked (Button* button)
-{
-    if (button == &newButton)
-    {
-        //std::cout << "Make new target!\n";
-        relayManager.newItem();
-        listBox.updateContent();
-    }
-    else if (button == &clearButton)
-    {
-        //std::cout << "Clear targets!\n";
-        relayManager.clear();
-        listBox.updateContent();
-    }
 }
 
 int MIDIListComponent::getNumRows()

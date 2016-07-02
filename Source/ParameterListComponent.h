@@ -17,7 +17,7 @@
 #include "ParameterRelay.h"
 #include "RelayComponent.h"
 #include "PluginProcessor.h"
-
+#include "ListControllerComponent.h"
 
 class ParameterSelectionComponent : public Component, private ComboBoxListener
 {
@@ -97,7 +97,7 @@ private:
 /*  A component presenting a list of targets
  */
 
-class ParameterListComponent : public Component, public ButtonListener, public ListBoxModel, public ChangeListener
+class ParameterListComponent : public Component, public ListBoxModel, public ChangeListener, public ListControllerListener
 {
 public:
     ParameterListComponent(RelayAudioProcessor& _processor);
@@ -109,20 +109,20 @@ public:
     
     void changeListenerCallback (ChangeBroadcaster *source) override;
     
-    // ======== ButtonListener =========
-    
-    void buttonClicked (Button* button) override;
-    
     // ======== ListBoxModel ===========
     
     int getNumRows() override;
     void paintListBoxItem (int rowNumber, Graphics &g, int width, int height, bool rowIsSelected) override;
     Component* refreshComponentForRow (int rowNumber, bool isRowSelected, Component *existingComponentToUpdate) override;
     
+    // ======== ListControllerListener ===========
+    
+    virtual void newItemRequest(Component* sender) override;
+    virtual void clearItemsRequest(Component* sender) override;
+    
 private:
     
-    TextButton newButton;
-    TextButton clearButton;
+    ListControllerComponent listController;
     ListBox listBox;
     Font font;
     

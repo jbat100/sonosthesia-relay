@@ -14,6 +14,7 @@
 #include "../JuceLibraryCode/JuceHeader.h"
 
 #include "OSCTargetManager.h"
+#include "ListControllerComponent.h"
 
 //==============================================================================
 /*  A component associated with a target
@@ -76,7 +77,7 @@ private:
 /*  A component presenting a list of targets
 */
 
-class TargetListComponent : public Component, public ButtonListener, public ListBoxModel, public ChangeListener
+class TargetListComponent : public Component, public ListBoxModel, public ChangeListener, public ListControllerListener
 {
 public:
     TargetListComponent(OSCTargetManager& oscTargetManager);
@@ -89,20 +90,21 @@ public:
     
     void changeListenerCallback (ChangeBroadcaster *source) override;
     
-    // ======== ButtonListener =========
-    
-    void buttonClicked (Button* button) override;
     
     // ======== ListBoxModel ===========
     
     int getNumRows() override;
     void paintListBoxItem (int rowNumber, Graphics &g, int width, int height, bool rowIsSelected) override;
     Component* refreshComponentForRow (int rowNumber, bool isRowSelected, Component *existingComponentToUpdate) override;
+    
+    // ======== ListControllerListener ===========
+    
+    virtual void newItemRequest(Component* sender) override;
+    virtual void clearItemsRequest(Component* sender) override;
 
 private:
     
-    TextButton newButton;
-    TextButton clearButton;
+    ListControllerComponent listController;
     ListBox listBox;
     Font font;
     
