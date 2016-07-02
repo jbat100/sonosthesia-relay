@@ -21,14 +21,12 @@ class ParameterTestComponent : public Component {
     
 public:
     
-    ParameterTestComponent(AudioProcessorParameter* _parameter);
+    ParameterTestComponent(AudioProcessorParameter& _parameter);
     
     virtual ~ParameterTestComponent() {};
     
     void paint (Graphics& g) override;
     void resized() override;
-    
-    void setParameter(AudioProcessorParameter* _parameter);
     
     static const int desiredHeight;
     static const int hmargin;
@@ -39,7 +37,7 @@ private:
     
     ParameterSlider slider;
     
-    AudioProcessorParameter* parameter;
+    AudioProcessorParameter& parameter;
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ParameterTestComponent)
 };

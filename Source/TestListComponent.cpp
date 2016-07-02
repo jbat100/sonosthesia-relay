@@ -10,30 +10,19 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "TestListComponent.h"
+#include "CommonComponent.h"
 
 const int ParameterTestComponent::desiredHeight = 30;
 const int ParameterTestComponent::hmargin = 10;
 
 
-ParameterTestComponent::ParameterTestComponent(AudioProcessorParameter* _parameter) :
-    slider(_parameter)
+ParameterTestComponent::ParameterTestComponent(AudioProcessorParameter& _parameter) :
+    slider(_parameter),
+    parameter(_parameter)
 {
     addAndMakeVisible(nameLabel);
     addAndMakeVisible(slider);
-    
-    setParameter(_parameter);
 }
-
-void ParameterTestComponent::setParameter(AudioProcessorParameter* _parameter)
-{
-    parameter = _parameter;
-    
-    slider.setParameter(_parameter);
-    
-    if (parameter) nameLabel.setText(parameter->getName(50), dontSendNotification);
-    else nameLabel.setText("", dontSendNotification);
-}
-
 
 void ParameterTestComponent::paint (Graphics& g)
 {
@@ -122,23 +111,17 @@ void TestListComponent::paintListBoxItem (int rowNumber, Graphics &g, int width,
 
 Component* TestListComponent::refreshComponentForRow (int rowNumber, bool isRowSelected, Component *existingComponentToUpdate)
 {
-    ParameterTestComponent* component = static_cast<ParameterTestComponent*> (existingComponentToUpdate);
-    
-    AudioProcessorParameter* parameter = nullptr;
-    
-    if (rowNumber < processor.getParameters().size())
-    {
-        parameter = processor.getParameters()[rowNumber];
-    }
+    //ParameterTestComponent* component = static_cast<ParameterTestComponent*> (existingComponentToUpdate);
+    ParameterSlider* component = static_cast<ParameterSlider*> (existingComponentToUpdate);
     
     // If an existing component is being passed-in for updating, we'll re-use it, but
     // if not, we'll have to create one.
-    if ( (component == nullptr) && (parameter != nullptr) )
+    if ( component == nullptr )
     {
-        component = new ParameterTestComponent(parameter);
+        AudioProcessorParameter* parameter = processor.getParameters()[rowNumber];
+        //component = new ParameterTestComponent(*parameter);
+        component = new ParameterSlider(*parameter);
     }
-    
-    component->setParameter(parameter);
     
     return component;
 }

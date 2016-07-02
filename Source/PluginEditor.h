@@ -42,7 +42,7 @@ private:
     TargetListComponent targetComponent;
     MIDIListComponent midiComponent;
     ParameterListComponent parameterComponent;
-    TestListComponent testComponent;
+    TestTableComponent testComponent;
 };
 
 

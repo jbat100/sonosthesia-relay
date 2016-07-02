@@ -150,11 +150,11 @@ Component* TestTableComponent::refreshComponentForCell (int rowNumber, int colum
     {
         AudioProcessorParameter* parameter = processor.getParameters()[rowNumber];
         
-        ParameterSlider* component = static_cast<ParameterSlider*> (existingComponentToUpdate);
+        DemoParameterSlider* component = static_cast<DemoParameterSlider*> (existingComponentToUpdate);
         
         // If an existing component is being passed-in for updating, we'll re-use it, but
         // if not, we'll have to create one.
-        if (component == nullptr) component = new ParameterSlider(parameter);
+        if (component == nullptr) component = new DemoParameterSlider(*parameter);
         
         return component;
     }
