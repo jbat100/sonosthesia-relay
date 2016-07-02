@@ -32,7 +32,7 @@
 
 namespace juce
 {
-    AudioProcessor::WrapperType PluginHostType::jucePlugInClientCurrentWrapperType = AudioProcessor::wrapperType_Undefined;
+    int* jucePlugInClientCurrentWrapperType = nullptr;
 }
 
 #if _MSC_VER || JUCE_MINGW

@@ -656,10 +656,7 @@ namespace WavFileHelpers
 
                 if (infoLength > 0)
                 {
-                    infoLength = jmin (infoLength, (int64) input.readInt());
-
-                    if (infoLength <= 0)
-                        return;
+                    infoLength = jlimit ((int64) 0, infoLength, (int64) input.readInt());
 
                     for (int i = 0; i < numElementsInArray (types); ++i)
                     {

@@ -11,8 +11,9 @@
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "TestListComponent.h"
 #include "CommonComponent.h"
+#include "Theme.h"
 
-const int ParameterTestComponent::desiredHeight = 30;
+const int ParameterTestComponent::desiredHeight = 40;
 const int ParameterTestComponent::hmargin = 10;
 
 
@@ -20,7 +21,10 @@ ParameterTestComponent::ParameterTestComponent(AudioProcessorParameter& _paramet
     slider(_parameter),
     parameter(_parameter)
 {
+    nameLabel.setText(parameter.getName(20), dontSendNotification);
     addAndMakeVisible(nameLabel);
+    Appearence::theme()->label(nameLabel);
+    
     addAndMakeVisible(slider);
 }
 
@@ -43,7 +47,7 @@ void ParameterTestComponent::paint (Graphics& g)
 void ParameterTestComponent::resized()
 {
     int vmargin = 4;
-    int hmargin = 20;
+    int hmargin = 10;
     int spacing = 10;
     
     int nameLabelWidth = 100;
@@ -111,16 +115,24 @@ void TestListComponent::paintListBoxItem (int rowNumber, Graphics &g, int width,
 
 Component* TestListComponent::refreshComponentForRow (int rowNumber, bool isRowSelected, Component *existingComponentToUpdate)
 {
-    //ParameterTestComponent* component = static_cast<ParameterTestComponent*> (existingComponentToUpdate);
-    ParameterSlider* component = static_cast<ParameterSlider*> (existingComponentToUpdate);
+    ParameterTestComponent* component = static_cast<ParameterTestComponent*> (existingComponentToUpdate);
+    //ParameterSlider* component = static_cast<ParameterSlider*> (existingComponentToUpdate);
     
     // If an existing component is being passed-in for updating, we'll re-use it, but
     // if not, we'll have to create one.
     if ( component == nullptr )
     {
         AudioProcessorParameter* parameter = processor.getParameters()[rowNumber];
-        //component = new ParameterTestComponent(*parameter);
-        component = new ParameterSlider(*parameter);
+        if (parameter)
+        {
+            component = new ParameterTestComponent(*parameter);
+        }
+        else
+        {
+            std::cout << "ERROR: unexpected absent parameter for row " << rowNumber << "\n";
+            return new Component(); // why does this happen?
+        }
+        //component = new ParameterSlider(*parameter);
     }
     
     return component;

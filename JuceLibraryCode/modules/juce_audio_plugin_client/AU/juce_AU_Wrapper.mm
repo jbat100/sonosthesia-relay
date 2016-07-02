@@ -80,6 +80,8 @@
 
 #include "juce_AU_Shared.h"
 
+JUCE_DEFINE_WRAPPER_TYPE (wrapperType_AudioUnit);
+
 //==============================================================================
 static Array<void*> activePlugins, activeUIs;
 
@@ -130,7 +132,7 @@ public:
         juceFilter->setPlayHead (this);
         juceFilter->addListener (this);
 
-        addParameters();
+        Globals()->UseIndexedParameters (juceFilter->getNumParameters());
 
         activePlugins.add (this);
 
@@ -458,10 +460,9 @@ public:
                     {
                         if (juceFilter != nullptr)
                         {
-                            const int paramID = getJuceIndexForAUParameterID (pv->inParamID);
                             const String text (String::fromCFString (pv->inString));
 
-                            if (AudioProcessorParameter* param = juceFilter->getParameters() [paramID])
+                            if (AudioProcessorParameter* param = juceFilter->getParameters() [(int) pv->inParamID])
                                 pv->outValue = param->getValueForText (text);
                             else
                                 pv->outValue = text.getFloatValue();
@@ -478,11 +479,10 @@ public:
                     {
                         if (juceFilter != nullptr)
                         {
-                            const int paramID = getJuceIndexForAUParameterID (pv->inParamID);
                             const float value = (float) *(pv->inValue);
                             String text;
 
-                            if (AudioProcessorParameter* param = juceFilter->getParameters() [paramID])
+                            if (AudioProcessorParameter* param = juceFilter->getParameters() [(int) pv->inParamID])
                                 text = param->getText ((float) *(pv->inValue), 0);
                             else
                                 text = String (value);
@@ -720,7 +720,7 @@ public:
                                       AudioUnitParameterID inParameterID,
                                       AudioUnitParameterInfo& outParameterInfo) override
     {
-        const int index = getJuceIndexForAUParameterID (inParameterID);
+        const int index = (int) inParameterID;
 
         if (inScope == kAudioUnitScope_Global
              && juceFilter != nullptr
@@ -766,9 +766,7 @@ public:
     {
         if (inScope == kAudioUnitScope_Global && juceFilter != nullptr)
         {
-            const int index = getJuceIndexForAUParameterID (inID);
-
-            outValue = juceFilter->getParameter (index);
+            outValue = juceFilter->getParameter ((int) inID);
             return noErr;
         }
 
@@ -783,9 +781,7 @@ public:
     {
         if (inScope == kAudioUnitScope_Global && juceFilter != nullptr)
         {
-            const int index = getJuceIndexForAUParameterID (inID);
-
-            juceFilter->setParameter (index, inValue);
+            juceFilter->setParameter ((int) inID, inValue);
             return noErr;
         }
 
@@ -889,10 +885,10 @@ public:
         return true;
     }
 
-    void sendAUEvent (const AudioUnitEventType type, const int juceParamIndex)
+    void sendAUEvent (const AudioUnitEventType type, const int index)
     {
         auEvent.mEventType = type;
-        auEvent.mArgument.mParameter.mParameterID = getAUParameterIDForIndex (juceParamIndex);
+        auEvent.mArgument.mParameter.mParameterID = (AudioUnitParameterID) index;
         AUEventListenerNotify (0, 0, &auEvent);
     }
 
@@ -1408,15 +1404,6 @@ private:
     AudioUnitHelpers::CoreAudioBufferList audioBuffer;
     MidiBuffer midiEvents, incomingEvents;
     bool prepared, isBypassed;
-
-    //==============================================================================
-   #if ! JUCE_FORCE_USE_LEGACY_PARAM_IDS
-    bool usingManagedParameter;
-    Array<AudioUnitParameterID> auParamIDs;
-    HashMap<int32, int> paramMap;
-   #endif
-
-    //==============================================================================
     AudioUnitEvent auEvent;
     mutable Array<AUPreset> presetsArray;
     CriticalSection incomingMidiLock;
@@ -1558,69 +1545,6 @@ private:
 
         return kAudioUnitErr_InvalidElement;
     }
-
-    //==============================================================================
-    void addParameters()
-    {
-        // check if all parameters are managed?
-        const int numParams = juceFilter->getNumParameters();
-
-      #if ! JUCE_FORCE_USE_LEGACY_PARAM_IDS
-        usingManagedParameter = (juceFilter->getParameters().size() == numParams);
-
-        if (usingManagedParameter)
-        {
-            const int n = juceFilter->getNumParameters();
-
-            for (int i = 0; i < n; ++i)
-            {
-                const AudioUnitParameterID auParamID = generateAUParameterIDForIndex (i);
-
-                auParamIDs.add (auParamID);
-                paramMap.set (static_cast<int32> (auParamID), i);
-
-                Globals()->SetParameter (auParamID, juceFilter->getParameter (i));
-            }
-        }
-        else
-       #endif
-        {
-            Globals()->UseIndexedParameters (numParams);
-        }
-    }
-
-    //==============================================================================
-   #if JUCE_FORCE_USE_LEGACY_PARAM_IDS
-    inline AudioUnitParameterID getAUParameterIDForIndex (int paramIndex) const noexcept    { return static_cast<AudioUnitParameterID> (paramIndex); }
-    inline int getJuceIndexForAUParameterID (AudioUnitParameterID address) const noexcept   { return static_cast<int> (address); }
-   #else
-    AudioUnitParameterID generateAUParameterIDForIndex (int paramIndex) const
-    {
-        const int n = juceFilter->getNumParameters();
-
-        if (isPositiveAndBelow (paramIndex, n))
-        {
-            const String& juceParamID = juceFilter->getParameterID (paramIndex);
-            return usingManagedParameter ? static_cast<AudioUnitParameterID> (juceParamID.hashCode())
-                                         : static_cast<AudioUnitParameterID> (juceParamID.getIntValue());
-        }
-
-        return static_cast<AudioUnitParameterID> (-1);
-    }
-
-    inline AudioUnitParameterID getAUParameterIDForIndex (int paramIndex) const noexcept
-    {
-        return usingManagedParameter ? auParamIDs.getReference (paramIndex)
-                                     : static_cast<AudioUnitParameterID> (paramIndex);
-    }
-
-    inline int getJuceIndexForAUParameterID (AudioUnitParameterID address) const noexcept
-    {
-        return usingManagedParameter ? paramMap[static_cast<int32> (address)]
-                                     : static_cast<int> (address);
-    }
-   #endif
-
 
     //==============================================================================
     OSStatus syncAudioUnitWithProcessor()
@@ -2088,7 +2012,7 @@ private:
     extern "C" __attribute__((visibility("default"))) ComponentResult Name ## Suffix (ComponentParameters* params, Class* obj); \
     extern "C" __attribute__((visibility("default"))) ComponentResult Name ## Suffix (ComponentParameters* params, Class* obj) \
     { \
-        PluginHostType::jucePlugInClientCurrentWrapperType = AudioProcessor::wrapperType_AudioUnit; \
+        JUCE_DECLARE_WRAPPER_TYPE (wrapperType_AudioUnit); \
         return ComponentEntryPoint<Class>::Dispatch (params, obj); \
     }
 
@@ -2102,7 +2026,7 @@ private:
     extern "C" __attribute__((visibility("default"))) void* Name ## Factory (const AudioComponentDescription* desc); \
     extern "C" __attribute__((visibility("default"))) void* Name ## Factory (const AudioComponentDescription* desc) \
     { \
-        PluginHostType::jucePlugInClientCurrentWrapperType = AudioProcessor::wrapperType_AudioUnit; \
+        JUCE_DECLARE_WRAPPER_TYPE (wrapperType_AudioUnit); \
         return FACTORY_BASE_CLASS<Class>::Factory (desc); \
     }
 

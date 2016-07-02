@@ -290,8 +290,6 @@ public:
             }
         }
 
-        updateActivePorts();
-
         return lastError;
     }
 

@@ -23,9 +23,6 @@
 */
 
 #include "../../juce_core/system/juce_TargetPlatform.h"
-
-#if JUCE_MAC
-
 #include "../utility/juce_CheckSettingMacros.h"
 
 #if JucePlugin_Build_VST || JucePlugin_Build_VST3
@@ -313,5 +310,4 @@ bool forwardCurrentKeyEventToHostVST (Component* comp, bool isNSView)
 
 } // (juce namespace)
 
-#endif
 #endif

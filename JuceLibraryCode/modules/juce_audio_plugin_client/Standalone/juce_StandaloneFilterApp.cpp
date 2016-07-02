@@ -35,6 +35,8 @@
 #include <juce_gui_extra/juce_gui_extra.h>
 #include <juce_audio_utils/juce_audio_utils.h>
 
+JUCE_DEFINE_WRAPPER_TYPE (wrapperType_Standalone);
+
 // You can set this flag in your build if you need to specify a different
 // standalone JUCEApplication class for your app to use. If you don't
 // set it then by default we'll just create a simple one as below.
@@ -53,7 +55,7 @@ class StandaloneFilterApp  : public JUCEApplication
 public:
     StandaloneFilterApp()
     {
-        PluginHostType::jucePlugInClientCurrentWrapperType = AudioProcessor::wrapperType_Standalone;
+        JUCE_DECLARE_WRAPPER_TYPE (wrapperType_Standalone);
     }
 
     const String getApplicationName() override              { return JucePlugin_Name; }
@@ -89,8 +91,10 @@ public:
         quit();
     }
 
-protected:
+private:
     ScopedPointer<StandaloneFilterWindow> mainWindow;
 };
+
+START_JUCE_APPLICATION (StandaloneFilterApp);
 
 #endif

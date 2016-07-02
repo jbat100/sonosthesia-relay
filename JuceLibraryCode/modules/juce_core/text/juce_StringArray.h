@@ -191,10 +191,8 @@ public:
 
     /** Adds a string to the array as long as it's not already in there.
         The search can optionally be case-insensitive.
-
-        @return true if the string has been added, false otherwise.
     */
-    bool addIfNotAlreadyThere (const String& stringToAdd, bool ignoreCase = false);
+    void addIfNotAlreadyThere (const String& stringToAdd, bool ignoreCase = false);
 
     /** Replaces one of the strings in the array with another one.
 

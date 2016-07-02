@@ -540,17 +540,13 @@ public:
         will be done.
 
         @param newElement   the new object to add to the array
-        @return             true if the element was added to the array; false otherwise.
     */
-    bool addIfNotAlreadyThere (ParameterType newElement)
+    void addIfNotAlreadyThere (ParameterType newElement)
     {
         const ScopedLockType lock (getLock());
 
-        if (contains (newElement))
-            return false;
-
-        add (newElement);
-        return true;
+        if (! contains (newElement))
+            add (newElement);
     }
 
     /** Replaces an element with a new value.

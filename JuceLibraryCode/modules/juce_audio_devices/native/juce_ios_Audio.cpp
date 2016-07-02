@@ -287,14 +287,7 @@ public:
         return r;
     }
 
-    int getDefaultBufferSize() override
-    {
-       #if TARGET_IPHONE_SIMULATOR
-        return 512;
-       #else
-        return 256;
-       #endif
-    }
+    int getDefaultBufferSize() override         { return 256; }
 
     String open (const BigInteger& inputChannelsWanted,
                  const BigInteger& outputChannelsWanted,
@@ -689,20 +682,14 @@ private:
         UInt32 framesPerSlice;
         UInt32 dataSize = sizeof (framesPerSlice);
 
-        AudioUnitInitialize (audioUnit);
-
-        AudioUnitSetProperty (audioUnit, kAudioUnitProperty_MaximumFramesPerSlice,
-                              kAudioUnitScope_Global, 0, &actualBufferSize, sizeof (actualBufferSize));
-
-
-        if (AudioUnitGetProperty (audioUnit, kAudioUnitProperty_MaximumFramesPerSlice,
-                                  kAudioUnitScope_Global, 0, &framesPerSlice, &dataSize) == noErr
-            && dataSize == sizeof (framesPerSlice) && static_cast<int> (framesPerSlice) != actualBufferSize)
+        if (AudioUnitGetProperty (audioUnit, kAudioUnitProperty_MaximumFramesPerSlice, kAudioUnitScope_Global, 0, &framesPerSlice, &dataSize) == noErr
+               && dataSize == sizeof (framesPerSlice) && framesPerSlice != actualBufferSize)
         {
-            actualBufferSize = static_cast<int> (framesPerSlice);
+            actualBufferSize = framesPerSlice;
             prepareFloatBuffers (actualBufferSize);
         }
 
+        AudioUnitInitialize (audioUnit);
         return true;
     }
 

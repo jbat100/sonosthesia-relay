@@ -380,31 +380,18 @@ public:
     public:
         Options();
 
-        //==============================================================================
         Options withTargetComponent (Component* targetComponent) const noexcept;
         Options withTargetScreenArea (const Rectangle<int>& targetArea) const noexcept;
         Options withMinimumWidth (int minWidth) const noexcept;
         Options withMaximumNumColumns (int maxNumColumns) const noexcept;
         Options withStandardItemHeight (int standardHeight) const noexcept;
         Options withItemThatMustBeVisible (int idOfItemToBeVisible) const noexcept;
-        Options withParentComponent (Component* parentComponent) const noexcept;
-
-        //==============================================================================
-        Component* getParentComponent() const noexcept          { return parentComponent; }
-        Component* getTargetComponent() const noexcept          { return targetComponent; }
-        Rectangle<int> getTargetScreenArea() const noexcept     { return targetArea; }
-        int getMinimumWidth() const noexcept                    { return minWidth; }
-        int getMaximumNumColumns() const noexcept               { return maxColumns; }
-        int getStandardItemHeight() const noexcept              { return standardHeight; }
-        int getItemThatMustBeVisible() const noexcept           { return visibleItemID; }
 
     private:
-        //==============================================================================
         friend class PopupMenu;
         friend class PopupMenu::Window;
         Rectangle<int> targetArea;
         Component* targetComponent;
-        Component* parentComponent;
         int visibleItemID, minWidth, maxColumns, standardHeight;
     };
 
@@ -681,8 +668,6 @@ public:
                                       bool isMenuOpen,
                                       bool isMouseOverBar,
                                       MenuBarComponent&) = 0;
-
-        virtual Component* getParentComponentForMenuOptions (const PopupMenu::Options& options) = 0;
     };
 
 private:

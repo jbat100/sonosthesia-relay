@@ -26,6 +26,10 @@
   ==============================================================================
 */
 
+#ifdef JUCE_MODULE_AVAILABLE_juce_audio_plugin_client
+ extern int* jucePlugInClientCurrentWrapperType;
+#endif
+
 CriticalSection::CriticalSection() noexcept
 {
     pthread_mutexattr_t atts;
@@ -630,7 +634,12 @@ File juce_getExecutableFile()
         {
             Dl_info exeInfo;
 
+          #ifdef JUCE_MODULE_AVAILABLE_juce_audio_plugin_client
+            void* localSymbol = jucePlugInClientCurrentWrapperType != nullptr ? (void*) jucePlugInClientCurrentWrapperType
+                                                                              : (void*) juce_getExecutableFile;
+          #else
             void* localSymbol = (void*) juce_getExecutableFile;
+          #endif
             dladdr (localSymbol, &exeInfo);
             return CharPointer_UTF8 (exeInfo.dli_fname);
         }
@@ -1081,14 +1090,14 @@ public:
                 close (pipeHandles[0]);   // close the read handle
 
                 if ((streamFlags & wantStdOut) != 0)
-                    dup2 (pipeHandles[1], STDOUT_FILENO); // turns the pipe into stdout
+                    dup2 (pipeHandles[1], 1); // turns the pipe into stdout
                 else
-                    dup2 (open ("/dev/null", O_WRONLY), STDOUT_FILENO);
+                    close (STDOUT_FILENO);
 
                 if ((streamFlags & wantStdErr) != 0)
-                    dup2 (pipeHandles[1], STDERR_FILENO);
+                    dup2 (pipeHandles[1], 2);
                 else
-                    dup2 (open ("/dev/null", O_WRONLY), STDERR_FILENO);
+                    close (STDERR_FILENO);
 
                 close (pipeHandles[1]);
 

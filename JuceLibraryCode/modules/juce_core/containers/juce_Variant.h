@@ -95,7 +95,6 @@ public:
     var& operator= (const char* value);
     var& operator= (const wchar_t* value);
     var& operator= (const String& value);
-    var& operator= (const MemoryBlock& value);
     var& operator= (const Array<var>& value);
     var& operator= (ReferenceCountedObject* object);
     var& operator= (NativeFunction method);

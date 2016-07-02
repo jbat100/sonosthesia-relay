@@ -1214,10 +1214,7 @@ private:
                                         e.dpi = ((static_cast<double> (crtc->width) * 25.4 * 0.5) / static_cast<double> (output->mm_width))
                                             + ((static_cast<double> (crtc->height) * 25.4 * 0.5) / static_cast<double> (output->mm_height));
 
-                                    double scale = getScaleForDisplay (output->name, e);
-                                    scale = (scale <= 0.1 ? 1.0 : scale);
-
-                                    e.scale = masterScale * scale;
+                                    e.scale = masterScale * getScaleForDisplay (output->name, e);
 
                                     infos.add (e);
                                 }

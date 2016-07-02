@@ -365,18 +365,17 @@ public:
     void updateSampleRates()
     {
         // find a list of sample rates..
+        const int possibleSampleRates[] = { 44100, 48000, 88200, 96000, 176400, 192000, 352800, 384000 };
         Array<double> newRates;
 
         if (asioObject != nullptr)
         {
-            const int possibleSampleRates[] = { 32000, 44100, 48000, 88200, 96000, 176400, 192000, 352800, 384000 };
-
             for (int index = 0; index < numElementsInArray (possibleSampleRates); ++index)
                 if (asioObject->canSampleRate ((double) possibleSampleRates[index]) == 0)
                     newRates.add ((double) possibleSampleRates[index]);
         }
 
-        if (newRates.isEmpty())
+        if (newRates.size() == 0)
         {
             double cr = getSampleRate();
             JUCE_ASIO_LOG ("No sample rates supported - current rate: " + String ((int) cr));
