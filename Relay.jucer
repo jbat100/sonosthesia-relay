@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<JUCERPROJECT id="WCGo9g" name="relay" projectType="audioplug" version="1.0.0"
+              bundleIdentifier="com.yourcompany.relay" includeBinaryInAppConfig="1"
+              buildVST="0" buildVST3="0" buildAU="1" buildAUv3="1" buildRTAS="0"
+              buildAAX="0" pluginName="relay" pluginDesc="relay" pluginManufacturer="Sonosthesia"
+              pluginManufacturerCode="Manu" pluginCode="Wcgo" pluginChannelConfigs=""
+              pluginIsSynth="0" pluginWantsMidiIn="1" pluginProducesMidiOut="0"
+              pluginIsMidiEffectPlugin="0" pluginEditorRequiresKeys="0" pluginAUExportPrefix="relayAU"
+              pluginRTASCategory="" aaxIdentifier="com.yourcompany.relay" pluginAAXCategory="AAX_ePlugInCategory_Dynamics"
+              jucerVersion="4.2.1">
+  <MAINGROUP id="OAWDY0" name="relay">
+    <FILE id="oRLtLa" name="CommonComponent.cpp" compile="1" resource="0"
+          file="Source/CommonComponent.cpp"/>
+    <FILE id="e4acO8" name="CommonComponent.h" compile="0" resource="0"
+          file="Source/CommonComponent.h"/>
+    <FILE id="SMtMH6" name="ListControllerComponent.cpp" compile="1" resource="0"
+          file="Source/ListControllerComponent.cpp"/>
+    <FILE id="aItFJ2" name="ListControllerComponent.h" compile="0" resource="0"
+          file="Source/ListControllerComponent.h"/>
+    <FILE id="rpGcQg" name="MIDIListComponent.cpp" compile="1" resource="0"
+          file="Source/MIDIListComponent.cpp"/>
+    <FILE id="NtBacD" name="MIDIListComponent.h" compile="0" resource="0"
+          file="Source/MIDIListComponent.h"/>
+    <FILE id="hxKZ2Z" name="MIDIRelay.cpp" compile="1" resource="0" file="Source/MIDIRelay.cpp"/>
+    <FILE id="eXi1Dp" name="MIDIRelay.h" compile="0" resource="0" file="Source/MIDIRelay.h"/>
+    <FILE id="jm2LZS" name="MIDITableComponent.cpp" compile="1" resource="0"
+          file="Source/MIDITableComponent.cpp"/>
+    <FILE id="zicrhz" name="MIDITableComponent.h" compile="0" resource="0"
+          file="Source/MIDITableComponent.h"/>
+    <FILE id="xuA17Y" name="OSCTargetManager.cpp" compile="1" resource="0"
+          file="Source/OSCTargetManager.cpp"/>
+    <FILE id="o01fmY" name="OSCTargetManager.h" compile="0" resource="0"
+          file="Source/OSCTargetManager.h"/>
+    <FILE id="pDTLyb" name="ParameterListComponent.cpp" compile="1" resource="0"
+          file="Source/ParameterListComponent.cpp"/>
+    <FILE id="ZhVX7K" name="ParameterListComponent.h" compile="0" resource="0"
+          file="Source/ParameterListComponent.h"/>
+    <FILE id="hT3dph" name="ParameterRelay.cpp" compile="1" resource="0"
+          file="Source/ParameterRelay.cpp"/>
+    <FILE id="BzbWwL" name="ParameterRelay.h" compile="0" resource="0"
+          file="Source/ParameterRelay.h"/>
+    <FILE id="nzO2R0" name="ParameterTableComponent.cpp" compile="1" resource="0"
+          file="Source/ParameterTableComponent.cpp"/>
+    <FILE id="s3bWqL" name="ParameterTableComponent.h" compile="0" resource="0"
+          file="Source/ParameterTableComponent.h"/>
+    <FILE id="WZ4gmX" name="PluginEditor.cpp" compile="1" resource="0"
+          file="Source/PluginEditor.cpp"/>
+    <FILE id="PuG6Re" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
+    <FILE id="oQOK2L" name="PluginProcessor.cpp" compile="1" resource="0"
+          file="Source/PluginProcessor.cpp"/>
+    <FILE id="pxuhKq" name="PluginProcessor.h" compile="0" resource="0"
+          file="Source/PluginProcessor.h"/>
+    <FILE id="bWNAGu" name="Relay.cpp" compile="1" resource="0" file="Source/Relay.cpp"/>
+    <FILE id="DqrzAg" name="Relay.h" compile="0" resource="0" file="Source/Relay.h"/>
+    <FILE id="JEB45j" name="RelayComponent.cpp" compile="1" resource="0"
+          file="Source/RelayComponent.cpp"/>
+    <FILE id="iJJWKp" name="RelayComponent.h" compile="0" resource="0"
+          file="Source/RelayComponent.h"/>
+    <FILE id="PDZzvY" name="TargetListComponent.cpp" compile="1" resource="0"
+          file="Source/TargetListComponent.cpp"/>
+    <FILE id="xVHoOj" name="TargetListComponent.h" compile="0" resource="0"
+          file="Source/TargetListComponent.h"/>
+    <FILE id="PQhkUv" name="TargetTableComponent.cpp" compile="1" resource="0"
+          file="Source/TargetTableComponent.cpp"/>
+    <FILE id="RZP8tz" name="TargetTableComponent.h" compile="0" resource="0"
+          file="Source/TargetTableComponent.h"/>
+    <FILE id="LMw3aj" name="TestListComponent.cpp" compile="1" resource="0"
+          file="Source/TestListComponent.cpp"/>
+    <FILE id="zcw0eV" name="TestListComponent.h" compile="0" resource="0"
+          file="Source/TestListComponent.h"/>
+    <FILE id="vtgk4Q" name="TestTableComponent.cpp" compile="1" resource="0"
+          file="Source/TestTableComponent.cpp"/>
+    <FILE id="JGAJfW" name="TestTableComponent.h" compile="0" resource="0"
+          file="Source/TestTableComponent.h"/>
+    <FILE id="QX7rA4" name="Theme.cpp" compile="1" resource="0" file="Source/Theme.cpp"/>
+    <FILE id="xVrntc" name="Theme.h" compile="0" resource="0" file="Source/Theme.h"/>
+    <FILE id="m9i2TK" name="Utils.cpp" compile="1" resource="0" file="Source/Utils.cpp"/>
+    <FILE id="KkJjTr" name="Utils.h" compile="0" resource="0" file="Source/Utils.h"/>
+  </MAINGROUP>
+  <EXPORTFORMATS>
+    <XCODE_MAC targetFolder="Builds/MacOSX">
+      <CONFIGURATIONS>
+        <CONFIGURATION name="Debug" isDebug="1" optimisation="1" targetName="relay"/>
+        <CONFIGURATION name="Release" isDebug="0" optimisation="3" targetName="relay"/>
+      </CONFIGURATIONS>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_core" path="../../juce/juce-git/modules"/>
+        <MODULEPATH id="juce_events" path="../../juce/juce-git/modules"/>
+        <MODULEPATH id="juce_graphics" path="../../juce/juce-git/modules"/>
+        <MODULEPATH id="juce_data_structures" path="../../juce/juce-git/modules"/>
+        <MODULEPATH id="juce_gui_basics" path="../../juce/juce-git/modules"/>
+        <MODULEPATH id="juce_gui_extra" path="../../juce/juce-git/modules"/>
+        <MODULEPATH id="juce_cryptography" path="../../juce/juce-git/modules"/>
+        <MODULEPATH id="juce_video" path="../../juce/juce-git/modules"/>
+        <MODULEPATH id="juce_opengl" path="../../juce/juce-git/modules"/>
+        <MODULEPATH id="juce_audio_basics" path="../../juce/juce-git/modules"/>
+        <MODULEPATH id="juce_audio_devices" path="../../juce/juce-git/modules"/>
+        <MODULEPATH id="juce_audio_formats" path="../../juce/juce-git/modules"/>
+        <MODULEPATH id="juce_audio_processors" path="../../juce/juce-git/modules"/>
+        <MODULEPATH id="juce_audio_plugin_client" path="../../juce/juce-git/modules"/>
+        <MODULEPATH id="juce_osc" path="../../juce/juce-git/modules"/>
+        <MODULEPATH id="juce_audio_utils" path="../../juce/juce-git/modules"/>
+      </MODULEPATHS>
+    </XCODE_MAC>
+  </EXPORTFORMATS>
+  <MODULES>
+    <MODULE id="juce_audio_basics" showAllCode="1" useLocalCopy="1"/>
+    <MODULE id="juce_audio_devices" showAllCode="1" useLocalCopy="1"/>
+    <MODULE id="juce_audio_formats" showAllCode="1" useLocalCopy="1"/>
+    <MODULE id="juce_audio_plugin_client" showAllCode="1" useLocalCopy="1"/>
+    <MODULE id="juce_audio_processors" showAllCode="1" useLocalCopy="1"/>
+    <MODULE id="juce_audio_utils" showAllCode="1" useLocalCopy="1"/>
+    <MODULE id="juce_core" showAllCode="1" useLocalCopy="1"/>
+    <MODULE id="juce_cryptography" showAllCode="1" useLocalCopy="1"/>
+    <MODULE id="juce_data_structures" showAllCode="1" useLocalCopy="1"/>
+    <MODULE id="juce_events" showAllCode="1" useLocalCopy="1"/>
+    <MODULE id="juce_graphics" showAllCode="1" useLocalCopy="1"/>
+    <MODULE id="juce_gui_basics" showAllCode="1" useLocalCopy="1"/>
+    <MODULE id="juce_gui_extra" showAllCode="1" useLocalCopy="1"/>
+    <MODULE id="juce_opengl" showAllCode="1" useLocalCopy="1"/>
+    <MODULE id="juce_osc" showAllCode="1" useLocalCopy="1"/>
+    <MODULE id="juce_video" showAllCode="1" useLocalCopy="1"/>
+  </MODULES>
+  <JUCEOPTIONS JUCE_QUICKTIME="disabled"/>
+</JUCERPROJECT>
